@@ -3,7 +3,12 @@
 CRUD de un instituto basado en MVC
 
 ## Links de interes
+### Requisitos de la practica
+
 https://docs.google.com/document/d/1vCzjkSLwsF4la1jvXJ73z8lcYTGdAtVV50-AgChxx_s/edit?usp=sharing
+
+### Distribucion del trabajo
+
 https://docs.google.com/spreadsheets/d/1KIeOL_F3bY1XDLkNiF8gt4EKAjcgzBFPP0_AOEBkspA/edit?usp=sharing
 
 ## Getting Started
