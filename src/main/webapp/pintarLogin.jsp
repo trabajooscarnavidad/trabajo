@@ -138,7 +138,7 @@
                 <div class="row">
                     <div class="col-sm-8 col-sm-offset-2">
                         <div class="footer-border"></div>
-                        <p>Este formulario es una plantilla que me he descargado. No lo he hecho yo :(!</p>
+                        <p>Este formulario es una plantilla que me he descargado. No lo he hecho yo a:(!</p>
                     </div>
                 </div>
             </div>
