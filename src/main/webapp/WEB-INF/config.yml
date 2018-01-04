@@ -4,9 +4,9 @@ driverDB: com.mysql.jdbc.Driver
 ##urlDB: jdbc:mysql://localhost:3306/baselocal?useSSL=false
 ##userDB: root
 ##passDB: admin
-urlDB: jdbc:mysql://db4free.net:3307/clasesdaw?useSSL=false
-userDB: oscarnovillo
-passDB: c557ef
+urlDB: jdbc:mysql://qyw391.marfilgrupo.es:3306/clasesdaw?useSSL=false
+userDB: qyw391
+passDB: Descargar1
 mailFrom: alumno1@iesquevedo.es
 smtpServer: smtp.gmail.com
 smtpPort: 587
