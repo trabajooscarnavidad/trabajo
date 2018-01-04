@@ -3,7 +3,7 @@
 driverDB: com.mysql.jdbc.Driver
 ##urlDB: jdbc:mysql://localhost:3306/baselocal?useSSL=false
 ##userDB: root
-##passDB: admin
+##passDB: adminq
 urlDB: jdbc:mysql://qyw391.marfilgrupo.es:3306/clasesdaw?useSSL=false
 userDB: qyw391
 passDB: Descargar1
