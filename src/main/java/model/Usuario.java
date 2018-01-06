@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public class Usuario {
 
-    private int id;
+    private int idUsuarios;
     private String Usuario;
     private String Pass;
     private String email;
@@ -48,12 +48,12 @@ public class Usuario {
         this.Codigo = Codigo;
     }
 
-    public int getId() {
-        return id;
+    public int getIdUsuarios() {
+        return idUsuarios;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdUsuarios(int idUsuarios) {
+        this.idUsuarios = idUsuarios;
     }
 
     public String getUsuario() {
