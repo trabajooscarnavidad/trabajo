@@ -56,7 +56,7 @@ public class DBConnection {
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-
+        config.setMaximumPoolSize(10);
         
    //             config.setMaximumPoolSize(1); el pool no reusa conexiones por eso el limite a 1 para no llenarlo de conexiones
    //     config.setConnectionTimeout(3000);
