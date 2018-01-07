@@ -29,7 +29,7 @@ public class AsignaturasDAO {
             con = DBConnection.getInstance().getConnection();
             QueryRunner qr = new QueryRunner();
             ResultSetHandler<List<Asignatura>> h = new BeanListHandler<Asignatura>(Asignatura.class);
-            lista = qr.query(con, "select * FROM ASIGNATURAS", h);
+            lista = qr.query(con, "select * FROM Asignaturas", h);
 
         } catch (Exception ex) {
             Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -47,9 +47,9 @@ public class AsignaturasDAO {
             QueryRunner qr = new QueryRunner();
             long id = qr.insert(con,
                     "INSERT INTO ASIGNATURAS (NOMBRE,CICLO,CURSO) VALUES(?,?,?)",
-                    new ScalarHandler<Long>(), a.getNombre(), a.getCiclo(), a.getCurso());
+                    new ScalarHandler<Long>(), a.getNombre());
            
-            a.setId(id);
+            a.setidAsignaturas(id);
             con.commit();
         } catch (Exception ex) {
             Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -66,7 +66,7 @@ public class AsignaturasDAO {
         try {
             con = DBConnection.getInstance().getConnection();
             QueryRunner qr = new QueryRunner();
-            filas = qr.update(con, "UPDATE ASIGNATURAS SET NOMBRE = ?, CICLO = ?, CURSO = ? WHERE ID = ?", a.getNombre(), a.getCiclo(), a.getCurso(), a.getId());
+            filas = qr.update(con, "UPDATE ASIGNATURAS SET NOMBRE = ? WHERE ID = ?", a.getNombre());
 
         } catch (Exception ex) {
             Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -82,7 +82,7 @@ public class AsignaturasDAO {
         try {
             con = DBConnection.getInstance().getConnection();
             QueryRunner qr = new QueryRunner();
-            filas = qr.update(con, "DELETE FROM ASIGNATURAS WHERE ID = ?", a.getId());
+            filas = qr.update(con, "DELETE FROM Asignaturas WHERE idAsignaturas = ?", a.getidAsignaturas());
 
         } catch (Exception ex) {
             if (ex.getMessage().contains("foreign")){
@@ -102,8 +102,8 @@ public class AsignaturasDAO {
             con = DBConnection.getInstance().getConnection();
             con.setAutoCommit(false);
             QueryRunner qr = new QueryRunner();
-            filas += qr.update(con, "DELETE FROM NOTAS WHERE ID_ASIGNATURA = ?", a.getId());
-            filas += qr.update(con, "DELETE FROM ASIGNATURAS WHERE ID = ?", a.getId());
+            filas += qr.update(con, "DELETE FROM NOTAS WHERE ID_ASIGNATURA = ?", a.getidAsignaturas());
+            filas += qr.update(con, "DELETE FROM ASIGNATURAS WHERE ID = ?", a.getidAsignaturas());
             
             con.commit();
 

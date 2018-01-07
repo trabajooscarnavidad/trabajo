@@ -19,8 +19,6 @@
             function cargarAsignatura(id, nombre, ciclo, curso) {
                 document.getElementById("idasignatura").value = id;
                 document.getElementById("nombre").value = nombre;
-                document.getElementById("ciclo").value = ciclo;
-                document.getElementById("curso").value = curso;
                 document.getElementById("actualizar").disabled = false;
                 document.getElementById("borrar").disabled = false;
                 document.getElementById("insertar").disabled = true;
@@ -60,8 +58,6 @@
                 <form name="formulario" action="asignaturas">
                     <input type="hidden" id="idasignatura" name="idasignatura">
                     <input type="text" id="nombre" name="nombre">
-                    <input type="text" id="ciclo" name="ciclo">
-                    <input type="text" id="curso" name="curso">
                     <input type="hidden" id="accion" name="accion">
                     <br>
                     <br>
@@ -74,17 +70,11 @@
                     <tr style="font-weight: bold">
                         <td></td>
                         <td>NOMBRE</td>
-                        <td>CICLO</td>
-                        <td>CURSO</td>
                     </tr>
                     <c:forEach items="${asignaturas}" var="asignatura">
                         <tr>
-                            <td><input type="button" value="Cargar ${asignatura.id}" style="width:100px" onclick="cargarAsignatura('${asignatura.id}',
-                                            '${fn:escapeXml(fn:replace(asignatura.nombre,"'", "\\'"))}', '${fn:escapeXml(fn:replace(asignatura.ciclo,"'", "\\'"))}',
-                                            '${fn:escapeXml(fn:replace(asignatura.curso,"'", "\\'"))}')"></td>
+                            <td><input type="button" value="Cargar" style="width:100px" onclick="cargarAsignatura('${asignatura.idAsignaturas}','${fn:escapeXml(fn:replace(asignatura.nombre,"'", "\\'"))}')"></td>
                             <td>${asignatura.nombre}</td>
-                            <td>${asignatura.ciclo}</td>
-                            <td>${asignatura.curso}</td>
                         </tr>
                     </c:forEach>
                 </table>

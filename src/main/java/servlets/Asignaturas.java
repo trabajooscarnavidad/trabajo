@@ -18,7 +18,7 @@ import servicios.AsignaturasServicios;
  *
  * @author Miguel Angel Diaz
  */
-@WebServlet(name = "Asignaturas", urlPatterns = {"/sesion/asignaturas"})
+@WebServlet(name = "Asignaturas", urlPatterns = {"/asignaturas"})
 public class Asignaturas extends HttpServlet {
 
     /**
@@ -39,14 +39,12 @@ public class Asignaturas extends HttpServlet {
         if (op != null) {
             Asignatura a = new Asignatura();
             a.setNombre(request.getParameter("nombre"));
-            a.setCiclo(request.getParameter("ciclo"));
-            a.setCurso(request.getParameter("curso"));
             int filas = 0;
             boolean errorBorrar = false;
 
             switch (op) {
                 case "actualizar":
-                    a.setId(Long.parseLong(request.getParameter("idasignatura")));
+                    a.setidAsignaturas(Long.parseLong(request.getParameter("idasignatura")));
                     filas = as.updateAsignatura(a);
                     break;
                 case "insertar":
@@ -56,16 +54,16 @@ public class Asignaturas extends HttpServlet {
                     }
                     break;
                 case "borrar":
-                    a.setId(Long.parseLong(request.getParameter("idasignatura")));
+                    a.setidAsignaturas(Long.parseLong(request.getParameter("idasignatura")));
                     filas = as.delAsignatura(a);
                     if (filas == -1) {
                         request.setAttribute("errorBorrar", "Si borras esta asignatura se borrarán todas las notas asociadas a ella.");
-                        request.setAttribute("idAsignatura", a.getId());
+                        request.setAttribute("idAsignatura", a.getidAsignaturas());
                         errorBorrar = true;
                     }
                     break;
                 case "borrar2":
-                    a.setId(Long.parseLong(request.getParameter("idasignatura")));
+                    a.setidAsignaturas(Long.parseLong(request.getParameter("idasignatura")));
                     filas = as.delAsignatura2(a);
                     break;
             }
