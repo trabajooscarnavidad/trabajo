@@ -6,6 +6,7 @@
 package servicios;
 
 import dao.PermisosDAO;
+import dao.UsuariosDAO;
 import java.util.ArrayList;
 import java.util.List;
 import model.Permiso;
@@ -30,6 +31,13 @@ public class PermisosServicios {
         return dao.getAllUsuariosJDBCTemplate();
     }
                 
+               public List<Usuario> getAllUsuariosSinAlta()
+    {
+        PermisosDAO dao = new PermisosDAO();
+        
+        return dao.getAllUsuariosSinAltaJDBCTemplate();
+    }
+                
       public void asociarPermisos(String usuarios[], String permisos[])
     {
         PermisosDAO dao = new PermisosDAO();
@@ -47,6 +55,61 @@ public class PermisosServicios {
 dao.asociarPermisosJDBCTemplate(listA);
        // return dao.asociarPermisosJDBCTemplate(listA);
     }
+      
+                      
+      public void quitarPermisos(String usuarios[], String permisos[])
+    {
+        PermisosDAO dao = new PermisosDAO();
+        List listA = new ArrayList();
+
+
+        Permiso obj_permiso = new Permiso(); 
+        for (int i = 0; i < usuarios.length; i++) {
+             obj_permiso.setIdPermisos(Long.parseLong(usuarios[i]));
+            for (int j = 0; j < permisos.length; j++) {
+                 obj_permiso.setValor(permisos[j]);
+                 listA.add(obj_permiso);
+            }
+        }
+dao.quitarPermisosJDBCTemplate(listA);
+       // return dao.asociarPermisosJDBCTemplate(listA);
+    }
+      
+         public void darDeAlta(String usuarios[], String permisos[])
+    {
+        PermisosDAO dao = new PermisosDAO();
+        List listA = new ArrayList();
+        List listB = new ArrayList();
+
+        Permiso obj_permiso = new Permiso(); 
+          Usuario obj_user = new Usuario();
+        for (int i = 0; i < usuarios.length; i++) {
+             obj_permiso.setIdPermisos(Long.parseLong(usuarios[i]));
+             obj_user.setIdUsuarios((int) Long.parseLong(usuarios[i]));
+              Usuario obj_user_db = dao.comprobarDatosUsuarioDB(obj_user);
+             listB.add(obj_user_db);
+            for (int j = 0; j < permisos.length; j++) {
+                 obj_permiso.setValor(permisos[j]);
+                 listA.add(obj_permiso);
+            }
+        }
+dao.asociarPermisosJDBCTemplate(listA);
+ MandarMail mail = new MandarMail();
+for (int i = 0; i < listB.size(); i++) {
+      
+obj_user = (Usuario) listB.get(i);
+String pass = null; //generar contraseña aleatoria
+//funcion para asignar nueva contraseña en la db
+mail.mandarMail(obj_user.getEmail(), "tu contraseña es " + pass + " codigo activacion "+ obj_user.getCodigo()+ " activalo en  http://127.0.0.1:8080/login?op=activar&usuario=" + obj_user.getUsuario() + "&codigo=" + obj_user.getCodigo(), "Codigo de activacion");
+
+}
+ 
+          
+       // mail.mandarMail(registro.getEmail(), "tu contraseña es "+ registro.getCodigo()+ " activalo en  http://127.0.0.1:8080/login?op=activar&usuario=" + registro.getUsuario() + "&codigo=" + registro.getCodigo(), "Codigo de activacion");
+
+       // return dao.asociarPermisosJDBCTemplate(listA);
+    }
+                
                 
 }
 

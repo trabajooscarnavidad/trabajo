@@ -66,9 +66,12 @@ public class Permisos extends HttpServlet {
 
                 break;
             case "quitarpermisos":
+                  ps.quitarPermisos(usuarios,permisos);
                // msg = ls.crearUsuario(nombre, password, email) ? "Usuario registrado" : "No se pudo registrar";
 
                 break;
+            case "dardealta":
+                // ps.dardealta(usuarios,permisos);
             case "addpermiso":
                 //String codigo = request.getParameter(Constantes.CODIGO_LOGIN);
                // msg = ls.activarUsuario(nombre, codigo) ? "usuario activado correctamente" : "no se pudo activar el usuario";
@@ -95,6 +98,7 @@ public class Permisos extends HttpServlet {
             // permisos.add(ps.getAlumnoById(1));
              root.put("permisos",ps.getAllPermisos());
               root.put("usuarios",ps.getAllUsuarios());
+              root.put("usuariosalt",ps.getAllUsuariosSinAlta());
              Template temp = Configuration.getInstance().getFreeMarker().getTemplate("permisos.ftl");
             temp.process(root, response.getWriter());
         } catch (TemplateException ex) {

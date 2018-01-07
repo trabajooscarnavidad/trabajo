@@ -83,7 +83,7 @@ noscript p {
         <div>No content</div>
     </#if>
 
-      <span class="form_h">Permisos(s):</span>
+   
       <form action="permisos" name="formulario1" method="get" >
           <input type="hidden" name ="op" id="op" value="test1"/>
         <div class="form_entry">
@@ -112,7 +112,7 @@ noscript p {
                 </div>
             </div>
             
-<span class="form_h">Alumnos(s):</span>
+
         <div class="form_entry">
             
             <div class="msel-wrapper" title="Move items from list on the left to the right to choose." style="display: inline-block;">
@@ -122,6 +122,11 @@ noscript p {
                         <optgroup label="Usuarios">
                                <#list usuarios as usuario>
      <option value="${usuario.idUsuarios}">${usuario.usuario}</option>
+    </#list>	
+                              </optgroup>
+                        <optgroup label="Usuarios sin alta">
+                               <#list usuariosalt as usuariosalta>
+     <option value="${usuariosalta.idUsuarios}">${usuariosalta.usuario}</option>
     </#list>	
                               </optgroup>
                         </select>
@@ -138,7 +143,38 @@ noscript p {
                     </div>
                 </div>
             </div>
-  <button id="asociarpermisos" onclick="myFunction(id)">Asociar permisos</button>       
+          
+       <!--third-->
+             
+        <div class="form_entry">
+            <div class="msel-wrapper" title="Move items from list on the left to the right to choose." style="display: inline-block;">
+                <div class="msel-from-wrapper" style="display: table-cell;">
+                    <input class="msel-search" style="display: none;">
+                    <select name="tablausuarios" multiple="multiple" size="10">
+                        <optgroup label="Usuario sin alta">
+                               <#list usuariosalt as usuariosalta>
+     <option value="${usuariosalta.idUsuarios}">${usuariosalta.usuario}</option>
+    </#list>	
+                              </optgroup>
+                        </select>
+                    </div>
+                <div class="msel-button-wrapper" style="display: none; vertical-align: middle;">
+                    <button type="button" class="msel-button-promote" style="display: block;">&gt;&gt;</button>
+                    <button type="button" class="msel-button-demote" style="display: block;">&lt;&lt;</button>
+                    </div>
+                <div class="msel-to-wrapper" style="display: none;">
+                    <input class="msel-search" style="display: block;">
+                    <select class="msel-selected" size="10" style="display: block; height: 100%;">
+                        </select><div class="msel-payload">
+                            </div>
+                    </div>
+                </div>
+            </div>
+          
+          
+  <button id="asociarpermisos" onclick="myFunction(id)">Asociar permisos</button>
+    <button id="quitarpermisos" onclick="myFunction(id)">Quitar permisos</button>
+      <button id="dardealta" onclick="myFunction(id)">Dar de alta</button>     
         </form>
         <script>
                 function myFunction(id) {

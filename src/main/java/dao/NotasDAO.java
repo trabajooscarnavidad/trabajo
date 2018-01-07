@@ -26,12 +26,12 @@ public class NotasDAO {
         try {
             con = DBConnection.getInstance().getConnection();
             QueryRunner qr = new QueryRunner();
-            filas = qr.update(con, "UPDATE NOTAS SET NOTA = ? WHERE ID_ALUMNO = ? AND ID_ASIGNATURA = ?", n.getNota(), n.getIdAlumno(), n.getIdAsignatura());
+            filas = qr.update(con, "UPDATE Notas SET Nota = ? WHERE Alumnos_idAlumnos = ? AND Asignaturas_idAsignaturas = ?", n.getNota(), n.getIdAlumno(), n.getIdAsignatura());
 
             if (filas == 0) {
                 con.setAutoCommit(false);
                 Long id = qr.insert(con,
-                        "INSERT INTO NOTAS (ID_ALUMNO,ID_ASIGNATURA,NOTA) VALUES(?,?,?)",
+                        "INSERT INTO Notas (Alumnos_idAlumnos,Asignaturas_idAsignaturas,Nota) VALUES(?,?,?)",
                         new ScalarHandler<Long>(), n.getIdAlumno(), n.getIdAsignatura(), n.getNota());
                 con.commit();
             }
@@ -50,7 +50,7 @@ public class NotasDAO {
         try {
             con = DBConnection.getInstance().getConnection();
             QueryRunner qr = new QueryRunner();
-            filas = qr.update(con, "DELETE FROM NOTAS WHERE ID_ALUMNO = ? AND ID_ASIGNATURA = ?", n.getIdAlumno(), n.getIdAsignatura());
+            filas = qr.update(con, "DELETE FROM Notas WHERE Alumnos_idAlumnos = ? AND Asignaturas_idAsignaturas = ?", n.getIdAlumno(), n.getIdAsignatura());
 
         } catch (Exception ex) {
             Logger.getLogger(NotasDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -67,7 +67,7 @@ public class NotasDAO {
             con = DBConnection.getInstance().getConnection();
             QueryRunner qr = new QueryRunner();
             ResultSetHandler<Nota> h = new BeanHandler<>(Nota.class);
-            n = qr.query(con, "SELECT * FROM NOTAS WHERE ID_ALUMNO = ? AND ID_ASIGNATURA = ?", h, idAlu, idAsig);
+            n = qr.query(con, "SELECT * FROM Notas WHERE Alumnos_idAlumnos = ? AND Asignaturas_idAsignaturas = ?", h, idAlu, idAsig);
 
         } catch (Exception ex) {
             Logger.getLogger(NotasDAO.class.getName()).log(Level.SEVERE, null, ex);
