@@ -11,23 +11,23 @@ package model;
  */
 public class Curso {
     
-    private long od;
+    private long id;
     private String nombre;
 
     public Curso() {
     }
 
-    public Curso(long od, String nombre) {
-        this.od = od;
+    public Curso(long id, String nombre) {
+        this.id = id;
         this.nombre = nombre;
     }
 
-    public long getOd() {
-        return od;
+    public long getId() {
+        return id;
     }
 
-    public void setOd(long od) {
-        this.od = od;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -37,6 +37,4 @@ public class Curso {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
-    
 }
