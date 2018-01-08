@@ -11,28 +11,28 @@ package model;
  */
 public class Nota {
     
-    private Long idAlumno;
-    private Long idAsignatura;
+    private Long Alumnos_idAlumnos;
+    private Long Asignaturas_idAsignaturas;
     private int nota;
     
     public Nota(){
     }
     
-    public void setIdAlumno(Long idAlumno){
-        this.idAlumno=idAlumno;
+    public void setAlumnos_idAlumnos(Long Alumnos_idAlumnos){
+        this.Alumnos_idAlumnos=Alumnos_idAlumnos;
     }
-    public void setIdAsignatura(Long idAsignatura){
-        this.idAsignatura=idAsignatura;
+    public void setAsignaturas_idAsignaturas(Long Asignaturas_idAsignaturas){
+        this.Asignaturas_idAsignaturas=Asignaturas_idAsignaturas;
     }
     public void setNota(int nota){
         this.nota=nota;
     }
     
-    public Long getIdAlumno(){
-        return idAlumno;
+    public Long getAlumnos_idAlumnos(){
+        return Alumnos_idAlumnos;
     }
-    public Long getIdAsignatura(){
-        return idAsignatura;
+    public Long getAsignaturas_idAsignaturas(){
+        return Asignaturas_idAsignaturas;
     }
     public int getNota(){
         return nota;

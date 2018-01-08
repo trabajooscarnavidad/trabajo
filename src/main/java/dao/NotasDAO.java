@@ -26,13 +26,13 @@ public class NotasDAO {
         try {
             con = DBConnection.getInstance().getConnection();
             QueryRunner qr = new QueryRunner();
-            filas = qr.update(con, "UPDATE Notas SET Nota = ? WHERE Alumnos_idAlumnos = ? AND Asignaturas_idAsignaturas = ?", n.getNota(), n.getIdAlumno(), n.getIdAsignatura());
+            filas = qr.update(con, "UPDATE Notas SET Nota = ? WHERE Alumnos_idAlumnos = ? AND Asignaturas_idAsignaturas = ?", n.getNota(), n.getAlumnos_idAlumnos(), n.getAsignaturas_idAsignaturas());
 
             if (filas == 0) {
                 con.setAutoCommit(false);
                 Long id = qr.insert(con,
                         "INSERT INTO Notas (Alumnos_idAlumnos,Asignaturas_idAsignaturas,Nota) VALUES(?,?,?)",
-                        new ScalarHandler<Long>(), n.getIdAlumno(), n.getIdAsignatura(), n.getNota());
+                        new ScalarHandler<Long>(), n.getAlumnos_idAlumnos(), n.getAsignaturas_idAsignaturas(), n.getNota());
                 con.commit();
             }
         } catch (Exception ex) {
@@ -50,7 +50,7 @@ public class NotasDAO {
         try {
             con = DBConnection.getInstance().getConnection();
             QueryRunner qr = new QueryRunner();
-            filas = qr.update(con, "DELETE FROM Notas WHERE Alumnos_idAlumnos = ? AND Asignaturas_idAsignaturas = ?", n.getIdAlumno(), n.getIdAsignatura());
+            filas = qr.update(con, "DELETE FROM Notas WHERE Alumnos_idAlumnos = ? AND Asignaturas_idAsignaturas = ?", n.getAlumnos_idAlumnos(), n.getAsignaturas_idAsignaturas());
 
         } catch (Exception ex) {
             Logger.getLogger(NotasDAO.class.getName()).log(Level.SEVERE, null, ex);

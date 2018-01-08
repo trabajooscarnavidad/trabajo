@@ -12,39 +12,39 @@ import java.time.LocalDateTime;
  * @author Miguel Angel Diaz
  */
 public class User {
-    private long id;
-    private String nombre;
-    private String password;
+    private long idUsuarios;
+    private String Usuario;
+    private String Pass;
     private boolean activo;
-    private String codigo_activacion;
-    private LocalDateTime fecha_activacion;
+    private String Codigo;
+    private LocalDateTime Fecha;
     private String email;
 
     public User() {
     }
 
     public Long getId() {
-        return id;
+        return idUsuarios;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.idUsuarios = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getUsuario() {
+        return Usuario;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setUsuario(String Usuario) {
+        this.Usuario = Usuario;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPass() {
+        return Pass;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPass(String Pass) {
+        this.Pass = Pass;
     }
 
     public boolean getActivo() {
@@ -55,20 +55,20 @@ public class User {
         this.activo = activo;
     }
 
-    public String getCodigo_activacion() {
-        return codigo_activacion;
+    public String getCodigo() {
+        return Codigo;
     }
 
-    public void setCodigo_activacion(String codigo_activacion) {
-        this.codigo_activacion = codigo_activacion;
+    public void setCodigo(String Codigo) {
+        this.Codigo = Codigo;
     }
 
-    public LocalDateTime getFecha_activacion() {
-        return fecha_activacion;
+    public LocalDateTime getFecha() {
+        return Fecha;
     }
 
-    public void setFecha_activacion(LocalDateTime fecha_activacion) {
-        this.fecha_activacion = fecha_activacion;
+    public void setFecha(LocalDateTime Fecha) {
+        this.Fecha = Fecha;
     }
 
     public String getEmail() {
