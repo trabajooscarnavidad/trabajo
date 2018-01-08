@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Asignatura;
+import model.Curso;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -38,6 +39,23 @@ public class AsignaturasDAO {
         }
         return lista;
     }
+    
+    public List<Curso> getAllCursos() {
+        List<Curso> lista = null;
+        Connection con = null;
+        try {
+            con = DBConnection.getInstance().getConnection();
+            QueryRunner qr = new QueryRunner();
+            ResultSetHandler<List<Curso>> h = new BeanListHandler<>(Curso.class);
+            lista = qr.query(con, "select * FROM Cursos", h);
+
+        } catch (Exception ex) {
+            Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBConnection.getInstance().cerrarConexion(con);
+        }
+        return lista;
+    }
 
     public Asignatura addAsignatura(Asignatura a) {
         Connection con = null;
@@ -46,7 +64,7 @@ public class AsignaturasDAO {
             con.setAutoCommit(false);
             QueryRunner qr = new QueryRunner();
             long id = qr.insert(con,
-                    "INSERT INTO ASIGNATURAS (NOMBRE,CICLO,CURSO) VALUES(?,?,?)",
+                    "INSERT INTO Asignaturas (Nombre) VALUES(?)",
                     new ScalarHandler<Long>(), a.getNombre());
            
             a.setidAsignaturas(id);
@@ -59,65 +77,25 @@ public class AsignaturasDAO {
         }
         return a;
     }
-
-    public int updateAsignatura(Asignatura a) {
-        Connection con = null;
-        int filas = 0;
-        try {
-            con = DBConnection.getInstance().getConnection();
-            QueryRunner qr = new QueryRunner();
-            filas = qr.update(con, "UPDATE ASIGNATURAS SET NOMBRE = ? WHERE ID = ?", a.getNombre());
-
-        } catch (Exception ex) {
-            Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            DBConnection.getInstance().cerrarConexion(con);
-        }
-        return filas;
-    }
-
-    public int delAsignatura(Asignatura a) {
-        Connection con = null;
-        int filas = 0;
-        try {
-            con = DBConnection.getInstance().getConnection();
-            QueryRunner qr = new QueryRunner();
-            filas = qr.update(con, "DELETE FROM Asignaturas WHERE idAsignaturas = ?", a.getidAsignaturas());
-
-        } catch (Exception ex) {
-            if (ex.getMessage().contains("foreign")){
-                filas = -1;
-            }
-            Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            DBConnection.getInstance().cerrarConexion(con);
-        }
-        return filas;
-    }
     
-    public int delAsignatura2(Asignatura a) {
+    public Curso addCurso(Curso c) {
         Connection con = null;
-        int filas = 0;
         try {
             con = DBConnection.getInstance().getConnection();
             con.setAutoCommit(false);
             QueryRunner qr = new QueryRunner();
-            filas += qr.update(con, "DELETE FROM NOTAS WHERE ID_ASIGNATURA = ?", a.getidAsignaturas());
-            filas += qr.update(con, "DELETE FROM ASIGNATURAS WHERE ID = ?", a.getidAsignaturas());
-            
+            long id = qr.insert(con,
+                    "INSERT INTO Cursos (Nombre) VALUES(?)",
+                    new ScalarHandler<Long>(), c.getNombre());
+           
+            c.setIdCursos(id);
             con.commit();
-
         } catch (Exception ex) {
             Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
-            try {
-                if (con!=null)
-                    con.rollback();
-            } catch (SQLException ex1) {
-                Logger.getLogger(AlumnosDAO.class.getName()).log(Level.SEVERE, null, ex1);
-            }
+            c = null;
         } finally {
             DBConnection.getInstance().cerrarConexion(con);
         }
-        return filas;
+        return c;
     }
 }

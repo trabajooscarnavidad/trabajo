@@ -8,6 +8,7 @@ package servicios;
 import dao.AsignaturasDAO;
 import model.Asignatura;
 import java.util.List;
+import model.Curso;
 
 /**
  *
@@ -19,24 +20,21 @@ public class AsignaturasServicios {
         AsignaturasDAO dao = new AsignaturasDAO();
         return dao.getAllAsignaturas();
     }
+    
+    public List<Curso> getAllcursos() {
+        AsignaturasDAO dao = new AsignaturasDAO();
+        return dao.getAllCursos();
+    }
 
     public Asignatura addAsignatura(Asignatura a) {
         AsignaturasDAO dao = new AsignaturasDAO();
         return dao.addAsignatura(a);
     }
-
-    public int updateAsignatura(Asignatura a) {
-        AsignaturasDAO dao = new AsignaturasDAO();
-        return dao.updateAsignatura(a);
-    }
-
-    public int delAsignatura(Asignatura a) {
-        AsignaturasDAO dao = new AsignaturasDAO();
-        return dao.delAsignatura(a);
-    }
     
-    public int delAsignatura2(Asignatura a){
+    public Curso addCurso(Curso c) {
         AsignaturasDAO dao = new AsignaturasDAO();
-        return dao.delAsignatura2(a);
+        return dao.addCurso(c);
     }
+
+    
 }

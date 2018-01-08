@@ -11,30 +11,37 @@ package model;
  */
 public class Curso {
     
-    private long id;
+    private long idCursos;
     private String nombre;
 
     public Curso() {
     }
 
-    public Curso(long id, String nombre) {
-        this.id = id;
+    public Curso(long idCursos, String nombre)
+    {
+        this.idCursos = idCursos;
         this.nombre = nombre;
     }
 
-    public long getId() {
-        return id;
+    public long getIdCursos()
+    {
+        return idCursos;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setIdCursos(long idCursos)
+    {
+        this.idCursos = idCursos;
     }
 
-    public String getNombre() {
+    public String getNombre()
+    {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
+    public void setNombre(String nombre)
+    {
         this.nombre = nombre;
     }
+
+    
 }

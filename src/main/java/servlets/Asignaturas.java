@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Asignatura;
+import model.Curso;
 import servicios.AsignaturasServicios;
 
 /**
@@ -38,33 +39,24 @@ public class Asignaturas extends HttpServlet {
 
         if (op != null) {
             Asignatura a = new Asignatura();
+            Curso c = new Curso();
             a.setNombre(request.getParameter("nombre"));
+            c.setNombre(request.getParameter("nombre1"));
             int filas = 0;
             boolean errorBorrar = false;
 
             switch (op) {
-                case "actualizar":
-                    a.setidAsignaturas(Long.parseLong(request.getParameter("idasignatura")));
-                    filas = as.updateAsignatura(a);
-                    break;
                 case "insertar":
                     a = as.addAsignatura(a);
                     if (a != null) {
                         filas = 1;
                     }
                     break;
-                case "borrar":
-                    a.setidAsignaturas(Long.parseLong(request.getParameter("idasignatura")));
-                    filas = as.delAsignatura(a);
-                    if (filas == -1) {
-                        request.setAttribute("errorBorrar", "Si borras esta asignatura se borrarán todas las notas asociadas a ella.");
-                        request.setAttribute("idAsignatura", a.getidAsignaturas());
-                        errorBorrar = true;
+                case "insertar1":
+                    c = as.addCurso(c);
+                    if (c != null) {
+                        filas = 1;
                     }
-                    break;
-                case "borrar2":
-                    a.setidAsignaturas(Long.parseLong(request.getParameter("idasignatura")));
-                    filas = as.delAsignatura2(a);
                     break;
             }
             if (errorBorrar == false) {
@@ -77,6 +69,7 @@ public class Asignaturas extends HttpServlet {
         }
         // getAll siempre se hace
         request.setAttribute("asignaturas", as.getAllAsignaturas());
+        request.setAttribute("cursos", as.getAllcursos());
         request.getRequestDispatcher("/pintarListaAsignaturas.jsp").forward(request, response);
     }
 

@@ -16,21 +16,20 @@
         <link rel="stylesheet" href="/assets/css/style.css">
         <title>JSP Page</title>
         <script>
-            function cargarAsignatura(id, nombre, ciclo, curso) {
-                document.getElementById("idasignatura").value = id;
+            function cargarAsignatura(nombre) {
                 document.getElementById("nombre").value = nombre;
-                document.getElementById("actualizar").disabled = false;
-                document.getElementById("borrar").disabled = false;
                 document.getElementById("insertar").disabled = true;
-            }
-            function accionActualizar() {
-                document.getElementById("accion").value = "actualizar";
             }
             function accionInsertar() {
                 document.getElementById("accion").value = "insertar";
             }
-            function accionBorrar() {
-                document.getElementById("accion").value = "borrar";
+            
+            function cargarCurso1(nombre1) {
+                document.getElementById("nombre1").value = nombre1;
+                document.getElementById("insertar1").disabled = true;
+            }
+            function accionInsertar1() {
+                document.getElementById("accion").value = "insertar1";
             }
         </script>
     </head>
@@ -53,42 +52,50 @@
             </div>
         </nav>
         <div class="container">
-            <div class="col-xs-8 col-xs-offset-2">
+            <div class="col-xs-6 col-xs-offset-2" style="margin: 0%">
                 <h1>Asignaturas</h1>
                 <form name="formulario" action="asignaturas">
-                    <input type="hidden" id="idasignatura" name="idasignatura">
                     <input type="text" id="nombre" name="nombre">
                     <input type="hidden" id="accion" name="accion">
                     <br>
                     <br>
-                    <button id="actualizar" onclick="accionActualizar()" disabled>Actualizar</button>
                     <button id="insertar" onclick="accionInsertar()">Insertar</button>
-                    <button id="borrar" onclick="accionBorrar()" disabled>Borrar</button>
                 </form>
                 <h3><c:out value="${mensaje}"></c:out></h3>
                 <table class="table table-striped">
-                    <tr style="font-weight: bold">
-                        <td></td>
-                        <td>NOMBRE</td>
-                    </tr>
+                    
                     <c:forEach items="${asignaturas}" var="asignatura">
                         <tr>
-                            <td><input type="button" value="Cargar" style="width:100px" onclick="cargarAsignatura('${asignatura.idAsignaturas}','${fn:escapeXml(fn:replace(asignatura.nombre,"'", "\\'"))}')"></td>
                             <td>${asignatura.nombre}</td>
                         </tr>
                     </c:forEach>
                 </table>
             </div>
+            
+                
+                
+            <div class="col-xs-6 col-xs-offset-2" style="margin: 0%">
+                <h1>Cursos</h1>
+                <form name="formulario" action="asignaturas">
+                    <input type="hidden" id="accion" name="accion" value="insertar1">
+                    <input type="text" id="nombre1" name="nombre1">
+                    <br>
+                    <br>
+                    <input type="submit" valor="Insertar">
+                </form>
+                <h3><c:out value="${mensaje}"></c:out></h3>
+                <table class="table table-striped">
+                    <tr style="font-weight: bold">
+                        
+                    </tr>
+                    <c:forEach items="${cursos}" var="curso">
+                        <tr>
+                            <td>${curso.nombre}</td>
+                            <td><button onclick="ver_asignaturas($curso.idCursos)" ></button></td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </div>
         </div>
-        <c:if test="${errorBorrar != null}">
-            <script>
-                var borrarnotas = confirm("${errorBorrar}" + "\n¿Quieres continuar?");
-                if (borrarnotas == true) {
-                    document.getElementById("accion").value = "borrar2";
-                    document.getElementById("idasignatura").value = "${idAsignatura}";
-                    document.formulario.submit();
-                }
-            </script>
-        </c:if>
     </body>
 </html>
