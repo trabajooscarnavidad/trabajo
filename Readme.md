@@ -11,6 +11,10 @@ https://docs.google.com/document/d/1vCzjkSLwsF4la1jvXJ73z8lcYTGdAtVV50-AgChxx_s/
 
 https://docs.google.com/spreadsheets/d/1KIeOL_F3bY1XDLkNiF8gt4EKAjcgzBFPP0_AOEBkspA/edit?usp=sharing
 
+### Estructura de la pagina
+
+https://docs.google.com/document/d/15-jiqwUT6XV7EIJbCdZMs4aDlW9_lpkuLHUTIcQgmac/edit?usp=sharing
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
