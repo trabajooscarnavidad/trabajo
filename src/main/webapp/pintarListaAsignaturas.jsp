@@ -51,7 +51,6 @@
                         data:datos,
                         success:function(resp)
                         {
-                            alert(resp);
                            if (resp == 0)
                            {
                                var eleccion = confirm("Este curso y asignatura no están relacionados. quieres relacionarlos?");
@@ -63,6 +62,10 @@
                            else
                            {
                                var eleccion = confirm("Este curso y asignatura están relacionados. quieres quitar esta relacion?");
+                               if (eleccion == true)
+                               {
+                                   quitar_relacion(asignatura, curso);
+                               }
                            }
                         }
                 });
@@ -77,8 +80,51 @@
                         data:datos,
                         success:function(resp)
                         {
-                            alert("relacionar: "+resp);
+                            if (resp != 0)
+                            {
+                                alert("Se han relacionado las dos asignaturas");
+                            }
+                            else
+                            {
+                                alert("Ha habido un error, vete tú a saber que coño es");
+                            }
                            
+                        }
+                });
+            }
+            
+            function quitar_relacion(asignatura, curso)
+            {
+                var datos = "asignatura="+asignatura+"&curso="+curso+"&accion=quitar_relacion";
+                $.ajax({
+                        type:'get',
+                        url:'asignaturas',
+                        data:datos,
+                        success:function(resp)
+                        {
+                            if (resp != 0)
+                            {
+                                alert("Se ha eliminado la relacion entre estas dos asignaturas");
+                            }
+                            else
+                            {
+                                alert("Ha habido un error, vete tú a saber que coño es");
+                            }
+                           
+                        }
+                });
+            }
+            
+            function ver_asignaturas (id, nombre)
+            {
+                var datos = "id="+id+"&accion=ver_asignaturas";
+                $.ajax({
+                        type:'get',
+                        url:'asignaturas',
+                        data:datos,
+                        success:function(resp)
+                        {
+                           document.getElementById("espacio").innerHTML = "Las asignaturas de "+nombre+" son: "+resp;
                         }
                 });
             }
@@ -118,7 +164,7 @@
                     <c:forEach items="${asignaturas}" var="asignatura">
                         <tr>
                             <td>${asignatura.nombre}</td>
-                            <td><button onclick="ver_cursos(${asignatura.idAsignaturas})" >Ver cursos</button></td>
+                            <td><button onclick="ver_cursos(${asignatura.idAsignaturas}, '${asignatura.nombre}')" >Ver cursos</button></td>
                         </tr>
                     </c:forEach>
                 </table>
@@ -143,7 +189,7 @@
                     <c:forEach items="${cursos}" var="curso">
                         <tr>
                             <td>${curso.nombre}</td>
-                            <td><button onclick="ver_asignaturas(${curso.idCursos})" >Ver asignaturas</button></td>
+                            <td><button onclick="ver_asignaturas(${curso.idCursos}, '${curso.nombre}')" >Ver asignaturas</button></td>
                         </tr>
                     </c:forEach>
                 </table>
@@ -151,7 +197,7 @@
                 
             <hr>
                 
-            <div class="col-xs-12 col-xs-offset-2" style="margin: 0%">
+            <div class="col-xs-12 col-xs-offset-2" style="margin: 3%">
                 <select id="select_asignaturas">
                     <c:forEach items="${asignaturas}" var="asignatura">
                         <option value="${asignatura.idAsignaturas}">${asignatura.nombre}</option>
@@ -163,6 +209,9 @@
                     </c:forEach>
                 </select>
                 <button onclick="comprobar_union()">Comprobar</button>
+            </div>
+            
+            <div id="espacio" class="col-xs-12 col-xs-offset-2" style="margin: 3%">
             </div>
         </div>
     </body>

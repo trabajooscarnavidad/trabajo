@@ -48,4 +48,24 @@ public class AsignaturasServicios {
         return dao.relacionar(s);
     }
     
+    public int quitar_relacion(Asignatura_curso y)
+    {
+        AsignaturasDAO dao = new AsignaturasDAO();
+        return dao.quitar_relacion(y);
+    }
+    
+    public String ver_asignaturas(int curso)
+    {
+        AsignaturasDAO dao = new AsignaturasDAO();
+        String asignaturas = "";
+        List<Asignatura> lista = dao.ver_asignaturas(curso);
+        
+        for(int x=0; x<lista.size(); x++) 
+        {
+            asignaturas += lista.get(x).getNombre()+", ";
+        }
+        return asignaturas;
+    }
+    
+    
 }

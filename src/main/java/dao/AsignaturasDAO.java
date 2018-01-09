@@ -41,6 +41,23 @@ public class AsignaturasDAO {
         return lista;
     }
     
+    public List<Asignatura> ver_asignaturas(int curso) {
+        List<Asignatura> lista = null;
+        Connection con = null;
+        try {
+            con = DBConnection.getInstance().getConnection();
+            QueryRunner qr = new QueryRunner();
+            ResultSetHandler<List<Asignatura>> h = new BeanListHandler<>(Asignatura.class);
+            lista = qr.query(con, "select a.Nombre from Asignaturas a join Asignaturas_has_Cursos m on a.idAsignaturas = m.Asignaturas_idAsignaturas join Cursos c on m.Cursos_idCursos = c.idCursos where c.idCursos = ?",curso , h);
+               
+        } catch (Exception ex) {
+            Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBConnection.getInstance().cerrarConexion(con);
+        }
+        return lista;
+    }
+    
     public List<Curso> getAllCursos() {
         List<Curso> lista = null;
         Connection con = null;
@@ -108,12 +125,27 @@ public class AsignaturasDAO {
             con = DBConnection.getInstance().getConnection();
             con.setAutoCommit(false);
             QueryRunner qr = new QueryRunner();
-            resultado = qr.insert(con,
-                    "insert into Asignaturas_has_Cursos values (?, ?)",
-                    new ScalarHandler<Long>(), s.getAsignaturas_idAsignaturas(), s.getCursos_idCursos());
-           
-            
-            con.commit();
+            resultado = qr.update(con,
+                    "insert into Asignaturas_has_Cursos values (?, ?)", s.getAsignaturas_idAsignaturas(), s.getCursos_idCursos());
+           con.commit();
+        } catch (Exception ex) {
+            Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBConnection.getInstance().cerrarConexion(con);
+        }
+        return (int) resultado;
+    }
+    
+    public int quitar_relacion(Asignatura_curso y) {
+        Connection con = null;
+        long resultado = 0;
+        try {
+            con = DBConnection.getInstance().getConnection();
+            con.setAutoCommit(false);
+            QueryRunner qr = new QueryRunner();
+            resultado = qr.update(con,
+                    "delete from Asignaturas_has_Cursos where Asignaturas_idAsignaturas=? and Cursos_idCursos=?", y.getAsignaturas_idAsignaturas(), y.getCursos_idCursos());
+           con.commit();
         } catch (Exception ex) {
             Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

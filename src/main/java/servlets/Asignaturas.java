@@ -88,6 +88,19 @@ public class Asignaturas extends HttpServlet {
                     
                     response.getWriter().print(as.relacionar(s));
                     break;
+                    
+                case "quitar_relacion":
+                    Asignatura_curso y = new Asignatura_curso();
+                    y.setAsignaturas_idAsignaturas(Integer.parseInt(request.getParameter("asignatura")));
+                    y.setCursos_idCursos(Integer.parseInt(request.getParameter("curso")));
+                    
+                    response.getWriter().print(as.quitar_relacion(y));
+                    break;
+                    
+                case "ver_asignaturas":
+                    int curso = Integer.parseInt(request.getParameter("id"));
+                    response.getWriter().print(as.ver_asignaturas(curso));
+                    break;
             }
         }
 

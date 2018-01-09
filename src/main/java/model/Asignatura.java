@@ -21,6 +21,10 @@ public class Asignatura {
         this.idAsignaturas = id;
         this.nombre = nombre;
     }
+
+    public Asignatura(String nombre) {
+        this.nombre = nombre;
+    }
     
     
     

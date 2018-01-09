@@ -14,6 +14,8 @@ public class Asignatura_curso
     private long Asignaturas_idAsignaturas;
     private long Cursos_idCursos;
 
+    
+    
     public long getAsignaturas_idAsignaturas()
     {
         return Asignaturas_idAsignaturas;
