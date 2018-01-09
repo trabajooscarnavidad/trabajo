@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Asignatura;
+import model.Asignatura_curso;
 import model.Curso;
 import servicios.AsignaturasServicios;
 
@@ -36,42 +37,60 @@ public class Asignaturas extends HttpServlet {
 
         AsignaturasServicios as = new AsignaturasServicios();
         String op = request.getParameter("accion");
-
-        if (op != null) {
-            Asignatura a = new Asignatura();
-            Curso c = new Curso();
+        Asignatura a = new Asignatura();
+        Curso c = new Curso();
             a.setNombre(request.getParameter("nombre"));
             c.setNombre(request.getParameter("nombre1"));
-            int filas = 0;
-            boolean errorBorrar = false;
-
+        int filas = 0;
+        
+        if (op == null) 
+        {
+            op = "inicio";
+        }
             switch (op) {
+                case "inicio":
+                    request.setAttribute("asignaturas", as.getAllAsignaturas());
+                    request.setAttribute("cursos", as.getAllcursos());
+                    request.getRequestDispatcher("/pintarListaAsignaturas.jsp").forward(request, response);
+                    break;
                 case "insertar":
                     a = as.addAsignatura(a);
                     if (a != null) {
                         filas = 1;
                     }
+                    request.setAttribute("asignaturas", as.getAllAsignaturas());
+                    request.setAttribute("cursos", as.getAllcursos());
+                    request.getRequestDispatcher("/pintarListaAsignaturas.jsp").forward(request, response);
+                    
                     break;
                 case "insertar1":
                     c = as.addCurso(c);
                     if (c != null) {
                         filas = 1;
                     }
+                    request.setAttribute("asignaturas", as.getAllAsignaturas());
+                    request.setAttribute("cursos", as.getAllcursos());
+                    request.getRequestDispatcher("/pintarListaAsignaturas.jsp").forward(request, response);
+                    
+                    break;
+                case "comprobar_union":
+                    Asignatura_curso r = new Asignatura_curso();
+                    r.setAsignaturas_idAsignaturas(Integer.parseInt(request.getParameter("asignatura")));
+                    r.setCursos_idCursos(Integer.parseInt(request.getParameter("curso")));
+                    
+                    response.getWriter().print(as.comprobar_union(r));
+                    break;
+                    
+                case "relacionar":
+                    Asignatura_curso s = new Asignatura_curso();
+                    s.setAsignaturas_idAsignaturas(Integer.parseInt(request.getParameter("asignatura")));
+                    s.setCursos_idCursos(Integer.parseInt(request.getParameter("curso")));
+                    
+                    response.getWriter().print(as.relacionar(s));
                     break;
             }
-            if (errorBorrar == false) {
-                if (filas != 0) {
-                    request.setAttribute("mensaje", filas + " filas modificadas correctamente");
-                } else {
-                    request.setAttribute("mensaje", "No se han hecho modificaciones");
-                }
-            }
         }
-        // getAll siempre se hace
-        request.setAttribute("asignaturas", as.getAllAsignaturas());
-        request.setAttribute("cursos", as.getAllcursos());
-        request.getRequestDispatcher("/pintarListaAsignaturas.jsp").forward(request, response);
-    }
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

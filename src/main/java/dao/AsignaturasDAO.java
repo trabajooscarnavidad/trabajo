@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Asignatura;
+import model.Asignatura_curso;
 import model.Curso;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
@@ -31,7 +32,7 @@ public class AsignaturasDAO {
             QueryRunner qr = new QueryRunner();
             ResultSetHandler<List<Asignatura>> h = new BeanListHandler<Asignatura>(Asignatura.class);
             lista = qr.query(con, "select * FROM Asignaturas", h);
-
+               
         } catch (Exception ex) {
             Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -97,5 +98,54 @@ public class AsignaturasDAO {
             DBConnection.getInstance().cerrarConexion(con);
         }
         return c;
+    }
+    
+    
+    public int relacionar(Asignatura_curso s) {
+        Connection con = null;
+        long resultado = 0;
+        try {
+            con = DBConnection.getInstance().getConnection();
+            con.setAutoCommit(false);
+            QueryRunner qr = new QueryRunner();
+            resultado = qr.insert(con,
+                    "insert into Asignaturas_has_Cursos values (?, ?)",
+                    new ScalarHandler<Long>(), s.getAsignaturas_idAsignaturas(), s.getCursos_idCursos());
+           
+            
+            con.commit();
+        } catch (Exception ex) {
+            Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBConnection.getInstance().cerrarConexion(con);
+        }
+        return (int) resultado;
+    }
+    
+    public int comprobar_union(Asignatura_curso r)
+    {
+        long resultado = 0;
+        
+        List<Asignatura_curso> lista = null;
+        Connection con = null;
+        try {
+            con = DBConnection.getInstance().getConnection();
+            QueryRunner qr = new QueryRunner();
+            ResultSetHandler<List<Asignatura_curso>> h = new BeanListHandler<>(Asignatura_curso.class);
+            lista = qr.query(con, "select * from Asignaturas_has_Cursos where Asignaturas_idAsignaturas=? and Cursos_idCursos=?", h, r.getAsignaturas_idAsignaturas(), r.getCursos_idCursos());
+            
+            if (lista.size() > 0)
+                {
+                    resultado = 1;
+                }
+            
+            
+        } catch (Exception ex) {
+            Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBConnection.getInstance().cerrarConexion(con);
+        }
+        
+        return (int) resultado;
     }
 }

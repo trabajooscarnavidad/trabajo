@@ -8,6 +8,7 @@ package servicios;
 import dao.AsignaturasDAO;
 import model.Asignatura;
 import java.util.List;
+import model.Asignatura_curso;
 import model.Curso;
 
 /**
@@ -35,6 +36,16 @@ public class AsignaturasServicios {
         AsignaturasDAO dao = new AsignaturasDAO();
         return dao.addCurso(c);
     }
-
+    
+    public int comprobar_union(Asignatura_curso r)
+    {
+        AsignaturasDAO dao = new AsignaturasDAO();
+        return dao.comprobar_union(r);
+    }
+    public int relacionar(Asignatura_curso s)
+    {
+        AsignaturasDAO dao = new AsignaturasDAO();
+        return dao.relacionar(s);
+    }
     
 }
