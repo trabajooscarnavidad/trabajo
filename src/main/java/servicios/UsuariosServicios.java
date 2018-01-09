@@ -20,41 +20,50 @@ import java.util.logging.Logger;
 import model.Usuario;
 import utils.PasswordHash;
 
-public class UsuariosServicios {
+public class UsuariosServicios
+{
 
     UsuariosDAO dao = new UsuariosDAO();
 
-    public boolean loginUsuario(String nombre, String password) {
+    public boolean loginUsuario(String nombre, String password)
+    {
 
         boolean exito = false;
-        try {
+        try
+        {
             Usuario obj_user = new Usuario();
             obj_user.setUsuario(nombre);
             Usuario obj_user_db = dao.comprobarDatosUsuarioDB(obj_user);
-            if (obj_user_db != null) {
+            if (obj_user_db != null)
+            {
                 exito = PasswordHash.getInstance().validatePassword(password, obj_user_db.getPass());
             }
-        } catch (NoSuchAlgorithmException ex) {
+        } catch (NoSuchAlgorithmException ex)
+        {
             Logger.getLogger(PasswordHash.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InvalidKeySpecException ex) {
+        } catch (InvalidKeySpecException ex)
+        {
             Logger.getLogger(PasswordHash.class.getName()).log(Level.SEVERE, null, ex);
         }
         return exito;
     }
 
-    public boolean comprobarActivado(String nombre) {
+    public boolean comprobarActivado(String nombre)
+    {
         boolean exito = false;
         Usuario obj_user = new Usuario();
         obj_user.setUsuario(nombre);
         Usuario obj_user_db = dao.comprobarDatosUsuarioDB(obj_user);
-        if (obj_user_db != null) {
+        if (obj_user_db != null)
+        {
             exito = obj_user_db.isActivo();
         }
 
         return exito;
     }
 
-    public boolean crearUsuario(String nombre, String password, String email) {
+    public boolean crearUsuario(String nombre, String password, String email)
+    {
         boolean exito = false;
         Usuario obj_user = new Usuario();
         obj_user.setUsuario(nombre);
@@ -62,7 +71,8 @@ public class UsuariosServicios {
         obj_user.setEmail(email);
         preparacionUser(obj_user); //añadir fecha, hashear contraseña...
         boolean existe = dao.comprobarUser(obj_user); //comprobar si usuario ya existe
-        if (existe == false) {
+        if (existe == false)
+        {
             exito = dao.insertarRegistro(obj_user);
             mandarMail(obj_user);
         }
@@ -71,7 +81,8 @@ public class UsuariosServicios {
 
     }
 
-    public boolean activarUsuario(String nombre, String codigo) {
+    public boolean activarUsuario(String nombre, String codigo)
+    {
         boolean exito = false;
         Usuario obj_user = new Usuario();
         obj_user.setUsuario(nombre);
@@ -81,38 +92,101 @@ public class UsuariosServicios {
         LocalDateTime ldt = LocalDateTime.now();
         LocalDateTime ldt2 = obj_user_db.getFecha();
         long minutospasados = Duration.between(ldt, ldt2).toMinutes();
-        if (minutosyml < minutospasados) {
+        if (minutosyml < minutospasados)
+        {
             exito = dao.activarRegistro(obj_user);
         }
 
         return exito;
     }
 
-    public void mandarMail(Usuario registro) {
+    public void mandarMail(Usuario registro)
+    {
         MandarMail mail = new MandarMail();
-        mail.mandarMail(registro.getEmail(), "tu codigo de activacion es "+ registro.getCodigo()+ " activalo en  http://127.0.0.1:8080/login?op=activar&usuario=" + registro.getUsuario() + "&codigo=" + registro.getCodigo(), "Codigo de activacion");
+        mail.mandarMail(registro.getEmail(), "tu codigo de activacion es "
+                + registro.getCodigo() + " activalo en  http://127.0.0.1:8080/login?op=activar&usuario="
+                + registro.getUsuario() + "&codigo=" + registro.getCodigo(), "Codigo de activacion");
 
     }
 
-    public Usuario preparacionUser(Usuario registro) {
-        try {
+    public Usuario preparacionUser(Usuario registro)
+    {
+        try
+        {
             LocalDateTime ldt = LocalDateTime.now();
             registro.setFecha(ldt);
             String hash = PasswordHash.getInstance().createHash(registro.getPass());
             registro.setPass(hash);
             generarcodigoActivacion(registro);
 
-        } catch (Exception ex) {
+        } catch (Exception ex)
+        {
             Logger.getLogger(UsuariosServicios.class.getName()).log(Level.SEVERE, null, ex);
         }
         return registro;
     }
 
-    public Usuario generarcodigoActivacion(Usuario registro) {
+    public Usuario generarcodigoActivacion(Usuario registro)
+    {
 
         String codigo = UUID.randomUUID().toString();
         registro.setCodigo(codigo);
 
         return registro;
     }
+
+    public boolean recuperarPass(String nombre, String email)
+    {
+        boolean exito = false;
+        Usuario obj_user = new Usuario();
+        obj_user.setUsuario(nombre);
+        obj_user.setEmail(email);
+        boolean existe = false;
+        existe = dao.comprobarUser(obj_user);
+        obj_user = dao.comprobarDatosUsuarioDB(obj_user);
+        if (existe == true)
+        {
+            MandarMail mail = new MandarMail();
+            mail.mandarMail(obj_user.getEmail(), "tu contraseña es :" + obj_user.getPass(), "Recuperacion de contraseña");
+            exito = true;
+        } else
+        {
+            exito = false;
+        }
+        return exito;
+
+    }
+
+    public boolean cambiarPass(String pass, String passNueva)
+    {
+        boolean exito = false;
+        try
+        {
+
+            Usuario obj_user = new Usuario();
+            obj_user.setPass(pass);
+            String hash = PasswordHash.getInstance().createHash(obj_user.getPass());
+            obj_user.setPass(hash);
+            boolean igual = false;
+            igual = dao.comprobarDatosUsuarioByPassDB(obj_user);
+            if (igual == true)
+            {
+                int update = 0;
+                update = dao.updatePass(obj_user, passNueva);
+                if(update>0)
+                {
+                   exito = true; 
+                }else
+                {
+                exito = false;
+                }
+            }
+
+        } catch (Exception ex)
+        {
+            Logger.getLogger(UsuariosServicios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return exito;
+    }
+
 }

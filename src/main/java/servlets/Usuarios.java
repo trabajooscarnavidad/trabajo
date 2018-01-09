@@ -38,6 +38,7 @@ public class Usuarios extends HttpServlet {
         String msg = "";
         String nombre = request.getParameter(Constantes.NOMBRE_LOGIN);
         String password = request.getParameter(Constantes.PASSWORD_LOGIN);
+         String newPassword = request.getParameter("nuevaPass");
         String email = request.getParameter(Constantes.EMAIL_LOGIN);
         String op = request.getParameter(Constantes.OPCION_SWITCH);
 /*
@@ -79,6 +80,26 @@ public class Usuarios extends HttpServlet {
             case "desloguear":
                 request.getSession().setAttribute("LOGIN", null);
                 break;
+            case "recuperarPass":
+                boolean exito;
+               exito = ls.recuperarPass(nombre,email);
+                if(exito==true)
+                {
+                 request.setAttribute("mensaje", "Se ha enviado un correo para recuperar tu contraseña");
+                }else
+                {
+                    request.setAttribute("mensaje", "El usuario no existe!");
+                }
+            case"updatePass":
+                boolean updated;
+                updated = ls.cambiarPass(password, newPassword);
+                if(updated==true)
+                {
+                 request.setAttribute("mensaje", "Se ha cambiado tu contraseña");
+                }else
+                {
+                    request.setAttribute("mensaje", "La contraseña introducida no es correcta");
+                }
             default:
                 break;
         }

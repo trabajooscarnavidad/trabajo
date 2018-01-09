@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import servicios.PermisosServicios;
+import servicios.UserServicios;
 import utils.Constantes;
 
 /**
@@ -48,6 +49,7 @@ public class Permisos extends HttpServlet {
         String[] permisos = request.getParameterValues("tablapermisos");
        String op = request.getParameter(Constantes.OPCION_SWITCH);
         PermisosServicios ps = new PermisosServicios();
+        UserServicios us = new UserServicios();
                 if (op == null) {
             op = "salir";
         }
@@ -94,11 +96,10 @@ public class Permisos extends HttpServlet {
             
             root.put("content","hola");
             
-            // List<Permisos> permisos = new ArrayList();
-            // permisos.add(ps.getAlumnoById(1));
-             root.put("permisos",ps.getAllPermisos());
-              root.put("usuarios",ps.getAllUsuarios());
-              root.put("usuariosalt",ps.getAllUsuariosSinAlta());
+
+             root.put("permisos",ps.getAllPermisos()); 
+               root.put("usuarios",us.getAllUsuarios());
+              root.put("usuariosalt",us.getAllUsuariosSinAlta());
              Template temp = Configuration.getInstance().getFreeMarker().getTemplate("permisos.ftl");
             temp.process(root, response.getWriter());
         } catch (TemplateException ex) {

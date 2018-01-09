@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Permiso;
-import model.Usuario;
+import model.User;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -33,25 +33,8 @@ public class PermisosDAO {
         return permisos;
     }
       
-                public List<Usuario> getAllUsuariosJDBCTemplate() {
-     
-        JdbcTemplate jtm = new JdbcTemplate(
-          DBConnection.getInstance().getDataSource());
-        List<Usuario> usuarios = jtm.query("Select * from Usuarios",
-          new BeanPropertyRowMapper(Usuario.class));
-        
-        
-        return usuarios;
-    }
-                                public List<Usuario> getAllUsuariosSinAltaJDBCTemplate() {
-     
-        JdbcTemplate jtm = new JdbcTemplate(
-          DBConnection.getInstance().getDataSource());
-        List<Usuario> usuarios = jtm.query("SELECT idUsuarios, Usuario FROM qyw391.Usuarios left JOIN qyw391.Usuarios_has_Permisos ON Usuarios.idUsuarios = Usuarios_has_Permisos.Usuarios_idUsuarios where Usuarios_has_Permisos.Permisos_idPermisos is null",
-          new BeanPropertyRowMapper(Usuario.class));
 
-        return usuarios;
-    }
+                        
                 
                 
 public void asociarPermisosJDBCTemplate(final List<Permiso> records ) {
@@ -105,16 +88,5 @@ try {
         System.out.println("history already exist");
     }
 }
-    public Usuario comprobarDatosUsuarioDB(Usuario obj_user){
-            Usuario obj_db_user;
-        try {
-            JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
-            obj_db_user =(Usuario) jtm.queryForObject("SELECT * FROM Usuarios WHERE idUsuario = ?", new Object[]{obj_user.getIdUsuarios()}, new BeanPropertyRowMapper(Usuario.class));
-        } catch (Exception ex) {
-            Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, ex);
-            obj_db_user = null;
-        }
-        return obj_db_user;
-    }
 
 }

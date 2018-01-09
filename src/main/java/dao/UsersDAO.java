@@ -5,6 +5,7 @@
  */
 package dao;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.User;
@@ -98,4 +99,38 @@ public class UsersDAO {
         }
         return u;
     }
+    
+                    public List<User> getAllUsuariosJDBCTemplate() {
+     
+        JdbcTemplate jtm = new JdbcTemplate(
+          DBConnection.getInstance().getDataSource());
+        List<User> usuarios = jtm.query("Select * from Usuarios",
+          new BeanPropertyRowMapper(User.class));
+        
+        
+        return usuarios;
+    }
+                    
+                 public List<User> getAllUsuariosSinAltaJDBCTemplate() {
+     
+        JdbcTemplate jtm = new JdbcTemplate(
+          DBConnection.getInstance().getDataSource());
+        List<User> usuarios = jtm.query("SELECT idUsuarios, Usuario FROM qyw391.Usuarios left JOIN qyw391.Usuarios_has_Permisos ON Usuarios.idUsuarios = Usuarios_has_Permisos.Usuarios_idUsuarios where Usuarios_has_Permisos.Permisos_idPermisos is null",
+          new BeanPropertyRowMapper(User.class));
+
+        return usuarios;
+    }           
+                 
+                     public User comprobarDatosUsuarioDB(User obj_user){
+            User obj_db_user;
+        try {
+            JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
+            obj_db_user =(User) jtm.queryForObject("SELECT * FROM Usuarios WHERE idUsuario = ?", new Object[]{obj_user.getIdUsuarios()}, new BeanPropertyRowMapper(User.class));
+        } catch (Exception ex) {
+            Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, ex);
+            obj_db_user = null;
+        }
+        return obj_db_user;
+    }
+
 }

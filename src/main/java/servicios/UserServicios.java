@@ -10,6 +10,7 @@ import dao.UsersDAO;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.User;
@@ -98,4 +99,20 @@ public class UserServicios {
         return activar;
     }
 
+                public List<User> getAllUsuarios()
+    {
+        UsersDAO dao = new UsersDAO();
+        
+        return dao.getAllUsuariosJDBCTemplate();
+    }
+    
+       public List<User> getAllUsuariosSinAlta()
+    {
+        UsersDAO dao = new UsersDAO();
+        
+        return dao.getAllUsuariosSinAltaJDBCTemplate();
+    }
+                
+                
+                
 }
