@@ -23,13 +23,14 @@ public class User {
     public User() {
     }
 
-    public Long getId() {
+    public long getIdUsuarios() {
         return idUsuarios;
     }
 
-    public void setId(Long id) {
-        this.idUsuarios = id;
+    public void setIdUsuarios(long idUsuarios) {
+        this.idUsuarios = idUsuarios;
     }
+
 
     public String getUsuario() {
         return Usuario;
