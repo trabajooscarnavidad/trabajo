@@ -67,5 +67,18 @@ public class AsignaturasServicios {
         return asignaturas;
     }
     
+    public String ver_cursos(int asignatura)
+    {
+        AsignaturasDAO dao = new AsignaturasDAO();
+        String cursos = "";
+        List<Curso> lista = dao.ver_cursos(asignatura);
+        
+        for(int x=0; x<lista.size(); x++) 
+        {
+            cursos += lista.get(x).getNombre()+", ";
+        }
+        return cursos;
+    }
+    
     
 }

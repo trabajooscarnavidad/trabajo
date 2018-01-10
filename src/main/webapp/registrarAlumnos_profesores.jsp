@@ -13,17 +13,48 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Registro alumnos profesores</title>
+        <script src="js/jquery-3.2.1.js"></script>
+        <script>
+            function registrar_alumno()
+            {
+                var alumno_nombre = document.getElementById("alumno_nombre").value;
+                var alumno_pass = document.getElementById("alumno_pass").value;
+                var alumno_email = document.getElementById("alumno_email").value;
+                var alumno_fecha = document.getElementById("alumno_date").value;
+                var alumno_mayor;
+                
+                if (document.getElementById("alumno_mayor").checked == true)
+                {
+                    alumno_mayor = 1;
+                }
+                else
+                {
+                    alumno_mayor = 0;
+                }
+                
+                var datos = "alumno_nombre="+alumno_nombre+"&alumno_pass="+alumno_pass+"&alumno_email="+alumno_email+"&alumno_mayor="+alumno_mayor+"&alumno_date="+alumno_fecha+"&op=registrar_alumno";
+                alert(datos);
+                
+                $.ajax({
+                        type:'get',
+                        url:'alumnos_profesores',
+                        data:datos,
+                        success:function(resp)
+                        {
+                           document.getElementById("espacio").innerHTML=resp;
+                        }
+                });
+            }
+        </script>
     </head>
     <body>
-        <form action="alumnos_profesores" method="get">
-            <h2>Alumnos</h2>
-            Nombre: <input type="text" name="nombre"><br>
-            Email: <input type="text" name="email"><br>
-            Fecha nacimiento: <input type="date" name="fecha"><br>
-            Mayor: <input type="select" name="mayor"><br>
-            <input type="submit" value="enviar">
-            <input type="hidden" name="op" value="registrar_alumno">
-        </form>
+        <h2>Alumnos</h2>
+        Nombre: <input type="text" id="alumno_nombre"><br>
+        Contraseña <input type="password" id="alumno_pass"><br>
+        Email: <input type="text" id="alumno_email"><br>
+        Fecha nacimiento: <input type="date" id="alumno_date"><br>
+        Mayor: <input type="checkbox" id="alumno_mayor"><br>
+        <button onclick="registrar_alumno()" >Registrar</button>
         
         <form action="alumnos_profesores" method="get">
             <h2>Profesores</h2>
@@ -56,6 +87,7 @@
                 </tr>
             </c:forEach>
         </table>
-        
+        <br>
+        <div id="espacio"></div>
     </body>
 </html>

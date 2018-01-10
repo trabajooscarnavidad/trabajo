@@ -128,6 +128,20 @@
                         }
                 });
             }
+            
+            function ver_cursos (id, nombre)
+            {
+                var datos = "id="+id+"&accion=ver_cursos";
+                $.ajax({
+                        type:'get',
+                        url:'asignaturas',
+                        data:datos,
+                        success:function(resp)
+                        {
+                           document.getElementById("espacio").innerHTML = "Los cursos de "+nombre+" son: "+resp;
+                        }
+                });
+            }
         </script>
     </head>
     <body>

@@ -9,6 +9,7 @@ import dao.Alumnos_profesoresDAO;
 import java.util.List;
 import model.Alumno;
 import model.Profesor;
+import model.User;
 
 /**
  *
@@ -23,5 +24,20 @@ public class Alumnos_profesoresServicios
     public List<Profesor> listarProfesores() {
         Alumnos_profesoresDAO dao = new Alumnos_profesoresDAO();
         return dao.listarProfesores();
+    }
+    
+    public long getIdUsuario(String usuario)
+    {
+        Alumnos_profesoresDAO dao = new Alumnos_profesoresDAO();
+        List<User> lista = dao.getIdUsuario(usuario);
+        long id = lista.get(0).getIdUsuarios();
+        
+        return id;
+    }
+    
+    public int introducir_alumno(Alumno alumno)
+    {
+        Alumnos_profesoresDAO dao = new Alumnos_profesoresDAO();
+        return dao.introducir_alumno(alumno);
     }
 }

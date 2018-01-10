@@ -20,6 +20,12 @@ public class User {
     private LocalDateTime Fecha;
     private String email;
 
+    public User(long idUsuarios) {
+        this.idUsuarios = idUsuarios;
+    }
+
+    
+    
     public User() {
     }
 

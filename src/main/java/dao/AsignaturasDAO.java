@@ -58,6 +58,23 @@ public class AsignaturasDAO {
         return lista;
     }
     
+    public List<Curso> ver_cursos(int asignatura) {
+        List<Curso> lista = null;
+        Connection con = null;
+        try {
+            con = DBConnection.getInstance().getConnection();
+            QueryRunner qr = new QueryRunner();
+            ResultSetHandler<List<Curso>> h = new BeanListHandler<>(Curso.class);
+            lista = qr.query(con, "select c.Nombre from Asignaturas a join Asignaturas_has_Cursos m on a.idAsignaturas = m.Asignaturas_idAsignaturas join Cursos c on m.Cursos_idCursos = c.idCursos where a.idAsignaturas = ?",asignatura , h);
+               
+        } catch (Exception ex) {
+            Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBConnection.getInstance().cerrarConexion(con);
+        }
+        return lista;
+    }
+    
     public List<Curso> getAllCursos() {
         List<Curso> lista = null;
         Connection con = null;

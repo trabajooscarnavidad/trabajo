@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import model.Alumno;
 import model.Asignatura;
 import model.Profesor;
+import model.User;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -38,6 +39,22 @@ public class Alumnos_profesoresDAO
         }
         return lista;
     }
+    public List<User> getIdUsuario(String usuario) {
+        List<User> lista = null;
+        Connection con = null;
+        try {
+            con = DBConnection.getInstance().getConnection();
+            QueryRunner qr = new QueryRunner();
+            ResultSetHandler<List<User>> h = new BeanListHandler<>(User.class);
+            lista = qr.query(con, "select idUsuarios from Usuarios where Usuario = ?",usuario , h);
+               
+        } catch (Exception ex) {
+            Logger.getLogger(Alumnos_profesoresDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBConnection.getInstance().cerrarConexion(con);
+        }
+        return lista;
+    }
     
     public List<Profesor> listarProfesores() {
         List<Profesor> lista = null;
@@ -54,5 +71,23 @@ public class Alumnos_profesoresDAO
             DBConnection.getInstance().cerrarConexion(con);
         }
         return lista;
+    }
+    
+    public int introducir_alumno(Alumno alumno) {
+        Connection con = null;
+        long resultado = 0;
+        try {
+            con = DBConnection.getInstance().getConnection();
+            con.setAutoCommit(false);
+            QueryRunner qr = new QueryRunner();
+            resultado = qr.update(con,
+                    "insert into Alumnos (Usuarios_idUsuarios, Nombre, Fecha_nac, Mayor) values (?, ?, ?, ?)", alumno.getUsuarios_idUsuarios(), alumno.getNombre(), alumno.getFecha_nac(), alumno.getMayor());
+           con.commit();
+        } catch (Exception ex) {
+            Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBConnection.getInstance().cerrarConexion(con);
+        }
+        return (int) resultado;
     }
 }

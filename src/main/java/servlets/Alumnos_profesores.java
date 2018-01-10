@@ -12,7 +12,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Alumno;
+import model.User;
 import servicios.Alumnos_profesoresServicios;
+import servicios.UserServicios;
 
 /**
  *
@@ -52,6 +55,31 @@ public class Alumnos_profesores extends HttpServlet
                 request.setAttribute("alumnos", s.listarAlumnos());
                 request.setAttribute("profesores", s.listarProfesores());
                 request.getRequestDispatcher("/registrarAlumnos_profesores.jsp").forward(request, response);
+                
+                break;
+                
+            case "registrar_alumno":
+                User u = new User();
+                UserServicios us = new UserServicios();
+                Alumnos_profesoresServicios a = new Alumnos_profesoresServicios();
+                
+                u.setUsuario(request.getParameter("alumno_nombre"));
+                u.setPass(request.getParameter("alumno_pass"));
+                u.setEmail(request.getParameter("alumno_email"));
+                int mayor =  Integer.parseInt(request.getParameter("alumno_mayor"));
+                us.registrar_alumno(u);
+                
+                //Una vez creado el Usuario, se obtiene el idUsuario geerado por el autoincremental para
+                //Poder meterlo en la tabla 'Alumnos'.
+                int idUsuario = (int) a.getIdUsuario(request.getParameter("alumno_nombre"));
+                
+                Alumno alumno = new Alumno();
+                alumno.setUsuarios_idUsuarios(idUsuario);
+                alumno.setNombre(request.getParameter("alumno_nombre"));
+                alumno.setFecha_nac(request.getParameter("alumno_date"));
+                alumno.setMayor(mayor);
+                
+                int introducir_alumno = a.introducir_alumno(alumno);
                 
                 break;
         }

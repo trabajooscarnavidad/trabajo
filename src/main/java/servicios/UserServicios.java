@@ -39,7 +39,7 @@ public class UserServicios {
                 user = dao.registrar(user);
                 if (user != null) {
                     MailServicios mail = new MailServicios();
-                    mail.mandarMail(user.getEmail(), Constantes.LINK_EMAIL + user.getCodigo(), Constantes.ASUNTO_EMAIL);
+                    mail.mandarMail(user.getEmail(), "Activa tu cuenta aquí: <a href='"+Constantes.LINK_EMAIL + user.getCodigo()+"'>Activar</a>", Constantes.ASUNTO_EMAIL);
                     alta = 1;
                 }
 
@@ -51,6 +51,36 @@ public class UserServicios {
         }
         return alta;
     }
+    public int registrar_alumno(User user) {
+        UsersDAO dao = new UsersDAO();
+
+        boolean existe = this.comprobarNombres(user.getUsuario());
+
+        int alta = -1;
+        if (!existe) {
+            try {
+                String pass = user.getPass();
+                user.setPass(PasswordHash.getInstance().createHash(pass));
+                user.setCodigo(Utils.randomAlphaNumeric(Configuration.getInstance().getLongitudCodigo()));
+                LocalDateTime fechaActual = LocalDateTime.now();
+                user.setFecha(fechaActual);
+                user = dao.registrar(user);
+                if (user != null) {
+                    MailServicios mail = new MailServicios();
+                    mail.mandarMail(user.getEmail(), "Tu usuario es: "+user.getUsuario()+" y tu contraseña es: "+pass+". Activa tu cuenta aquí: <a href='"+Constantes.LINK_EMAIL + user.getCodigo()+"'>Activar</a>", Constantes.ASUNTO_EMAIL);
+                    alta = 1;
+                }
+
+            } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
+                Logger.getLogger(UserServicios.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            alta = 2;
+        }
+        return alta;
+    }
+    
+    
 
     public boolean comprobarNombres(String nombreUser) {
         UsersDAO dao = new UsersDAO();

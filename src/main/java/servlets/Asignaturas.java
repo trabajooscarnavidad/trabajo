@@ -101,6 +101,10 @@ public class Asignaturas extends HttpServlet {
                     int curso = Integer.parseInt(request.getParameter("id"));
                     response.getWriter().print(as.ver_asignaturas(curso));
                     break;
+                case "ver_cursos":
+                    int asignatura = Integer.parseInt(request.getParameter("id"));
+                    response.getWriter().print(as.ver_cursos(asignatura));
+                    break;
             }
         }
 

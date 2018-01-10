@@ -5,8 +5,6 @@
  */
 package model;
 
-import java.util.Date;
-
 /**
  *
  * @author Miguel Angel Diaz
@@ -16,8 +14,8 @@ public class Alumno {
     private long idAlumnos;
     private long Usuarios_idUsuarios;
     private String Nombre;
-    private Date Fecha_nac;
-    private Boolean Mayor;
+    private String Fecha_nac;
+    private int Mayor;
 
     public long getIdAlumnos()
     {
@@ -49,27 +47,19 @@ public class Alumno {
         this.Nombre = Nombre;
     }
 
-    public Date getFecha_nac()
-    {
+    public String getFecha_nac() {
         return Fecha_nac;
     }
 
-    public void setFecha_nac(Date Fecha_nac)
-    {
+    public void setFecha_nac(String Fecha_nac) {
         this.Fecha_nac = Fecha_nac;
     }
 
-    public Boolean getMayor()
-    {
+    public int getMayor() {
         return Mayor;
     }
 
-    public void setMayor(Boolean Mayor)
-    {
+    public void setMayor(int Mayor) {
         this.Mayor = Mayor;
     }
-
-    
-
-   
 }
