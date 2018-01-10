@@ -5,28 +5,24 @@
  */
 package model;
 
-import java.util.Date;
-
 /**
  *
- * @author Miguel Angel Diaz
+ * @author DAW
  */
-public class Alumno {
-    
-    private long idAlumnos;
+public class Profesor
+{
+    private long idProfesores;
     private long Usuarios_idUsuarios;
     private String Nombre;
-    private Date Fecha_nac;
-    private Boolean Mayor;
 
-    public long getIdAlumnos()
+    public long getIdProfesores()
     {
-        return idAlumnos;
+        return idProfesores;
     }
 
-    public void setIdAlumnos(long idAlumnos)
+    public void setIdProfesores(long idProfesores)
     {
-        this.idAlumnos = idAlumnos;
+        this.idProfesores = idProfesores;
     }
 
     public long getUsuarios_idUsuarios()
@@ -48,28 +44,6 @@ public class Alumno {
     {
         this.Nombre = Nombre;
     }
-
-    public Date getFecha_nac()
-    {
-        return Fecha_nac;
-    }
-
-    public void setFecha_nac(Date Fecha_nac)
-    {
-        this.Fecha_nac = Fecha_nac;
-    }
-
-    public Boolean getMayor()
-    {
-        return Mayor;
-    }
-
-    public void setMayor(Boolean Mayor)
-    {
-        this.Mayor = Mayor;
-    }
-
     
-
-   
+    
 }
