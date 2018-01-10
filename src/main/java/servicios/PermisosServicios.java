@@ -8,8 +8,10 @@ package servicios;
 import dao.PermisosDAO;
 import dao.UsersDAO;
 import dao.UsuariosDAO;
+import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 import java.util.List;
+import model.Asociaciones;
 import model.Permiso;
 import model.User;
 
@@ -29,44 +31,45 @@ public class PermisosServicios {
     
                 
 
-      public void asociarPermisos(String usuarios[], String permisos[])
+      public int [] asociarPermisos(String usuarios[], String permisos[])
     {
         PermisosDAO dao = new PermisosDAO();
         List listA = new ArrayList();
-
-
-        Permiso obj_permiso = new Permiso(); 
-        for (int i = 0; i < usuarios.length; i++) {
-             obj_permiso.setIdPermisos(Long.parseLong(usuarios[i]));
+      
+        for (int i = 0; i < usuarios.length; i++) {       
             for (int j = 0; j < permisos.length; j++) {
-                 obj_permiso.setValor(permisos[j]);
-                 listA.add(obj_permiso);
+            
+ Asociaciones obj_asociaciones = new Asociaciones(); 
+                 obj_asociaciones.setId1(parseInt(usuarios[i]));
+                 obj_asociaciones.setId2(parseInt(permisos[j]));
+                 listA.add(obj_asociaciones);
+
             }
         }
-dao.asociarPermisosJDBCTemplate(listA);
+return dao.asociarPermisosJDBCTemplate(listA);
        // return dao.asociarPermisosJDBCTemplate(listA);
     }
       
                       
-      public void quitarPermisos(String usuarios[], String permisos[])
+      public int [] quitarPermisos(String usuarios[], String permisos[])
     {
         PermisosDAO dao = new PermisosDAO();
         List listA = new ArrayList();
 
-
-        Permiso obj_permiso = new Permiso(); 
         for (int i = 0; i < usuarios.length; i++) {
-             obj_permiso.setIdPermisos(Long.parseLong(usuarios[i]));
             for (int j = 0; j < permisos.length; j++) {
-                 obj_permiso.setValor(permisos[j]);
-                 listA.add(obj_permiso);
+ Asociaciones obj_asociaciones = new Asociaciones(); 
+                 obj_asociaciones.setId1(parseInt(usuarios[i]));
+                 obj_asociaciones.setId2(parseInt(permisos[j]));
+                 listA.add(obj_asociaciones);
+
             }
         }
-dao.quitarPermisosJDBCTemplate(listA);
+return dao.quitarPermisosJDBCTemplate(listA);
        // return dao.asociarPermisosJDBCTemplate(listA);
     }
       
-         public void darDeAlta(String usuarios[], String permisos[])
+         public void darDeAlta(String usuarios[], String permisos[]) //sin terminar
     {
         PermisosDAO dao = new PermisosDAO();
         List listA = new ArrayList();

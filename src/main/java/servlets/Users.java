@@ -134,9 +134,44 @@ HashMap root = new HashMap();
 
                 case "logout": {
                     request.getSession().invalidate();
+                   
+                } break;
+                case "recuperarPass":
+                    String nombre = request.getParameter("nombreLogin");
+                     String email =request.getParameter("emailRegistro");
+                     
+                boolean exito;
+               exito = us.recuperarPass(nombre,email);
+                if(exito==true)
+                {
+                 request.setAttribute("mensaje", "Se ha enviado un correo para recuperar tu contraseña");
+                }else
+                {
+                    request.setAttribute("mensaje", "El usuario no existe!");
                 }
-            }
+                break;
+            case"updatePass":
+                 nombre = request.getParameter("nombreLogin");
+                String password = request.getParameter("passLogin");
+                String newPassword = request.getParameter("passNueva");
+                
+                boolean updated;
+                updated = us.cambiarPass(nombre, password, newPassword);
+                if(updated==true)
+                {
+                 request.setAttribute("mensaje", "Se ha cambiado tu contraseña");
+                }else
+                {
+                    request.setAttribute("mensaje", "La contraseña introducida no es correcta");
+                }
+                break;
+            default:
+                break;
         }
+            }
+        
+        
+        
         //request.getRequestDispatcher(Constantes.PINTAR_LOGIN).forward(request, response);
          
         response.setContentType("text/html;charset=UTF-8");

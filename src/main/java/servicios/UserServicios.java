@@ -112,7 +112,102 @@ public class UserServicios {
         
         return dao.getAllUsuariosSinAltaJDBCTemplate();
     }
-                
+           public boolean recuperarPass(String nombre, String email)
+    { UsersDAO dao = new UsersDAO();
+        boolean exito = false;
+        User obj_user = new User();
+        obj_user.setUsuario(nombre);
+        obj_user.setEmail(email);
+      
+         User obj_user_db = dao.getUserByNombre(obj_user.getUsuario()); //comprueba si existe el usuario en la db
+
+         if (obj_user_db != null) //aqui podrias ser mas severo y comprobar nombre y correo aportado por el usuario con el de la db
+            {
+            String  pass =  Utils.randomAlphaNumeric(6); //genera nueva contraseña
+ 
+            cambiarPass(obj_user_db.getUsuario(), pass); // 
+        MailServicios mail = new MailServicios();
+                    mail.mandarMailPassword(obj_user_db.getEmail(), pass, "Password"); // le envia la nueva contraseña por correo
+                    //otra forma tambien podria ser que le envie un correo antes confirmando si quiere cambiar la contraseña y luego cambiarla
+                    //en la pantalla de cambiar contraseña pero para no complicarme lo hice asi, lo puedes rehacer o cambiar
+            exito = true;
+        } else
+        {
+            exito = false;
+        }
+        return exito;
+
+    }
+
+    public boolean cambiarPass(String usuario, String passNueva) //esta funcion se utiliza desde /user en recuperar contraseña
+    {
+      
+        boolean exito = false;
+        try
+        {
+             UsersDAO dao = new UsersDAO();
+            User obj_user = new User();
+            obj_user.setUsuario(usuario);
+            String hash = PasswordHash.getInstance().createHash(passNueva);
+            obj_user.setPass(hash);
+            boolean igual = false;
+           User obj_user_db = dao.getUserByNombre(usuario);   //esta funcion la he cambiado para que coja los datos verificando el usuario
+            if (obj_user_db != null) 
+            {
+                int update = 0;
+                update = dao.updatePass(obj_user);
+                if(update>0)
+                {
+                   exito = true; 
+                }else
+                {
+                exito = false;
+                }
+            }
+
+        } catch (Exception ex)
+        {
+            Logger.getLogger(UsuariosServicios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return exito;
+    }        
+    
+        public boolean cambiarPass(String usuario, String passActual, String passNueva) //no se si permite sobrecarga si no cambiarle el nombre a la funcion
+//esta funcion se utiliza en una nueva pagina que deberia ser /cambiarpassword o algo asi yo haria un nuevo servlet pero usando el servicio y dao de users
+                //el usuario se podria cojer de la session o formulario
+    {
+      
+        boolean exito = false;
+        try
+        {
+             UsersDAO dao = new UsersDAO();
+            User obj_user = new User();
+            obj_user.setUsuario(usuario);
+            String hash = PasswordHash.getInstance().createHash(passNueva);
+            obj_user.setPass(hash);
+            boolean igual = false;
+           User obj_user_db = dao.getUserByNombre(usuario); 
+            if (obj_user_db != null) //comprueba que existe el usuario
+            {
+                if (PasswordHash.getInstance().validatePassword(passActual, obj_user_db.getPass())){ //comprueba la pwd actual en la db con la que introducio el usuario si es la misma continua
+                int update = 0;
+                update = dao.updatePass(obj_user);
+                if(update>0)
+                {
+                   exito = true; 
+                }else
+                {
+                exito = false;
+                }
+                }
+            }
+
+        } catch (Exception ex)
+        {
+            Logger.getLogger(UsuariosServicios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return exito;
+    }        
                 
                 
 }

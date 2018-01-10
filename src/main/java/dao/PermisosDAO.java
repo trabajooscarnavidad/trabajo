@@ -10,8 +10,10 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Asociaciones;
 import model.Permiso;
 import model.User;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -37,20 +39,22 @@ public class PermisosDAO {
                         
                 
                 
-public void asociarPermisosJDBCTemplate(final List<Permiso> records ) {
+public int[] asociarPermisosJDBCTemplate(final List<Asociaciones> records ) {
+    int []filas = new int[0];
+    
 try {
-
+    
  JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
 
-    jtm.batchUpdate("INSERT INTO Usuarios_has_Permisos (Usuarios_idUsuarios,Permisos_idPermisos ) VALUES (?, ?)", new BatchPreparedStatementSetter() {
-        
+filas = jtm.batchUpdate("INSERT INTO Usuarios_has_Permisos (Usuarios_idUsuarios,Permisos_idPermisos ) VALUES (?, ?)", new BatchPreparedStatementSetter() {
+
 
         @Override
         public void setValues(PreparedStatement ps, int i) throws SQLException {
-              Permiso record = records.get(i);
+              Asociaciones record = records.get(i);
 
-              ps.setInt(1, Math.toIntExact(record.getIdPermisos()));
-              ps.setInt(2, Integer.parseInt(record.getValor()));
+              ps.setInt(1, record.getId1());
+              ps.setInt(2, record.getId2());
         }
 
         @Override
@@ -58,25 +62,31 @@ try {
             return records.size();
         }
     });
-}catch (DataIntegrityViolationException e) {
-        System.out.println("history already exist");
+}
+catch (DataAccessException e){
+//catch (DataIntegrityViolationException e) {
+       //System.out.println("repe");
     }
+
+          return filas ;
+
 }
 
-public void quitarPermisosJDBCTemplate(final List<Permiso> records ) {
+public int [] quitarPermisosJDBCTemplate(final List<Asociaciones> records ) {
+      int []filas = new int[0];
 try {
 
  JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
 
-    jtm.batchUpdate("DELETE FROM Usuarios_has_Permisos WHERE Usuarios_idUsuarios = ? AND Permisos_idPermisos ?", new BatchPreparedStatementSetter() {
+    filas = jtm.batchUpdate("DELETE FROM Usuarios_has_Permisos WHERE Usuarios_idUsuarios = ? AND Permisos_idPermisos = ?", new BatchPreparedStatementSetter() {
         
 
         @Override
         public void setValues(PreparedStatement ps, int i) throws SQLException {
-              Permiso record = records.get(i);
+              Asociaciones record = records.get(i);
 
-              ps.setInt(1, Math.toIntExact(record.getIdPermisos()));
-              ps.setInt(2, Integer.parseInt(record.getValor()));
+                 ps.setInt(1, record.getId1());
+              ps.setInt(2, record.getId2());
         }
 
         @Override
@@ -84,9 +94,12 @@ try {
             return records.size();
         }
     });
-}catch (DataIntegrityViolationException e) {
-        System.out.println("history already exist");
+}
+catch (DataAccessException e){
+//catch (DataIntegrityViolationException e) {
+        //System.out.println("history already exist");
     }
+          return filas;
 }
 
 }

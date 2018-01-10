@@ -48,6 +48,7 @@ public class Permisos extends HttpServlet {
                 String[] usuarios = request.getParameterValues("tablausuarios");
         String[] permisos = request.getParameterValues("tablapermisos");
        String op = request.getParameter(Constantes.OPCION_SWITCH);
+              HashMap root = new HashMap();
         PermisosServicios ps = new PermisosServicios();
         UserServicios us = new UserServicios();
                 if (op == null) {
@@ -55,21 +56,22 @@ public class Permisos extends HttpServlet {
         }
         switch (op) {
             case "asociarpermisos":
-                
-                //ArrayList<String> aList = new ArrayList<String>(Arrays.asList(usuarios));
-//aList.addAll(Arrays.asList(permisos));
-                ps.asociarPermisos(usuarios,permisos);
-             //   if (ls.loginUsuario(nombre, password)) {
-             //       request.getSession().setAttribute("LOGIN", "SI");
-             //       msg = "Login correcto";
-             //   } else {
-             //       msg = "Login incorrecto";
-             //   }
-
+             int [] result =  ps.asociarPermisos(usuarios,permisos); 
+             if (result.length>0){
+              root.put("resultado","asociado correctamente los permisos"); 		
+             } else {
+                 root.put("resultado","hubo un error"); 	
+             }
+              
                 break;
             case "quitarpermisos":
-                  ps.quitarPermisos(usuarios,permisos);
-               // msg = ls.crearUsuario(nombre, password, email) ? "Usuario registrado" : "No se pudo registrar";
+                   result =  ps.quitarPermisos(usuarios,permisos);
+                if (result.length<0){
+            		 root.put("resultado","hubo un error"); 
+             } else {
+                      root.put("resultado","quitado los permisos correctamente"); 
+                	
+             }
 
                 break;
             case "dardealta":
@@ -92,11 +94,10 @@ public class Permisos extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
         try {
-            HashMap root = new HashMap();
+     
             
-            root.put("content","hola");
-            
-
+            root.put("content","Pagina asignacion de Permisos");
+           
              root.put("permisos",ps.getAllPermisos()); 
                root.put("usuarios",us.getAllUsuarios());
               root.put("usuariosalt",us.getAllUsuariosSinAlta());

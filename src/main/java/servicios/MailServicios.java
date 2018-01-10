@@ -53,4 +53,40 @@ public class MailServicios {
             Logger.getLogger(MailServicios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+      public void mandarMailPassword(String to, String msg, String subject) {
+        try {
+
+            Email email = new SimpleEmail();
+
+            email.setHostName(Configuration.getInstance().getSmtpServer());
+            email.setSmtpPort(Integer.parseInt(Configuration.getInstance().getSmtpPort()));
+            email.setAuthentication(Configuration.getInstance().getMailFrom(), Configuration.getInstance().getMailPass());
+            email.setStartTLSEnabled(true);
+
+            //El correo siempre muestra el MailFrom del archivo de configuracion
+            email.setFrom(Configuration.getInstance().getMailFrom());
+
+            /*En algunos correos te muestra el MailFrom que tu le pongas.
+            En otros como Gmail, aunque el correo se envía sin problemas, te mostrará 
+            siempre el MailFrom del archivo de configuracion*/
+            //email.setFrom("prueba@iesquevedo.es");
+            email.setSubject(subject);
+            email.setContent("<html>"
+                    + "<body>"
+                    + "<h1>Pedido contraseña<strong>completado</strong></h1>"
+                    + "<p>Muchas gracias por usar nuestro servicio.</p>"
+                    + "<p>Tu nueva contraseña es: "+ msg +"</p>"
+                    + "</body>"
+                    + "</html>", "text/html");
+            //email.setMsg(msg);
+            email.addTo(to);
+
+            email.send();
+        } catch (EmailException ex) {
+            System.out.println(ex.getMessage());
+            Logger.getLogger(MailServicios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 }
