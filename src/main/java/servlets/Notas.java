@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Nota;
-//import servicios.AlumnosServicios;
+import servicios.Alumnos_profesoresServicios;
 import servicios.AsignaturasServicios;
 import servicios.NotasServicios;
 import utils.Constantes;
@@ -43,7 +43,7 @@ public class Notas extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         NotasServicios ns = new NotasServicios();
-       // AlumnosServicios alums = new AlumnosServicios();
+        Alumnos_profesoresServicios alums = new Alumnos_profesoresServicios();
         AsignaturasServicios asigs = new AsignaturasServicios();
         String op = request.getParameter("accion");
         String idAlu = request.getParameter("idAlumno");
@@ -95,7 +95,7 @@ public class Notas extends HttpServlet {
         }
         // getAll siempre se hace
          root.put("asignaturas", asigs.getAllAsignaturas());
-       //   root.put("alumnos",alums.getAllAlumnos());
+          root.put("alumnos",alums.listarAlumnos());
           root.put("cursos",asigs.getAllcursos());
            root.put("nomAlu",nomAlu);
             root.put("idAlu",idAlu);

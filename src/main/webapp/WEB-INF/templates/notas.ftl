@@ -65,7 +65,7 @@
         
 
                 <#list alumnos as alumno>
-                        <option value="${alumno.idalumnos}" name="${alumno.nombre}">${alumno.nombre}</option>
+                        <option value="${alumno.idAlumnos}" name="${alumno.nombre}">${alumno.nombre}</option>
                     </#list>	
                 </select>
                 <br>
@@ -104,7 +104,7 @@
                                 ASIGNATURA
                                 <br>
                                 <input type="hidden" id="idAsignatura" name="idAsignatura" size="1" value="<#if idAsig??>${idAsig}</#if>">
-                                <input type="text" name="nombreAsignatura" id="nombreAsignatura" value="<#if idAsig??>${idAasig}</#if>">
+                                <input type="text" name="nombreAsignatura" id="nombreAsignatura" value="<#if nomAsig??>${nomAsig}</#if>">
                             </td>
                                                         <td>
                                 CURSO

@@ -102,4 +102,18 @@ catch (DataAccessException e){
           return filas;
 }
 
+    public Asociaciones asociarPermisosSinInterfaz(Asociaciones u) {
+        try {
+            JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
+            int filas = jtm.update("INSERT INTO Usuarios_has_Permisos (Usuarios_idUsuarios,Permisos_idPermisos ) VALUES (?, ?)", u.getId1(), u.getId2());
+            if (filas == 0) {
+                u = null;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(PermisosDAO.class.getName()).log(Level.SEVERE, null, ex);
+            u = null;
+        }
+        return u;
+    }
+
 }
