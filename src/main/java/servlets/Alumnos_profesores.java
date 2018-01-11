@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.Alumno;
 import model.User;
 import servicios.Alumnos_profesoresServicios;
+import servicios.PermisosServicios;
 import servicios.UserServicios;
 
 /**
@@ -80,7 +81,9 @@ public class Alumnos_profesores extends HttpServlet
                 alumno.setMayor(mayor);
                 
                 int introducir_alumno = a.introducir_alumno(alumno);
-                
+                //añadir permisos
+                PermisosServicios ps = new PermisosServicios();
+                ps.asociarPermisosSinInterfaz(idUsuario, 3); //3 = alumnos, 2 = profesores
                 break;
         }
     }
