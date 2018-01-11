@@ -40,4 +40,9 @@ public class Alumnos_profesoresServicios
         Alumnos_profesoresDAO dao = new Alumnos_profesoresDAO();
         return dao.introducir_alumno(alumno);
     }
+    public int introducir_profesor(Profesor profe)
+    {
+        Alumnos_profesoresDAO dao = new Alumnos_profesoresDAO();
+        return dao.introducir_profesor(profe);
+    }
 }

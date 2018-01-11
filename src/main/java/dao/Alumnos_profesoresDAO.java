@@ -90,4 +90,21 @@ public class Alumnos_profesoresDAO
         }
         return (int) resultado;
     }
+    public int introducir_profesor(Profesor profe) {
+        Connection con = null;
+        long resultado = 0;
+        try {
+            con = DBConnection.getInstance().getConnection();
+            con.setAutoCommit(false);
+            QueryRunner qr = new QueryRunner();
+            resultado = qr.update(con,
+                    "insert into Profesores (Usuarios_idUsuarios, Nombre) values (?, ?)", profe.getUsuarios_idUsuarios(), profe.getNombre());
+           con.commit();
+        } catch (Exception ex) {
+            Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBConnection.getInstance().cerrarConexion(con);
+        }
+        return (int) resultado;
+    }
 }
