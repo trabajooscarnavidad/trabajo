@@ -45,6 +45,26 @@
                         }
                 });
             }
+            
+            function registrar_profesor()
+            {
+                var alumno_nombre = document.getElementById("profesor_nombre").value;
+                var alumno_pass = document.getElementById("profesor_pass").value;
+                var alumno_email = document.getElementById("profesor_email").value;
+                
+                var datos = "profesor_nombre="+profesor_nombre+"&profesor_pass="+profesor_pass+"&profesor_email="+profesor_email+"&op=registrar_profesor";
+                alert(datos);
+                
+                $.ajax({
+                        type:'get',
+                        url:'alumnos_profesores',
+                        data:datos,
+                        success:function(resp)
+                        {
+                           document.getElementById("espacio").innerHTML=resp;
+                        }
+                });
+            }
         </script>
     </head>
     <body>
@@ -56,13 +76,12 @@
         Mayor: <input type="checkbox" id="alumno_mayor"><br>
         <button onclick="registrar_alumno()" >Registrar</button>
         
-        <form action="alumnos_profesores" method="get">
-            <h2>Profesores</h2>
-            Nombre: <input type="text" name="nombre"><br>
-            Email: <input type="text" name="email"><br>
-            <input type="hidden" name="op" value="registrar_profesor">
-            <input type="submit" value="enviar">
-        </form>
+        
+        <h2>Profesores</h2>
+        Nombre: <input type="text" id="profesor_nombre"><br>
+        Contraseña <input type="password" id="profesor_pass"><br>
+        Email: <input type="text" id="profesor_email"><br>
+        <button onclick="registrar_profesor()" >Registrar</button>
         
         <br>
         
