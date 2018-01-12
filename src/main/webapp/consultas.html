@@ -1,0 +1,16 @@
+select a.Nombre, b.Nombre, n.Nota, p.Nombre from Alumnos a
+join Notas n on a.idAlumnos = n.Alumnos_idAlumnos 
+join Asignaturas b on b.idAsignaturas = n.Asignaturas_idAsignaturas 
+join Asignaturas_has_Profesores m on b.idAsignaturas = m.Asignaturas_idAsignaturas
+join Profesores p on m.Profesores_idProfesores = p.idProfesores;
+
+
+select b.Nombre, n.Nota, p.Nombre from Asignaturas b 
+join Notas n on n.Asignaturas_idAsignaturas = b.idAsignaturas 
+join Asignaturas_has_Profesores m on b.idAsignaturas = m.Asignaturas_idAsignaturas 
+join Profesores p on m.Profesores_idProfesores = p.idProfesores
+where b.idAsignaturas in
+(select b.idAsignaturas from Asignaturas b 
+join Asignaturas_has_Cursos h on b.idAsignaturas = h.Asignaturas_idAsignaturas
+join Cursos c on h.Cursos_idCursos = c.idCursos 
+where c.Nombre='Primero');
