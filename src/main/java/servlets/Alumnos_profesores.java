@@ -13,8 +13,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Alumno;
+import model.Profesor;
 import model.User;
 import servicios.Alumnos_profesoresServicios;
+import servicios.PermisosServicios;
 import servicios.UserServicios;
 
 /**
@@ -80,7 +82,33 @@ public class Alumnos_profesores extends HttpServlet
                 alumno.setMayor(mayor);
                 
                 int introducir_alumno = a.introducir_alumno(alumno);
+                //añadir permisos
+                PermisosServicios ps = new PermisosServicios();
+                ps.asociarPermisosSinInterfaz(idUsuario, 3); //3 = alumnos, 2 = profesores
+                break;
                 
+            case "registrar_profesor":
+                User u2 = new User();
+                UserServicios us2 = new UserServicios();
+                Alumnos_profesoresServicios a2 = new Alumnos_profesoresServicios();
+                
+                u2.setUsuario(request.getParameter("profesor_nombre"));
+                u2.setPass(request.getParameter("profesor_pass"));
+                u2.setEmail(request.getParameter("profesor_email"));
+                us2.registrar_alumno(u2);
+                
+                //Una vez creado el Usuario, se obtiene el idUsuario geerado por el autoincremental para
+                //Poder meterlo en la tabla 'Alumnos'.
+                int idProfesor = (int) a2.getIdUsuario(request.getParameter("profesor_nombre"));
+                
+                Profesor profe = new Profesor();
+                profe.setUsuarios_idUsuarios(idProfesor);
+                profe.setNombre(request.getParameter("profesor_nombre"));
+                
+                int introducir_profesor = a2.introducir_profesor(profe);
+                //añadir permisos
+                PermisosServicios ps2 = new PermisosServicios();
+                ps2.asociarPermisosSinInterfaz(idProfesor, 2); //3 = alumnos, 2 = profesores
                 break;
         }
     }
