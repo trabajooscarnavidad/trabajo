@@ -115,5 +115,15 @@ catch (DataAccessException e){
         }
         return u;
     }
-
+      public List<Asociaciones> getAllPermisosJDBCTemplate(int id) {
+     
+        JdbcTemplate jtm = new JdbcTemplate(
+          DBConnection.getInstance().getDataSource());
+        List<Asociaciones> permisos = jtm.query("Select * from qyw391.Usuarios_has_Permisos where Usuarios_idUsuarios=?", new Object[]{id}, 
+          new BeanPropertyRowMapper(Asociaciones.class));
+        
+        
+        return permisos;
+    }
+      
 }

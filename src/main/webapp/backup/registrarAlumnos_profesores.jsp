@@ -18,7 +18,7 @@
             }
         </style>
         <title>Registro alumnos profesores</title>
-        <script src="js/jquery-3.2.1.js"></script>
+        <script src="assets/js/jquery-3.2.1.js"></script>
         <script>
             function registrar_alumno()
             {

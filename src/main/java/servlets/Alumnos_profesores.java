@@ -5,8 +5,14 @@
  */
 package servlets;
 
+import config.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,6 +50,7 @@ public class Alumnos_profesores extends HttpServlet
     {
         Alumnos_profesoresServicios s = new Alumnos_profesoresServicios();
         String op = request.getParameter("op");
+        HashMap root = new HashMap();
         if (op == null)
         {
             op = "inicio";
@@ -53,10 +60,19 @@ public class Alumnos_profesores extends HttpServlet
         switch (op)
         {
             case "inicio":
-                
-                request.setAttribute("alumnos", s.listarAlumnos());
-                request.setAttribute("profesores", s.listarProfesores());
-                request.getRequestDispatcher("/registrarAlumnos_profesores.jsp").forward(request, response);
+                 root.put("alumnos", s.listarAlumnos());
+                 root.put("profesores", s.listarProfesores());
+                         response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+        try {
+             Template temp = Configuration.getInstance().getFreeMarker().getTemplate("alumnos_profesores.ftl");
+            temp.process(root, response.getWriter());
+        } catch (TemplateException ex) {
+            Logger.getLogger(Permisos.class.getName()).log(Level.SEVERE, null, ex);
+        }}
+                //request.setAttribute("alumnos", s.listarAlumnos());
+              //  request.setAttribute("profesores", s.listarProfesores());
+               // request.getRequestDispatcher("/registrarAlumnos_profesores.jsp").forward(request, response);
                 
                 break;
                 

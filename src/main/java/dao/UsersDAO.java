@@ -127,7 +127,7 @@ public class UsersDAO {
             JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
             obj_db_user =(User) jtm.queryForObject("SELECT * FROM Usuarios WHERE Usuario = ?", new Object[]{obj_user.getUsuario()}, new BeanPropertyRowMapper(User.class));
         } catch (Exception ex) {
-            Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
             obj_db_user = null;
         }
         return obj_db_user;
@@ -144,7 +144,7 @@ public class UsersDAO {
 
         } catch (Exception ex1)
         {
-            Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, ex1);
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex1);
 
         }
         return filas;

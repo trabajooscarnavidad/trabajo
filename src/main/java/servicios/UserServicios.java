@@ -5,6 +5,7 @@
  */
 package servicios;
 
+import com.sun.corba.se.spi.presentation.rmi.StubAdapter;
 import config.Configuration;
 import dao.UsersDAO;
 import java.security.NoSuchAlgorithmException;
@@ -197,7 +198,7 @@ public class UserServicios {
 
         } catch (Exception ex)
         {
-            Logger.getLogger(UsuariosServicios.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserServicios.class.getName()).log(Level.SEVERE, null, ex);
         }
         return exito;
     }        
@@ -234,7 +235,7 @@ public class UserServicios {
 
         } catch (Exception ex)
         {
-            Logger.getLogger(UsuariosServicios.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserServicios.class.getName()).log(Level.SEVERE, null, ex);
         }
         return exito;
     }        

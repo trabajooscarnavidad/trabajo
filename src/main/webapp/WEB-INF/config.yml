@@ -11,6 +11,6 @@ mailFrom: alumno1@iesquevedo.es
 smtpServer: smtp.gmail.com
 smtpPort: 587
 mailPass: alumnodam2
-minutosParaValidar: 1
+minutosParaValidar: 4320
 longitudCodigo: 50
 minutos: -10

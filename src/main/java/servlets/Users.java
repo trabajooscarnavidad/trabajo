@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.User;
+import servicios.PermisosServicios;
 import servicios.UserServicios;
 import utils.Constantes;
 
@@ -116,7 +117,13 @@ HashMap root = new HashMap();
                     switch (login) {
                         case 1:
                                root.put("nombreUsuario", nombreLogin);
+                            
+                                PermisosServicios ps = new PermisosServicios();
+                                  root.put("permisos",  ps.getAllPermisosbyID(nombreLogin));
                             request.getSession().setAttribute("nombreUsuario", nombreLogin);
+                            request.getSession().setAttribute("permisos",  ps.getAllPermisosbyID(nombreLogin));
+
+                            
                             break;
                         case 2:
                                root.put("mensaje",Constantes.ERROR_LOGIN);

@@ -25,8 +25,15 @@
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/ico/apple-touch-icon-72-precomposed.png">
         <link rel="apple-touch-icon-precomposed" href="/assets/ico/apple-touch-icon-57-precomposed.png">
         <#if nombreUsuario??>
+        ${nombreUsuario}<br>
+
+    <br>
+                               <#list permisos as permiso>
+     ${permiso}
+    ${permiso.id2}
+    </#list>	    
         <script>
-            location.href="/sesion/alumnos";
+           // location.href="/sesion/alumnos";
             </script>
         </#if>
 

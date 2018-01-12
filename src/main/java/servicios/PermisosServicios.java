@@ -11,7 +11,6 @@ package servicios;
 
 import dao.PermisosDAO;
 import dao.UsersDAO;
-import dao.UsuariosDAO;
 import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,7 +94,14 @@ Asociaciones obj_asociaciones = new Asociaciones();
         
         }
 
-    
+
+        public List<Asociaciones> getAllPermisosbyID(String usuario)
+    {
+        PermisosDAO dao = new PermisosDAO();
+        UsersDAO dao2 = new UsersDAO();
+      int id = (int) dao2.getUserByNombre(usuario).getIdUsuarios();
+        return dao.getAllPermisosJDBCTemplate(id);
+    }
 
 //      
 //         public void darDeAlta(String usuarios[], String permisos[]) //sin terminar seguramente para borrar
