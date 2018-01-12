@@ -142,6 +142,20 @@
                         }
                 });
             }
+            
+            function ver_profesores (id, nombre)
+            {
+                var datos = "id="+id+"&accion=ver_profesores";
+                $.ajax({
+                        type:'get',
+                        url:'asignaturas',
+                        data:datos,
+                        success:function(resp)
+                        {
+                           document.getElementById("espacio").innerHTML = "Los profesores de "+nombre+" son: "+resp;
+                        }
+                });
+            }
         </script>
     </head>
     <body>
@@ -179,6 +193,7 @@
                         <tr>
                             <td>${asignatura.nombre}</td>
                             <td><button onclick="ver_cursos(${asignatura.idAsignaturas}, '${asignatura.nombre}')" >Ver cursos</button></td>
+                            <td><button onclick="ver_profesores(${asignatura.idAsignaturas}, '${asignatura.nombre}')" >Ver profesores</button></td>
                         </tr>
                     </c:forEach>
                 </table>
@@ -209,9 +224,11 @@
                 </table>
             </div>
                 
-            <hr>
-                
+            <hr/>
+            
+            <div id="espacio" class="col-xs-12 col-xs-offset-2" style="margin: 3%"></div>
             <div class="col-xs-12 col-xs-offset-2" style="margin: 3%">
+                Relacion asignatura-curso: 
                 <select id="select_asignaturas">
                     <c:forEach items="${asignaturas}" var="asignatura">
                         <option value="${asignatura.idAsignaturas}">${asignatura.nombre}</option>
@@ -225,8 +242,23 @@
                 <button onclick="comprobar_union()">Comprobar</button>
             </div>
             
-            <div id="espacio" class="col-xs-12 col-xs-offset-2" style="margin: 3%">
+            <div class="col-xs-12 col-xs-offset-2" style="margin: 3%">
+                Relacion asignatura-profesor: 
+                <select id="select_asignaturas2">
+                    <c:forEach items="${asignaturas}" var="asignatura">
+                        <option value="${asignatura.idAsignaturas}">${asignatura.nombre}</option>
+                    </c:forEach>
+                </select>
+                <select id="select_profesores">
+                    <c:forEach items="${profesores}" var="profesor">
+                        <option value="${profesores.idProfesores}">${profesores.nombre}</option>
+                    </c:forEach>
+                </select>
+                <button onclick="comprobar_union2()">Comprobar</button>
             </div>
+            
+            
+            
         </div>
     </body>
 </html>

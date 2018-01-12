@@ -10,6 +10,7 @@ import model.Asignatura;
 import java.util.List;
 import model.Asignatura_curso;
 import model.Curso;
+import model.Profesor;
 
 /**
  *
@@ -25,6 +26,11 @@ public class AsignaturasServicios {
     public List<Curso> getAllcursos() {
         AsignaturasDAO dao = new AsignaturasDAO();
         return dao.getAllCursos();
+    }
+    
+    public List<Profesor> getAllprofesores() {
+        AsignaturasDAO dao = new AsignaturasDAO();
+        return dao.getAllprofesores();
     }
 
     public Asignatura addAsignatura(Asignatura a) {
@@ -78,6 +84,20 @@ public class AsignaturasServicios {
             cursos += lista.get(x).getNombre()+", ";
         }
         return cursos;
+    }
+    
+    public String ver_profesores(int asignatura)
+    {
+        AsignaturasDAO dao = new AsignaturasDAO();
+        String profesores = "";
+        List<Profesor> lista = dao.ver_profesores(asignatura);
+        
+        for(int x=0; x<lista.size(); x++) 
+        {
+            profesores += lista.get(x).getNombre()+", ";
+        }
+        
+        return profesores;
     }
     
     

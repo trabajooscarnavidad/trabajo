@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import model.Asignatura;
 import model.Asignatura_curso;
 import model.Curso;
+import model.Profesor;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -32,6 +33,23 @@ public class AsignaturasDAO {
             QueryRunner qr = new QueryRunner();
             ResultSetHandler<List<Asignatura>> h = new BeanListHandler<Asignatura>(Asignatura.class);
             lista = qr.query(con, "select * FROM Asignaturas", h);
+               
+        } catch (Exception ex) {
+            Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBConnection.getInstance().cerrarConexion(con);
+        }
+        return lista;
+    }
+    
+    public List<Profesor> getAllprofesores() {
+        List<Profesor> lista = null;
+        Connection con = null;
+        try {
+            con = DBConnection.getInstance().getConnection();
+            QueryRunner qr = new QueryRunner();
+            ResultSetHandler<List<Profesor>> h = new BeanListHandler<>(Profesor.class);
+            lista = qr.query(con, "select * FROM Profesores", h);
                
         } catch (Exception ex) {
             Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -74,6 +92,24 @@ public class AsignaturasDAO {
         }
         return lista;
     }
+    
+    public List<Profesor> ver_profesores(int asignatura) {
+        List<Profesor> lista = null;
+        Connection con = null;
+        try {
+            con = DBConnection.getInstance().getConnection();
+            QueryRunner qr = new QueryRunner();
+            ResultSetHandler<List<Profesor>> h = new BeanListHandler<>(Profesor.class);
+            lista = qr.query(con, "select p.Nombre from Asignaturas a join Asignaturas_has_Profesores m on a.idAsignaturas = m.Asignaturas_idAsignaturas join Profesores p on m.Profesores_idProfesores = p.idProfesores where a.idAsignaturas = ?",asignatura , h);
+               
+        } catch (Exception ex) {
+            Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBConnection.getInstance().cerrarConexion(con);
+        }
+        return lista;
+    }
+    
     
     public List<Curso> getAllCursos() {
         List<Curso> lista = null;

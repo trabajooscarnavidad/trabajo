@@ -51,6 +51,7 @@ public class Asignaturas extends HttpServlet {
                 case "inicio":
                     request.setAttribute("asignaturas", as.getAllAsignaturas());
                     request.setAttribute("cursos", as.getAllcursos());
+                    request.setAttribute("profesores", as.getAllprofesores());
                     request.getRequestDispatcher("/pintarListaAsignaturas.jsp").forward(request, response);
                     break;
                 case "insertar":
@@ -60,6 +61,7 @@ public class Asignaturas extends HttpServlet {
                     }
                     request.setAttribute("asignaturas", as.getAllAsignaturas());
                     request.setAttribute("cursos", as.getAllcursos());
+                    request.setAttribute("profesores", as.getAllprofesores());
                     request.getRequestDispatcher("/pintarListaAsignaturas.jsp").forward(request, response);
                     
                     break;
@@ -70,6 +72,7 @@ public class Asignaturas extends HttpServlet {
                     }
                     request.setAttribute("asignaturas", as.getAllAsignaturas());
                     request.setAttribute("cursos", as.getAllcursos());
+                    request.setAttribute("profesores", as.getAllprofesores());
                     request.getRequestDispatcher("/pintarListaAsignaturas.jsp").forward(request, response);
                     
                     break;
@@ -104,6 +107,10 @@ public class Asignaturas extends HttpServlet {
                 case "ver_cursos":
                     int asignatura = Integer.parseInt(request.getParameter("id"));
                     response.getWriter().print(as.ver_cursos(asignatura));
+                    break;
+                case "ver_profesores":
+                    int asignatura1 = Integer.parseInt(request.getParameter("id"));
+                    response.getWriter().print(as.ver_profesores(asignatura1));
                     break;
             }
         }
