@@ -125,6 +125,7 @@ response.setContentType("text/html;charset=UTF-8");
                     response.getWriter().print(as.comprobar_union2(m));
                     break;
                     
+                    
                 case "relacionar":
                     Asignatura_curso s = new Asignatura_curso();
                     s.setAsignaturas_idAsignaturas(Integer.parseInt(request.getParameter("asignatura")));
