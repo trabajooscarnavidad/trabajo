@@ -71,6 +71,39 @@
                 });
             }
             
+            function comprobar_union2()
+            {
+                var asignatura = document.getElementById("select_asignaturas2").value;
+                var profesor = document.getElementById("select_profesor").value;
+                
+                var datos = "asignatura2="+asignatura+"&profesor="+profesor+"&accion=comprobar_union2";
+                
+                $.ajax({
+                        type:'get',
+                        url:'asignaturas',
+                        data:datos,
+                        success:function(resp)
+                        {
+                           if (resp == 0)
+                           {
+                               var eleccion = confirm("Este profesor y asignatura no están relacionados. quieres relacionarlos?");
+                               if (eleccion == true)
+                               {
+                                   relacionar2(asignatura, profesor);
+                               }
+                           }
+                           else
+                           {
+                               var eleccion = confirm("Este profesor y asignatura están relacionados. quieres quitar esta relacion?");
+                               if (eleccion == true)
+                               {
+                                   quitar_relacion2(asignatura, profesor);
+                               }
+                           }
+                        }
+                });
+            }
+            
             function relacionar(asignatura, curso)
             {
                 var datos = "asignatura="+asignatura+"&curso="+curso+"&accion=relacionar";
@@ -82,7 +115,7 @@
                         {
                             if (resp != 0)
                             {
-                                alert("Se han relacionado las dos asignaturas");
+                                alert("Se han relacionado el curso y la asignatura");
                             }
                             else
                             {
@@ -104,7 +137,51 @@
                         {
                             if (resp != 0)
                             {
-                                alert("Se ha eliminado la relacion entre estas dos asignaturas");
+                                alert("Se ha eliminado la relacion entres el curso y la asignatura");
+                            }
+                            else
+                            {
+                                alert("Ha habido un error, vete tú a saber que coño es");
+                            }
+                           
+                        }
+                });
+            }
+            
+            function relacionar2(asignatura, profesor)
+            {
+                var datos = "asignatura="+asignatura+"&profesor="+profesor+"&accion=relacionar2";
+                $.ajax({
+                        type:'get',
+                        url:'asignaturas',
+                        data:datos,
+                        success:function(resp)
+                        {
+                            if (resp != 0)
+                            {
+                                alert("Se han relacionado el profesor y la asignatura");
+                            }
+                            else
+                            {
+                                alert("Ha habido un error, vete tú a saber que coño es");
+                            }
+                           
+                        }
+                });
+            }
+            
+            function quitar_relacion2(asignatura, profesor)
+            {
+                var datos = "asignatura="+asignatura+"&profesor="+profesor+"&accion=quitar_relacion2";
+                $.ajax({
+                        type:'get',
+                        url:'asignaturas',
+                        data:datos,
+                        success:function(resp)
+                        {
+                            if (resp != 0)
+                            {
+                                alert("Se ha eliminado la relacion entre el profesor y la asignatura");
                             }
                             else
                             {
@@ -226,6 +303,7 @@
                 
             <hr/>
             
+            
             <div id="espacio" class="col-xs-12 col-xs-offset-2" style="margin: 3%"></div>
             <div class="col-xs-12 col-xs-offset-2" style="margin: 3%">
                 Relacion asignatura-curso: 
@@ -241,7 +319,6 @@
                 </select>
                 <button onclick="comprobar_union()">Comprobar</button>
             </div>
-            
             <div class="col-xs-12 col-xs-offset-2" style="margin: 3%">
                 Relacion asignatura-profesor: 
                 <select id="select_asignaturas2">
@@ -249,13 +326,14 @@
                         <option value="${asignatura.idAsignaturas}">${asignatura.nombre}</option>
                     </c:forEach>
                 </select>
-                <select id="select_profesores">
+                <select id="select_profesor">
                     <c:forEach items="${profesores}" var="profesor">
-                        <option value="${profesores.idProfesores}">${profesores.nombre}</option>
+                        <option value="${profesor.idProfesores}">${profesor.nombre}</option>
                     </c:forEach>
                 </select>
                 <button onclick="comprobar_union2()">Comprobar</button>
             </div>
+            <br>
             
             
             

@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Asignatura;
 import model.Asignatura_curso;
+import model.Asignatura_profesor;
 import model.Curso;
 import model.Profesor;
 import org.apache.commons.dbutils.QueryRunner;
@@ -207,6 +208,42 @@ public class AsignaturasDAO {
         return (int) resultado;
     }
     
+    public int relacionar2(Asignatura_profesor w) {
+        Connection con = null;
+        long resultado = 0;
+        try {
+            con = DBConnection.getInstance().getConnection();
+            con.setAutoCommit(false);
+            QueryRunner qr = new QueryRunner();
+            resultado = qr.update(con,
+                    "insert into Asignaturas_has_Profesores values (?, ?)", w.getAsignaturas_idAsignaturas(), w.getProfesores_idProfesores());
+           con.commit();
+        } catch (Exception ex) {
+            Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBConnection.getInstance().cerrarConexion(con);
+        }
+        return (int) resultado;
+    }
+    
+    public int quitar_relacion2(Asignatura_profesor t) {
+        Connection con = null;
+        long resultado = 0;
+        try {
+            con = DBConnection.getInstance().getConnection();
+            con.setAutoCommit(false);
+            QueryRunner qr = new QueryRunner();
+            resultado = qr.update(con,
+                    "delete from Asignaturas_has_Profesores where Asignaturas_idAsignaturas=? and Profesores_idProfesores=?", t.getAsignaturas_idAsignaturas(), t.getProfesores_idProfesores());
+           con.commit();
+        } catch (Exception ex) {
+            Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBConnection.getInstance().cerrarConexion(con);
+        }
+        return (int) resultado;
+    }
+    
     public int comprobar_union(Asignatura_curso r)
     {
         long resultado = 0;
@@ -218,6 +255,33 @@ public class AsignaturasDAO {
             QueryRunner qr = new QueryRunner();
             ResultSetHandler<List<Asignatura_curso>> h = new BeanListHandler<>(Asignatura_curso.class);
             lista = qr.query(con, "select * from Asignaturas_has_Cursos where Asignaturas_idAsignaturas=? and Cursos_idCursos=?", h, r.getAsignaturas_idAsignaturas(), r.getCursos_idCursos());
+            
+            if (lista.size() > 0)
+                {
+                    resultado = 1;
+                }
+            
+            
+        } catch (Exception ex) {
+            Logger.getLogger(AsignaturasDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBConnection.getInstance().cerrarConexion(con);
+        }
+        
+        return (int) resultado;
+    }
+    
+    public int comprobar_union2(Asignatura_profesor m)
+    {
+        long resultado = 0;
+        
+        List<Asignatura_profesor> lista = null;
+        Connection con = null;
+        try {
+            con = DBConnection.getInstance().getConnection();
+            QueryRunner qr = new QueryRunner();
+            ResultSetHandler<List<Asignatura_profesor>> h = new BeanListHandler<>(Asignatura_profesor.class);
+            lista = qr.query(con, "select * from Asignaturas_has_Profesores where Asignaturas_idAsignaturas=? and Profesores_idProfesores=?", h, m.getAsignaturas_idAsignaturas(), m.getProfesores_idProfesores());
             
             if (lista.size() > 0)
                 {

@@ -9,6 +9,7 @@ import dao.AsignaturasDAO;
 import model.Asignatura;
 import java.util.List;
 import model.Asignatura_curso;
+import model.Asignatura_profesor;
 import model.Curso;
 import model.Profesor;
 
@@ -48,6 +49,12 @@ public class AsignaturasServicios {
         AsignaturasDAO dao = new AsignaturasDAO();
         return dao.comprobar_union(r);
     }
+    
+    public int comprobar_union2(Asignatura_profesor m)
+    {
+        AsignaturasDAO dao = new AsignaturasDAO();
+        return dao.comprobar_union2(m);
+    }
     public int relacionar(Asignatura_curso s)
     {
         AsignaturasDAO dao = new AsignaturasDAO();
@@ -58,6 +65,18 @@ public class AsignaturasServicios {
     {
         AsignaturasDAO dao = new AsignaturasDAO();
         return dao.quitar_relacion(y);
+    }
+    
+    public int relacionar2(Asignatura_profesor w)
+    {
+        AsignaturasDAO dao = new AsignaturasDAO();
+        return dao.relacionar2(w);
+    }
+    
+    public int quitar_relacion2(Asignatura_profesor t)
+    {
+        AsignaturasDAO dao = new AsignaturasDAO();
+        return dao.quitar_relacion2(t);
     }
     
     public String ver_asignaturas(int curso)
