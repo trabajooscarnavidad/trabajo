@@ -6,13 +6,17 @@
 package dao;
 
 import java.sql.Connection;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Asociaciones2;
 import model.Nota;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  *
@@ -75,5 +79,18 @@ public class NotasDAO {
             DBConnection.getInstance().cerrarConexion(con);
         }
         return n;
+    }
+    
+    public  List<Asociaciones2> getNotas(Long idAlu) {
+        Connection con = null;
+          List<Asociaciones2> n = null;
+
+           JdbcTemplate jtm = new JdbcTemplate(
+          DBConnection.getInstance().getDataSource());
+     
+        List <Asociaciones2>asignaturas_notas = jtm.query("select Nota, Nombre from Asignaturas inner join Notas on idAsignaturas=Asignaturas_idAsignaturas where Alumnos_idAlumnos =?", new Object[]{idAlu}, 
+          new BeanPropertyRowMapper(Asociaciones2.class));
+
+        return asignaturas_notas;
     }
 }

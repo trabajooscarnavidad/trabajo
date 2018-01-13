@@ -12,9 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Asociaciones;
 import model.Permiso;
-import model.User;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -53,8 +51,8 @@ filas = jtm.batchUpdate("INSERT INTO Usuarios_has_Permisos (Usuarios_idUsuarios,
         public void setValues(PreparedStatement ps, int i) throws SQLException {
               Asociaciones record = records.get(i);
 
-              ps.setInt(1, record.getId1());
-              ps.setInt(2, record.getId2());
+              ps.setInt(1, record.getUsuarios_idUsuarios());
+              ps.setInt(2, record.getPermisos_idPermisos());
         }
 
         @Override
@@ -85,8 +83,8 @@ try {
         public void setValues(PreparedStatement ps, int i) throws SQLException {
               Asociaciones record = records.get(i);
 
-                 ps.setInt(1, record.getId1());
-              ps.setInt(2, record.getId2());
+                 ps.setInt(1, record.getUsuarios_idUsuarios());
+              ps.setInt(2, record.getPermisos_idPermisos());
         }
 
         @Override
@@ -105,7 +103,7 @@ catch (DataAccessException e){
     public Asociaciones asociarPermisosSinInterfaz(Asociaciones u) {
         try {
             JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
-            int filas = jtm.update("INSERT INTO Usuarios_has_Permisos (Usuarios_idUsuarios,Permisos_idPermisos ) VALUES (?, ?)", u.getId1(), u.getId2());
+            int filas = jtm.update("INSERT INTO Usuarios_has_Permisos (Usuarios_idUsuarios,Permisos_idPermisos ) VALUES (?, ?)", u.getUsuarios_idUsuarios(), u.getPermisos_idPermisos());
             if (filas == 0) {
                 u = null;
             }
@@ -119,7 +117,8 @@ catch (DataAccessException e){
      
         JdbcTemplate jtm = new JdbcTemplate(
           DBConnection.getInstance().getDataSource());
-        List<Asociaciones> permisos = jtm.query("Select * from qyw391.Usuarios_has_Permisos where Usuarios_idUsuarios=?", new Object[]{id}, 
+        //where Usuarios_idUsuarios=35" //jtm.queryForObject
+        List <Asociaciones>permisos = jtm.query("Select * from Usuarios_has_Permisos where Usuarios_idUsuarios=?", new Object[]{id}, 
           new BeanPropertyRowMapper(Asociaciones.class));
         
         

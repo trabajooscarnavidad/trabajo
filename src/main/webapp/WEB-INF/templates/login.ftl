@@ -29,8 +29,7 @@
 
     <br>
                                <#list permisos as permiso>
-     ${permiso}
-    ${permiso.id2}
+    ${permiso.permisos_idPermisos}
     </#list>	    
         <script>
            // location.href="/sesion/alumnos";

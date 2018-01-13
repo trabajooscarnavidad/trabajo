@@ -18,10 +18,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Asignatura;
+import servicios.Alumnos_profesoresServicios;
+import servicios.AsignaturasServicios;
+import servicios.NotasServicios;
 import utils.Constantes;
 
-@WebServlet(name = "Password", urlPatterns = {"/password"})
-public class Password extends HttpServlet {
+/**
+ *
+ * @author Miguel Angel Diaz
+ */
+@WebServlet(name = "NotasAlumno", urlPatterns = {"/notasalumno"})
+public class NotasAlumno extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,16 +41,42 @@ public class Password extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+            throws ServletException, IOException {
+        NotasServicios ns = new NotasServicios();
+        Alumnos_profesoresServicios alums = new Alumnos_profesoresServicios();
+        AsignaturasServicios asigs = new AsignaturasServicios();
+        String op = request.getParameter("accion");
+        String idAlu = request.getParameter("idAlumno");
+        String idAsig = request.getParameter("idAsignatura");
+        String nomAlu = request.getParameter("nombreAlumno");
+        String nomAsig = request.getParameter("nombreAsignatura");
+        String nota = request.getParameter("nota");
+        boolean cargar = false;
+        HashMap root = new HashMap();
+        Asignatura obj_temporal = new Asignatura();
 
-HashMap root = new HashMap();
+       Long id =  (Long) request.getSession().getAttribute("id");
 
-         
-        response.setContentType("text/html;charset=UTF-8");
+                                             root.put("notas",ns.getNotas(id));
+                    
+
+
+            
+        
+        // getAll siempre se hace
+         root.put("asignaturas", asigs.getAllAsignaturas());
+          root.put("alumnos",alums.listarAlumnos());
+          root.put("cursos",asigs.getAllcursos());
+           root.put("nomAlu",nomAlu);
+            root.put("idAlu",idAlu);
+             root.put("nomAsig",nomAsig);
+              root.put("idAsig",idAsig);
+  
+                 response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
         try {
-
-             Template temp = Configuration.getInstance().getFreeMarker().getTemplate("password.ftl");
+      
+             Template temp = Configuration.getInstance().getFreeMarker().getTemplate("notasalumno.ftl");
             temp.process(root, response.getWriter());
         } catch (TemplateException ex) {
             Logger.getLogger(Permisos.class.getName()).log(Level.SEVERE, null, ex);
@@ -62,7 +96,7 @@ HashMap root = new HashMap();
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -76,7 +110,7 @@ HashMap root = new HashMap();
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 

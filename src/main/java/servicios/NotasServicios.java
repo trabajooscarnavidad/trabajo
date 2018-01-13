@@ -6,6 +6,8 @@
 package servicios;
 
 import dao.NotasDAO;
+import java.util.List;
+import model.Asociaciones2;
 import model.Nota;
 
 /**
@@ -26,5 +28,11 @@ public class NotasServicios {
     public int delNota(Nota n){
         NotasDAO dao = new NotasDAO();
         return dao.delNota(n);
+    }
+    
+        public  List<Asociaciones2> getNotas(Long idusuario){
+        Alumnos_profesoresServicios ap = new Alumnos_profesoresServicios();
+         NotasDAO dao = new NotasDAO();
+        return dao.getNotas( ap.getIdAlumno((int)(long)idusuario));
     }
 }

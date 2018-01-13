@@ -11,23 +11,23 @@ package model;
  */
 public class Asociaciones {
 
-    private int id1;
-    private int id2;
+    private int Usuarios_idUsuarios;
+    private int Permisos_idPermisos;
 
-    public int getId1() {
-        return id1;
+    public int getUsuarios_idUsuarios() {
+        return Usuarios_idUsuarios;
     }
 
-    public void setId1(int id1) {
-        this.id1 = id1;
+    public void setUsuarios_idUsuarios(int Usuarios_idUsuarios) {
+        this.Usuarios_idUsuarios = Usuarios_idUsuarios;
     }
 
-    public int getId2() {
-        return id2;
+    public int getPermisos_idPermisos() {
+        return Permisos_idPermisos;
     }
 
-    public void setId2(int id2) {
-        this.id2 = id2;
+    public void setPermisos_idPermisos(int Permisos_idPermisos) {
+        this.Permisos_idPermisos = Permisos_idPermisos;
     }
     
 }

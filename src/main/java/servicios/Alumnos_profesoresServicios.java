@@ -45,4 +45,13 @@ public class Alumnos_profesoresServicios
         Alumnos_profesoresDAO dao = new Alumnos_profesoresDAO();
         return dao.introducir_profesor(profe);
     }
+    
+        public long getIdAlumno(int idusuario)
+    {
+        Alumnos_profesoresDAO dao = new Alumnos_profesoresDAO();
+        List<Alumno> lista = dao.getIdAlumno(idusuario);
+        long id = lista.get(0).getIdAlumnos();
+        
+        return id;
+    }
 }

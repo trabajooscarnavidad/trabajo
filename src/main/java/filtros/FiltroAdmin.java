@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -17,13 +18,14 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import model.Asociaciones;
 
 /**
  *
  * @author Miguel Angel Diaz
  */
-@WebFilter(filterName = "FiltroLogin", urlPatterns = {"/password"})
-public class FiltroLogin implements Filter {
+@WebFilter(filterName = "FiltroAdmin", urlPatterns = {""})
+public class FiltroAdmin implements Filter {
 
     private static final boolean debug = true;
 
@@ -32,7 +34,7 @@ public class FiltroLogin implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
 
-    public FiltroLogin() {
+    public FiltroAdmin() {
     }
 
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
@@ -111,10 +113,30 @@ public class FiltroLogin implements Filter {
         Throwable problem = null;
         try {
             if (((HttpServletRequest) request).getSession().getAttribute("nombreLogin") != null) {
+                 boolean ok=false;
+                 //Seguramente esto se podria optimizar sacando la lista directamente del objeto Object y comprobar si contiene el permiso en si
+                 //sin embargo esto de los filtros es muy frustrante ya que tiene que irse rebuildeando el proyecto con los cambios para que los coja
+                 //No me salio directamente asi que casting y recorrer lista. Tambien esta asi por que permito que un usuario tenga varios permisos
+                 //complicandome la vida
+                ArrayList<Asociaciones> list = new ArrayList<Asociaciones>();
 
-                chain.doFilter(request, response);
+                         list =  (ArrayList<Asociaciones>) ((HttpServletRequest) request).getSession().getAttribute("permisos");
+               		for (int i = 0; i < list.size(); i++) {
+			if(list.get(i).getPermisos_idPermisos()==1){
+                            ok=true;
+                            i=list.size();
+                        }}
+            
+                if (ok){
+	
+  chain.doFilter(request, response);
+               
             } else {
-                request.getRequestDispatcher("/errorLogin.html").forward(request, response);
+                request.getRequestDispatcher("/errorPermisos.html").forward(request, response);
+            }
+               
+        } else {
+            request.getRequestDispatcher("/errorLogin.html").forward(request, response);
             }
            
         } catch (Throwable t) {

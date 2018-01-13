@@ -216,7 +216,6 @@ public class UserServicios {
             obj_user.setUsuario(usuario);
             String hash = PasswordHash.getInstance().createHash(passNueva);
             obj_user.setPass(hash);
-            boolean igual = false;
            User obj_user_db = dao.getUserByNombre(usuario); 
             if (obj_user_db != null) //comprueba que existe el usuario
             {
@@ -239,6 +238,12 @@ public class UserServicios {
         }
         return exito;
     }        
-                
+          
+         public User getDatosUsuarioByUsuario(User usuario)
+    {
+        UsersDAO dao = new UsersDAO();
+        
+        return dao.getUserByNombre(usuario.getUsuario());
+    }
                 
 }

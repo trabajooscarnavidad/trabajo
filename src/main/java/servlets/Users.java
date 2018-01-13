@@ -10,7 +10,9 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -18,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Asociaciones;
 import model.User;
 import servicios.PermisosServicios;
 import servicios.UserServicios;
@@ -60,16 +63,15 @@ HashMap root = new HashMap();
                         case 1:
                              root.put("mensaje",Constantes.REGISTRO_CORRECTO);
                               root.put("mensaje2",Constantes.REGISTRO_CORRECTO_2);
-                         //   request.setAttribute("mensaje", Constantes.REGISTRO_CORRECTO);
-                         //   request.setAttribute("mensaje2", Constantes.REGISTRO_CORRECTO_2);
+
                             break;
                         case 2:
                              root.put("errorNombre",Constantes.ERROR_NOMBRE);
-                           // request.setAttribute("errorNombre", Constantes.ERROR_NOMBRE);
+
                             break;
                         case -1:
                                root.put("mensaje",Constantes.ERROR_REGISTRO);
-                        //    request.setAttribute("mensaje", Constantes.ERROR_REGISTRO);
+
                             break;
                     }
                     
@@ -82,26 +84,22 @@ HashMap root = new HashMap();
                         case 0:
                                root.put("mensaje",Constantes.ERROR_TIEMPO);
                                   root.put("mensaje2",Constantes.ERROR_TIEMPO_2);
-                           // request.setAttribute("mensaje", Constantes.ERROR_TIEMPO);
-                           // request.setAttribute("mensaje2", Constantes.ERROR_TIEMPO_2);
+
                             break;
                         case 1:
                                root.put("mensaje",Constantes.CUENTA_ACTIVADA);
                                   root.put("mensaje2",Constantes.CUENTA_ACTIVADA_2);
-                          //  request.setAttribute("mensaje", Constantes.CUENTA_ACTIVADA);
-                          //  request.setAttribute("mensaje2", Constantes.CUENTA_ACTIVADA_2);
+
                             break;
                         case 2:
                                root.put("mensaje",Constantes.YA_ACTIVADA);
                                   root.put("mensaje2",Constantes.CUENTA_ACTIVADA_2);
-                           // request.setAttribute("mensaje", Constantes.YA_ACTIVADA);
-                           // request.setAttribute("mensaje2", Constantes.CUENTA_ACTIVADA_2);
+
                             break;
                         case -1:
                                root.put("mensaje",Constantes.ERROR_ACTIVAR);
                                   root.put("mensaje2",Constantes.ERROR_ACTIVAR_2);
-                       //     request.setAttribute("mensaje", Constantes.ERROR_ACTIVAR);
-                        //    request.setAttribute("mensaje2", Constantes.ERROR_ACTIVAR_2);
+
                             break;
                     }
                     break;
@@ -119,21 +117,23 @@ HashMap root = new HashMap();
                                root.put("nombreUsuario", nombreLogin);
                             
                                 PermisosServicios ps = new PermisosServicios();
+                               List<Asociaciones> a = ps.getAllPermisosbyID(nombreLogin);
                                   root.put("permisos",  ps.getAllPermisosbyID(nombreLogin));
-                            request.getSession().setAttribute("nombreUsuario", nombreLogin);
+                            request.getSession().setAttribute("nombreLogin", nombreLogin);
+                            request.getSession().setAttribute("id", us.getDatosUsuarioByUsuario(u).getIdUsuarios());
                             request.getSession().setAttribute("permisos",  ps.getAllPermisosbyID(nombreLogin));
+                            
 
                             
                             break;
                         case 2:
                                root.put("mensaje",Constantes.ERROR_LOGIN);
                                   root.put("mensaje2",Constantes.ERROR_LOGIN_2);
-                            //request.setAttribute("mensaje", Constantes.ERROR_LOGIN);
-                            //request.setAttribute("mensaje2", Constantes.ERROR_LOGIN_2);
+
                             break;
                         default:
                                root.put("errorLogin",Constantes.ERROR_LOGIN_3);
-                         //   request.setAttribute("errorLogin", Constantes.ERROR_LOGIN_3);
+
                             break;
                     }
                     
@@ -157,11 +157,14 @@ HashMap root = new HashMap();
                     request.setAttribute("mensaje", "El usuario no existe!");
                 }
                 break;
-            case"updatePass":
-                 nombre = request.getParameter("nombreLogin");
+            case"cambiarPass":
+                   nombre = (String) request.getSession().getAttribute("nombreLogin");
+                  Enumeration<String> test = request.getSession().getAttributeNames();
                 String password = request.getParameter("passLogin");
                 String newPassword = request.getParameter("passNueva");
-                
+                 String newPassword2 = request.getParameter("passNueva2");
+                 if (newPassword.equals(newPassword2)){
+                 
                 boolean updated;
                 updated = us.cambiarPass(nombre, password, newPassword);
                 if(updated==true)
@@ -170,7 +173,10 @@ HashMap root = new HashMap();
                 }else
                 {
                     request.setAttribute("mensaje", "La contraseña introducida no es correcta");
-                }
+                }} else {
+                      request.setAttribute("mensaje", "Las nueva contraseñas no concuerda");
+                 }
+
                 break;
             default:
                 break;
@@ -184,13 +190,7 @@ HashMap root = new HashMap();
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
         try {
-      
-            
-            // List<Permisos> permisos = new ArrayList();
-            // permisos.add(ps.getAlumnoById(1));
-           //  root.put("permisos",ps.getAllPermisos());
-            //  root.put("usuarios",ps.getAllUsuarios());
-            //  root.put("usuariosalt",ps.getAllUsuariosSinAlta());
+
              Template temp = Configuration.getInstance().getFreeMarker().getTemplate("login.ftl");
             temp.process(root, response.getWriter());
         } catch (TemplateException ex) {

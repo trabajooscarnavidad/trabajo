@@ -81,11 +81,11 @@
                                         </div>
 
                                     <div class="form-group">
-                                        <label class="sr-only" for="passLogin">Repita la contraseña</label>
-                                        <input type="password" name="passLogin" placeholder="Repita la contraseña actual..." class="form-password form-control" id="passLogin">
+                                        <label class="sr-only" for="passNueva2">Repita la contraseña</label>
+                                        <input type="password" name="passNueva2" placeholder="Repita la contraseña actual..." class="form-password form-control" id="passLogin">
                                         </div>
 
-                                    <button type="submit" class="btn">Recuperar contraseña</button>
+                                    <button type="submit" class="btn">Cambiar contraseña</button>
                                     </form>
                                 </div>                           
                             </div>

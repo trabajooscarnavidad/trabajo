@@ -5,7 +5,14 @@
  */
 package servlets;
 
+import config.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,7 +41,8 @@ public class Asignaturas extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+HashMap root = new HashMap();
+response.setContentType("text/html;charset=UTF-8");
         AsignaturasServicios as = new AsignaturasServicios();
         String op = request.getParameter("accion");
         Asignatura a = new Asignatura();
@@ -49,32 +57,56 @@ public class Asignaturas extends HttpServlet {
         }
             switch (op) {
                 case "inicio":
-                    request.setAttribute("asignaturas", as.getAllAsignaturas());
-                    request.setAttribute("cursos", as.getAllcursos());
-                    request.setAttribute("profesores", as.getAllprofesores());
-                    request.getRequestDispatcher("/pintarListaAsignaturas.jsp").forward(request, response);
+                       root.put("asignaturas", as.getAllAsignaturas());
+                          root.put("cursos", as.getAllcursos());
+                             root.put("profesores", as.getAllprofesores());
+                             
+                                         
+       
+        try {
+      
+             Template temp = Configuration.getInstance().getFreeMarker().getTemplate("asignaturas.ftl");
+            temp.process(root, response.getWriter());
+        } catch (TemplateException ex) {
+            Logger.getLogger(Permisos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
                     break;
                 case "insertar":
                     a = as.addAsignatura(a);
                     if (a != null) {
                         filas = 1;
                     }
-                    request.setAttribute("asignaturas", as.getAllAsignaturas());
-                    request.setAttribute("cursos", as.getAllcursos());
-                    request.setAttribute("profesores", as.getAllprofesores());
-                    request.getRequestDispatcher("/pintarListaAsignaturas.jsp").forward(request, response);
-                    
+                      root.put("asignaturas", as.getAllAsignaturas());
+                          root.put("cursos", as.getAllcursos());
+                             root.put("profesores", as.getAllprofesores());
+                      try {
+      
+             Template temp = Configuration.getInstance().getFreeMarker().getTemplate("asignaturas.ftl");
+            temp.process(root, response.getWriter());
+        } catch (TemplateException ex) {
+            Logger.getLogger(Permisos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
                     break;
                 case "insertar1":
                     c = as.addCurso(c);
                     if (c != null) {
                         filas = 1;
                     }
-                    request.setAttribute("asignaturas", as.getAllAsignaturas());
-                    request.setAttribute("cursos", as.getAllcursos());
-                    request.setAttribute("profesores", as.getAllprofesores());
-                    request.getRequestDispatcher("/pintarListaAsignaturas.jsp").forward(request, response);
-                    
+                      root.put("asignaturas", as.getAllAsignaturas());
+                          root.put("cursos", as.getAllcursos());
+                             root.put("profesores", as.getAllprofesores());
+                             
+                     try {
+      
+             Template temp = Configuration.getInstance().getFreeMarker().getTemplate("asignaturas.ftl");
+            temp.process(root, response.getWriter());
+        } catch (TemplateException ex) {
+            Logger.getLogger(Permisos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
                     break;
                 case "comprobar_union":
                     Asignatura_curso r = new Asignatura_curso();
@@ -113,7 +145,7 @@ public class Asignaturas extends HttpServlet {
                     response.getWriter().print(as.ver_profesores(asignatura1));
                     break;
             }
-        }
+  }
 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

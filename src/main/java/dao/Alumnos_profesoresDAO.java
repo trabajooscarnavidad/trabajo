@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Alumno;
-import model.Asignatura;
 import model.Profesor;
 import model.User;
 import org.apache.commons.dbutils.QueryRunner;
@@ -106,5 +105,22 @@ public class Alumnos_profesoresDAO
             DBConnection.getInstance().cerrarConexion(con);
         }
         return (int) resultado;
+    }
+    
+       public List<Alumno> getIdAlumno(int Usuarios_idUsuarios) {
+    List<Alumno> lista = null;
+        Connection con = null;
+        try {
+            con = DBConnection.getInstance().getConnection();
+            QueryRunner qr = new QueryRunner();
+            ResultSetHandler<List<Alumno>> h = new BeanListHandler<Alumno>(Alumno.class);
+            lista = qr.query(con, "select idAlumnos from Alumnos where Usuarios_idUsuarios = ?", h, Usuarios_idUsuarios);
+               
+        } catch (Exception ex) {
+            Logger.getLogger(Alumnos_profesoresDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBConnection.getInstance().cerrarConexion(con);
+        }
+        return lista;
     }
 }
