@@ -11,39 +11,35 @@ package model;
  */
 public class Profesor
 {
-    private long idProfesores;
-    private long Usuarios_idUsuarios;
+    private int idProfesores;
+    private int Usuarios_idUsuarios;
     private String Nombre;
 
-    public long getIdProfesores()
-    {
+    public int getIdProfesores() {
         return idProfesores;
     }
 
-    public void setIdProfesores(long idProfesores)
-    {
+    public void setIdProfesores(int idProfesores) {
         this.idProfesores = idProfesores;
     }
 
-    public long getUsuarios_idUsuarios()
-    {
+    public int getUsuarios_idUsuarios() {
         return Usuarios_idUsuarios;
     }
 
-    public void setUsuarios_idUsuarios(long Usuarios_idUsuarios)
-    {
+    public void setUsuarios_idUsuarios(int Usuarios_idUsuarios) {
         this.Usuarios_idUsuarios = Usuarios_idUsuarios;
     }
 
-    public String getNombre()
-    {
+    public String getNombre() {
         return Nombre;
     }
 
-    public void setNombre(String Nombre)
-    {
+    public void setNombre(String Nombre) {
         this.Nombre = Nombre;
     }
+
+    
     
     
 }

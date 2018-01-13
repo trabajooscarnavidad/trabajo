@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Asignatura;
 import model.Asignatura_curso;
+import model.Asignatura_profesor;
 import model.Curso;
 import servicios.AsignaturasServicios;
 
@@ -116,6 +117,14 @@ response.setContentType("text/html;charset=UTF-8");
                     response.getWriter().print(as.comprobar_union(r));
                     break;
                     
+                case "comprobar_union2":
+                    Asignatura_profesor m = new Asignatura_profesor();
+                    m.setAsignaturas_idAsignaturas(Integer.parseInt(request.getParameter("asignatura2")));
+                    m.setProfesores_idProfesores(Integer.parseInt(request.getParameter("profesor")));
+                    
+                    response.getWriter().print(as.comprobar_union2(m));
+                    break;
+                    
                 case "relacionar":
                     Asignatura_curso s = new Asignatura_curso();
                     s.setAsignaturas_idAsignaturas(Integer.parseInt(request.getParameter("asignatura")));
@@ -130,6 +139,22 @@ response.setContentType("text/html;charset=UTF-8");
                     y.setCursos_idCursos(Integer.parseInt(request.getParameter("curso")));
                     
                     response.getWriter().print(as.quitar_relacion(y));
+                    break;
+                    
+                case "relacionar2":
+                    Asignatura_profesor w = new Asignatura_profesor();
+                    w.setAsignaturas_idAsignaturas(Integer.parseInt(request.getParameter("asignatura")));
+                    w.setProfesores_idProfesores(Integer.parseInt(request.getParameter("profesor")));
+                    
+                    response.getWriter().print(as.relacionar2(w));
+                    break;
+                    
+                case "quitar_relacion2":
+                    Asignatura_profesor t = new Asignatura_profesor();
+                    t.setAsignaturas_idAsignaturas(Integer.parseInt(request.getParameter("asignatura")));
+                    t.setProfesores_idProfesores(Integer.parseInt(request.getParameter("profesor")));
+                    
+                    response.getWriter().print(as.quitar_relacion2(t));
                     break;
                     
                 case "ver_asignaturas":
