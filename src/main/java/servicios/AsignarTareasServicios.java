@@ -31,7 +31,7 @@ public class AsignarTareasServicios
         TareasDAO dao = new TareasDAO();
         boolean exito = false;
         Tarea tarea = new Tarea();
-        LocalDateTime fechaFormat = tratarFechas(fecha); 
+        LocalDateTime fechaFormat = tratarFechas(fecha);
         tarea.setFecha(fechaFormat);
         tarea.setAsignaturas_idAsignaturas(idAsignatura);
         tarea.setNombre(nombre);
@@ -53,28 +53,29 @@ public class AsignarTareasServicios
         tarea.setTareas_idTareas(Integer.parseInt(idTarea));
         tarea.setAsignaturas_idAsignaturas(Integer.parseInt(idAsignatura));
         tarea.setNombre(nombre);
-        LocalDateTime fechaFormat = tratarFechas(fecha); 
+        LocalDateTime fechaFormat = tratarFechas(fecha);
         tarea.setFecha(fechaFormat);
         filas = dao.modificarTarea(tarea);
         return filas;
     }
-    public boolean borrarTarea(String idTarea, String idAsignatura, String nombre, String fecha)
+
+    public int borrarTarea(String idTarea, String idAsignatura, String nombre, String fecha)
     {
-        boolean exito = false;
+        int filas = 0;
         TareasDAO dao = new TareasDAO();
         Tarea tarea = new Tarea();
         tarea.setTareas_idTareas(Integer.parseInt(idTarea));
         tarea.setAsignaturas_idAsignaturas(Integer.parseInt(idAsignatura));
         tarea.setNombre(nombre);
-        LocalDateTime fechaFormat = tratarFechas(fecha); 
+        LocalDateTime fechaFormat = tratarFechas(fecha);
         tarea.setFecha(fechaFormat);
-        exito = dao.borrarTarea(tarea);
-        return exito;
+        filas = dao.borrarTarea(tarea);
+        return filas;
     }
-    
+
     public LocalDateTime tratarFechas(String fechaFormat)
     {
-        
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime dateTime = LocalDateTime.parse(fechaFormat, formatter);
         return dateTime;

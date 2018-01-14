@@ -12,14 +12,16 @@ import org.springframework.jdbc.core.JdbcTemplate;
  */
 public class TareasDAO
 {
+
     public boolean asignarTarea(Tarea tarea)
     {
-        boolean exito = false; 
+        boolean exito = false;
         JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
-       // exito = jtm.query("INSERT INTO Tareas (Asignaturas_idAsignaturas,Nombre,Fecha) VALUES = (?,?,?)",tarea.get, new BeanPropertyRowMapper(Tarea.class));
-            return exito;
+        // exito = jtm.query("INSERT INTO Tareas (Asignaturas_idAsignaturas,Nombre,Fecha) VALUES = (?,?,?)",tarea.get, new BeanPropertyRowMapper(Tarea.class));
+        return exito;
     }
-       public List<Tarea> getAllTareas()
+
+    public List<Tarea> getAllTareas()
     {
 
         JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
@@ -30,16 +32,17 @@ public class TareasDAO
 
     public int modificarTarea(Tarea tarea)
     {
-       int filas = 0; 
-       JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
-       filas = jtm.update("UPDATE TAREAS SET AND Nombre = ?,FechA = ? WHERE Asignaturas_idAsignaturas = ?", tarea.getNombre(), tarea.getFecha(),tarea.getAsignaturas_idAsignaturas(),new BeanPropertyRowMapper(Tarea.class));
-       return filas;
+        int filas = 0;
+        JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
+        filas = jtm.update("UPDATE TAREAS SET AND Nombre = ?,FechA = ? WHERE Asignaturas_idAsignaturas = ?", tarea.getNombre(), tarea.getFecha(), tarea.getAsignaturas_idAsignaturas(), new BeanPropertyRowMapper(Tarea.class));
+        return filas;
     }
-    public boolean borrarTarea(Tarea tarea)
+
+    public int borrarTarea(Tarea tarea)
     {
-       boolean exito = false; 
-       JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
-       //exito = jtm.query("DELETE FROM TAREAS WHERE Asignaturas_idAsignaturas = ?,Nombre = ?,FechA = ?", ,new BeanPropertyRowMapper(Tarea.class));
-       return exito;
+        int filas = 0;
+        JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
+        filas = jtm.update("DELETE FROM TAREAS WHERE Asignaturas_idAsignaturas = ?,Nombre = ?,FechA = ?",tarea.getAsignaturas_idAsignaturas(),tarea.getNombre(),tarea.getFecha(), new BeanPropertyRowMapper(Tarea.class));
+        return filas;
     }
 }

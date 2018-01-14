@@ -82,8 +82,8 @@ public class AsignarTareas extends HttpServlet
                 }
                 break;
             case "borrar":
-                exito = ats.borrarTarea(idTarea, idAsignatura, nombre, fecha);
-                if (exito == true)
+                filas = ats.borrarTarea(idTarea, idAsignatura, nombre, fecha);
+                if (filas>0)
                 {
                     root.put("mensaje", "La tarea ha sido modificada");
 
