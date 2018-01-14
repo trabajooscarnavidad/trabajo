@@ -44,6 +44,11 @@ public class AsignarTareasServicios
         TareasDAO dao = new TareasDAO();
         return dao.getAllTareas();
     }
+    public List <Tarea> getAllAlumnosTareas()
+    {
+        TareasDAO dao = new TareasDAO();
+        return dao.getAllAlumnosTareas();
+    }
 
     public int modificarTarea(String idTarea, String idAsignatura, String nombre, String fecha)
     {

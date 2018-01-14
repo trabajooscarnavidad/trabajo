@@ -5,8 +5,14 @@
  */
 package servlets;
 
+import config.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,12 +49,36 @@ public class Tareas extends HttpServlet
         String idAsignatura = request.getParameter("idAsignatura");
         String realizada = request.getParameter("realizada");
         String op = request.getParameter("accion");
+        HashMap root = new HashMap();
         int filas = 0;
         switch(op)
         {
             case "actualizar":
                 filas = ats.actualizarRealizada(idTarea,idAsignatura,realizada);
-                
+                if(filas>0)
+                {
+                    root.put("mensaje","Tu tarea ha sido realizada");
+                }else
+                {
+                    root.put("mensaje","Error al actualizar tu tarea");
+                }
+              break;  
+        }
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter())
+        {
+            try
+            {
+                root.put("alumnosTareas", ats.getAllAlumnosTareas());
+                root.put("tareas", ats.getAllTareas());
+                //  root.put("usuariosalt",ps.getAllUsuariosSinAlta());
+                Template temp = Configuration.getInstance().getFreeMarker().getTemplate("Tareas.ftl");
+                temp.process(root, response.getWriter());
+            } catch (TemplateException ex)
+            {
+                Logger.getLogger(Permisos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
         
     }
