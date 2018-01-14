@@ -46,6 +46,12 @@ public class AsignarTareasServicios
         return dao.getAllTareas(alumno);
     }
     
+        public List<Tarea> getAllTareas2()
+    {
+        TareasDAO dao = new TareasDAO();
+        return dao.getAllTareas2();
+    }
+    
     public int marcarHecha (int id_tarea, int id_alumno, int realizada)
     {
         TareasDAO dao = new TareasDAO();
@@ -63,7 +69,7 @@ public class AsignarTareasServicios
         int filas = 0;
         TareasDAO dao = new TareasDAO();
         Tarea tarea = new Tarea();
-        tarea.setTareas_idTareas(Integer.parseInt(idTarea));
+        tarea.setIdTareas(Integer.parseInt(idTarea));
         tarea.setAsignaturas_idAsignaturas(Integer.parseInt(idAsignatura));
         tarea.setNombre(nombre);
         LocalDateTime fechaFormat = tratarFechas(fecha);
@@ -77,15 +83,12 @@ public class AsignarTareasServicios
         int filas = 0;
         TareasDAO dao = new TareasDAO();
         Tarea tarea = new Tarea();
-        tarea.setTareas_idTareas(Integer.parseInt(idTarea));
+        tarea.setIdTareas(Integer.parseInt(idTarea));
         tarea.setAsignaturas_idAsignaturas(Integer.parseInt(idAsignatura));
-        tarea.setNombre(nombre);
-        LocalDateTime fechaFormat = tratarFechas(fecha);
-        tarea.setFecha(fechaFormat);
         filas = dao.borrarTarea(tarea);
         return filas;
     }
-
+    
     public LocalDateTime tratarFechas(String fechaFormat)
     {
 
@@ -94,15 +97,5 @@ public class AsignarTareasServicios
         return dateTime;
     }
 
-    public int actualizarRealizada(String idTarea, String idAsignatura, String realizada)
-    {
-        int filas = 0;
-        TareasDAO dao = new TareasDAO();
-        Tarea tarea = new Tarea();
-        tarea.setTareas_idTareas(Integer.parseInt(idTarea));
-        tarea.setAsignaturas_idAsignaturas(Integer.parseInt(idTarea));
-        tarea.setRealizada(Boolean.valueOf(realizada));
-        filas = dao.actualizarRealizada(tarea);
-        return filas;
-    }
+ 
 }

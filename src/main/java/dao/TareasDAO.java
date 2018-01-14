@@ -22,10 +22,16 @@ public class TareasDAO
 {
 
     public int asignarTarea(Tarea tarea)
-    {
-        int filas = 0;
+    {   int filas = 0;
+        try {
+     
         JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
-        filas = jtm.update("INSERT INTO Tareas (Asignaturas_idAsignaturas,Nombre,Fecha) VALUES = (?,?,?)", tarea.getAsignaturas_idAsignaturas(), tarea.getNombre(), tarea.getFecha(), new BeanPropertyRowMapper(Tarea.class));
+        filas = jtm.update("INSERT INTO Tareas (Asignaturas_idAsignatura,Nombre,Fecha) VALUES (?,?,?)", tarea.getAsignaturas_idAsignaturas(), tarea.getNombre(), tarea.getFecha());
+       
+        }catch (Exception ex) {
+             Logger.getLogger(TareasDAO.class.getName()).log(Level.SEVERE, null, ex);
+ 
+         }
         return filas;
     }
 
@@ -69,34 +75,49 @@ public class TareasDAO
         return (int) resultado;
     }
 
-    public int modificarTarea(Tarea tarea)
-    {
-        int filas = 0;
+      public int modificarTarea(Tarea tarea)
+    
+           {   int filas = 0;
+        try {
+     
         JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
-        filas = jtm.update("UPDATE TAREAS SET AND Nombre = ?,FechA = ? WHERE Asignaturas_idAsignaturas = ?", tarea.getNombre(), tarea.getFecha(), tarea.getAsignaturas_idAsignaturas(), new BeanPropertyRowMapper(Tarea.class));
+        filas = jtm.update("UPDATE Tareas SET Nombre = ?,Fecha = ? WHERE IdTareas = ? AND Asignaturas_idAsignaturas = ?", tarea.getNombre(), tarea.getFecha(),tarea.getIdTareas(), tarea.getAsignaturas_idAsignaturas());
+       
+        }catch (Exception ex) {
+             Logger.getLogger(TareasDAO.class.getName()).log(Level.SEVERE, null, ex);
+ 
+         }
         return filas;
     }
-
+      
     public int borrarTarea(Tarea tarea)
-    {
-        int filas = 0;
+       
+           {   int filas = 0;
+        try {
+     
         JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
-        filas = jtm.update("DELETE FROM TAREAS WHERE Asignaturas_idAsignaturas = ?,Nombre = ?,FechA = ?", tarea.getAsignaturas_idAsignaturas(), tarea.getNombre(), tarea.getFecha(), new BeanPropertyRowMapper(Tarea.class));
+        filas = jtm.update("DELETE FROM Tareas WHERE idTareas = ?", tarea.getIdTareas());
+       
+        }catch (Exception ex) {
+             Logger.getLogger(TareasDAO.class.getName()).log(Level.SEVERE, null, ex);
+ 
+         }
         return filas;
     }
-
-    public int actualizarRealizada(Tarea tarea)
-    {
-        int filas = 0;
-        JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
-        filas = jtm.update("UPDATE Alumnos_has_Tareas WHERE Alumnos_idAlumnos = ?, Tareas_idTareas = ? SET Realizada", tarea.getAlumnos_idAlumnos(), tarea.getTareas_idTareas(), tarea.isRealizada(), new BeanPropertyRowMapper(Tarea.class));
-        return filas;
-    }
-
     public List<Tarea> getAllAlumnosTareas()
     {
         JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
         List<Tarea> lista = jtm.query("SELECT * FROM Alumnos_has_Tareas", new BeanPropertyRowMapper(Tarea.class));
         return lista;
     }
+    
+       public List<Tarea> getAllTareas2()
+    {
+
+        JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
+        List<Tarea> lista = jtm.query("SELECT * FROM Tareas", new BeanPropertyRowMapper(Tarea.class));
+
+        return lista;
+    }
+
 }

@@ -18,9 +18,10 @@
                 document.getElementById("idAsignatura").value = id;
                 document.getElementById("nombreAsignatura").value = nombre;
             }
-                 function cargarTarea (id, nombre, fecha) {
+                 function cargarTarea (id, id2, nombre, fecha) {
                 document.getElementById("idTarea").value = id;
-                document.getElementById("nombreTarea").value = nombre;
+                    document.getElementById("idAsignatura").value = id2;
+                document.getElementById("nombre").value = nombre;
                     document.getElementById("fecha").value = fecha;
             }
 
@@ -55,7 +56,7 @@
                                 Tarea
                                 <br>
                                 <input type="hidden" id="idTarea" name="idTarea" size="1" value="<#if idAlu??>${idAlu}</#if>">
-                                <input type="text" name="nombreTarea" id="nombreTarea" value="<#if nomAlu??>${nomAlu}</#if>">
+                                <input type="text" name="nombre" id="nombre" value="<#if nomAlu??>${nomAlu}</#if>">
                                <input type="datetime-local" name="fecha" id="fecha"><br>
                             </td>
                             <td>
@@ -85,6 +86,7 @@
                     
                     <#list asignaturas as asignatura>
                         <tr>
+                            <td>${asignatura.idAsignaturas}</td>
                             <td>${asignatura.nombre}</td>
                             <td>
                         <input type="button" value="✔" 
@@ -101,7 +103,14 @@
                     
                     <#list tareas as tarea>
                         <tr>
-                            <td>${tarea.idTareas}</td><td>${tarea.Asignaturas_idAsignaturas}</td><td>${tarea.nombre}</td><td>${tarea.fecha}</td>
+                            <td>${tarea.idTareas}</td><td>${tarea.asignaturas_idAsignaturas}</td><td>${tarea.nombre}</td><td>${tarea.fecha}</td>
+                           <td> <input type="button" value="✔" 
+                               onclick="cargarTarea('${tarea.idTareas}',
+                                           '${tarea.asignaturas_idAsignaturas}',
+                                           '${tarea.nombre}',
+                                           '${tarea.fecha}')
+                                           "/>
+                            </td>
                         </tr>
                    </#list>
                 </table>

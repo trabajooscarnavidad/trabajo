@@ -9,21 +9,19 @@ import java.time.LocalDateTime;
 public class Tarea
 {
 
-    private int tareas_idTareas;
+    private int idTareas;
     private int asignaturas_idAsignaturas;
-    private int Alumnos_idAlumnos;
     private String nombre;
     private LocalDateTime fecha;
-    private boolean realizada;
 
-    public int getTareas_idTareas()
+    public int getIdTareas()
     {
-        return tareas_idTareas;
+        return idTareas;
     }
 
-    public void setTareas_idTareas(int tareas_idTareas)
+    public void setIdTareas(int idTareas)
     {
-        this.tareas_idTareas = tareas_idTareas;
+        this.idTareas = idTareas;
     }
 
     public int getAsignaturas_idAsignaturas()
@@ -36,21 +34,6 @@ public class Tarea
         this.asignaturas_idAsignaturas = asignaturas_idAsignaturas;
     }
 
-    public int getAlumnos_idAlumnos()
-    {
-        return Alumnos_idAlumnos;
-    }
-
-    public void setAlumnos_idAlumnos(int Alumnos_idAlumnos)
-    {
-        this.Alumnos_idAlumnos = Alumnos_idAlumnos;
-    }
-
-   
-
-    
-
-   
 
     public String getNombre()
     {
@@ -71,14 +54,6 @@ public class Tarea
     {
         this.fecha = fecha;
     }
-    public boolean isRealizada()
-    {
-        return realizada;
-    }
 
-    public void setRealizada(boolean realizada)
-    {
-        this.realizada = realizada;
-    }
 
 }
