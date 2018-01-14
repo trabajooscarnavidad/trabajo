@@ -81,7 +81,7 @@ public class AsignarTareasServicios
     public LocalDateTime tratarFechas(String fechaFormat)
     {
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         LocalDateTime dateTime = LocalDateTime.parse(fechaFormat, formatter);
         return dateTime;
     }

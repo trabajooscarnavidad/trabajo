@@ -55,6 +55,12 @@ public class AsignarTareas extends HttpServlet
         String op = request.getParameter("accion");
         HashMap root = new HashMap();
         int filas;
+        
+                
+               if (op==null){
+            op="salir";
+        }   
+        
         switch (op)
         {
             case "asignar":
