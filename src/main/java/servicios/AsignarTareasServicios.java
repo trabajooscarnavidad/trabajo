@@ -25,18 +25,18 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class AsignarTareasServicios
 {
 
-    public boolean asignarTarea(int idAsignatura, String nombre, String fecha)
+    public int asignarTarea(int idAsignatura, String nombre, String fecha)
     {
 
         TareasDAO dao = new TareasDAO();
-        boolean exito = false;
+       int filas = 0;
         Tarea tarea = new Tarea();
         LocalDateTime fechaFormat = tratarFechas(fecha);
         tarea.setFecha(fechaFormat);
         tarea.setAsignaturas_idAsignaturas(idAsignatura);
         tarea.setNombre(nombre);
-        exito = dao.asignarTarea(tarea);
-        return exito;
+        filas = dao.asignarTarea(tarea);
+        return filas;
     }
 
     public List<Tarea> getAllTareas()
@@ -79,5 +79,17 @@ public class AsignarTareasServicios
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime dateTime = LocalDateTime.parse(fechaFormat, formatter);
         return dateTime;
+    }
+
+    public int actualizarRealizada(String idTarea, String idAsignatura, String realizada)
+    {
+        int filas = 0;
+        TareasDAO dao = new TareasDAO();
+        Tarea tarea = new Tarea();
+        tarea.setTareas_idTareas(Integer.parseInt(idTarea));
+        tarea.setAsignaturas_idAsignaturas(Integer.parseInt(idTarea));
+        tarea.setRealizada(Boolean.valueOf(realizada));
+        filas = dao.actualizarRealizada(tarea);
+        return filas;
     }
 }

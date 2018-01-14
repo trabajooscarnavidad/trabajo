@@ -13,12 +13,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class TareasDAO
 {
 
-    public boolean asignarTarea(Tarea tarea)
+    public int asignarTarea(Tarea tarea)
     {
-        boolean exito = false;
+        int filas = 0;
         JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
-        // exito = jtm.query("INSERT INTO Tareas (Asignaturas_idAsignaturas,Nombre,Fecha) VALUES = (?,?,?)",tarea.get, new BeanPropertyRowMapper(Tarea.class));
-        return exito;
+        filas = jtm.update("INSERT INTO Tareas (Asignaturas_idAsignaturas,Nombre,Fecha) VALUES = (?,?,?)",tarea.getAsignaturas_idAsignaturas(),tarea.getNombre(),tarea.getFecha(), new BeanPropertyRowMapper(Tarea.class));
+        return filas;
     }
 
     public List<Tarea> getAllTareas()
@@ -43,6 +43,14 @@ public class TareasDAO
         int filas = 0;
         JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
         filas = jtm.update("DELETE FROM TAREAS WHERE Asignaturas_idAsignaturas = ?,Nombre = ?,FechA = ?",tarea.getAsignaturas_idAsignaturas(),tarea.getNombre(),tarea.getFecha(), new BeanPropertyRowMapper(Tarea.class));
+        return filas;
+    }
+
+    public int actualizarRealizada(Tarea tarea)
+    {
+        int filas = 0;
+        JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
+        filas = jtm.update("UPDATE Alumnos_has_Tareas WHERE Alumnos_idAlumnos = ?, Tareas_idTareas = ? SET Realizada",tarea.getAlumnos_idAlumnos(),tarea.getTareas_idTareas(),tarea.isRealizada(), new BeanPropertyRowMapper(Tarea.class));
         return filas;
     }
 }

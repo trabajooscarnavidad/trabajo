@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import servicios.AsignarTareasServicios;
 
 /**
  *
@@ -37,7 +38,18 @@ public class Tareas extends HttpServlet
             throws ServletException, IOException
     {
         
-        
+        AsignarTareasServicios ats = new AsignarTareasServicios();
+        String idTarea = request.getParameter("idTarea");
+        String idAsignatura = request.getParameter("idAsignatura");
+        String realizada = request.getParameter("realizada");
+        String op = request.getParameter("accion");
+        int filas = 0;
+        switch(op)
+        {
+            case "actualizar":
+                filas = ats.actualizarRealizada(idTarea,idAsignatura,realizada);
+                
+        }
         
     }
 

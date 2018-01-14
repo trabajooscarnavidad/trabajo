@@ -53,15 +53,13 @@ public class AsignarTareas extends HttpServlet
         String fecha = request.getParameter("fecha");
         String nombre = request.getParameter("nombre");
         String op = request.getParameter("accion");
-        String realizada = request.getParameter("realizada");
         HashMap root = new HashMap();
-        boolean exito;
         int filas;
         switch (op)
         {
             case "asignar":
-                exito = ats.asignarTarea(Integer.parseInt(idAsignatura), nombre, fecha);
-                if (exito == true)
+                filas = ats.asignarTarea(Integer.parseInt(idAsignatura), nombre, fecha);
+                if (filas>0)
                 {
                     root.put("mensaje", "La tarea ha sido añadida");
 
@@ -71,8 +69,8 @@ public class AsignarTareas extends HttpServlet
                 }
                 break;
             case "modificar":
-                filas = ats.modificarTarea(idTarea,idAsignatura,nombre,fecha);
-                if (filas>0)
+                filas = ats.modificarTarea(idTarea, idAsignatura, nombre, fecha);
+                if (filas > 0)
                 {
                     root.put("mensaje", "La tarea ha sido modificada");
 
@@ -83,7 +81,7 @@ public class AsignarTareas extends HttpServlet
                 break;
             case "borrar":
                 filas = ats.borrarTarea(idTarea, idAsignatura, nombre, fecha);
-                if (filas>0)
+                if (filas > 0)
                 {
                     root.put("mensaje", "La tarea ha sido modificada");
 
