@@ -44,23 +44,7 @@
         </script>
     </head>
     <body>
-        <nav class="navbar navbar-inverse" style="border-radius: 0">
-            <div class="container-fluid">
-                <div style=" margin-right: 100px" class="navbar-header">
-                    <span style="cursor: default" class="navbar-brand"><strong><#if nombreUsuario??>${nombreUsuario}</#if></strong></span>
-                </div>
-                <ul class="nav navbar-nav">
-                    <li><a href="/sesion/alumnos">Alumnos</a></li>
-                    <li><a href="/sesion/asignaturas">Asignaturas</a></li>
-                    <li class="active"><a style="cursor: default; pointer-events: none" href="#">Notas</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="../users?accion=logout"><span class="glyphicon glyphicon-log-out"></span> Cerrar sesión</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+      <#include "menu.ftl">
         <div class="container">
             <div class="col-xs-8 col-xs-offset-2">
                 <h1>Notas</h1>

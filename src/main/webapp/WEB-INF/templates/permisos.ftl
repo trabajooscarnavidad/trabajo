@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="/assets/css/permisos.css">
         </head>
     <body>  
+        <#include "menu.ftl">
     <#if content??>
         <div>${content}</div>
     <#else>
@@ -22,6 +23,7 @@
     <#else>
         <div>No content</div>
     </#if>
+        
        <form action="permisos" name="formulario1" method="get" >
           <input type="hidden" name ="op" id="op" value="test1"/>
   

@@ -10,6 +10,7 @@
         <title>Informe de alumnos</title>
     </head>
     <body>
+        <#include "menu.ftl">
         <h1>Informe de alumnos</h1>
         <hr/>
         <h3>Todas las notas del alumno: <font color="red"><#if alumno??>${alumno}</#if></font> iniciado en sesión.</h3>

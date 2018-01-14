@@ -49,7 +49,7 @@
         </#if>
 
         </head>
-
+   <#include "menu.ftl">
     <body>
         <div class="top-content">
             <div class="inner-bg">
@@ -189,8 +189,8 @@
                 </div>
             </footer>
 
-        <script src="assets/js/jquery-1.11.1.min.js"></script>
-        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+      
         <script src="assets/js/jquery.backstretch.min.js"></script>
         <script src="assets/js/scripts.js"></script>
 

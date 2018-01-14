@@ -37,6 +37,7 @@
     </head>
 
 <body>
+    <#include "menu.ftl">
     <div class="top-content">
         <div class="inner-bg">
             <div class="container">
@@ -82,7 +83,7 @@
 
                                     <div class="form-group">
                                         <label class="sr-only" for="passNueva2">Repita la contraseña</label>
-                                        <input type="password" name="passNueva2" placeholder="Repita la contraseña actual..." class="form-password form-control" id="passLogin">
+                                        <input type="password" name="passNueva2" placeholder="Repita la nueva contraseña..." class="form-password form-control" id="passLogin">
                                         </div>
 
                                     <button type="submit" class="btn">Cambiar contraseña</button>

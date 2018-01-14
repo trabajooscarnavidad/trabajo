@@ -13,6 +13,8 @@
             }
         </style>
         <title>Registro alumnos profesores</title>
+                <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    
     <script src="assets/js/jquery-3.2.1.js"></script>
         <script>
             function registrar_alumno()
@@ -68,6 +70,7 @@
         </script>
     </head>
     <body>
+<#include "menu.ftl">
         
         <h2>REGISTRAR ALUMNOS/PROFESORES</h2>
         <hr/>

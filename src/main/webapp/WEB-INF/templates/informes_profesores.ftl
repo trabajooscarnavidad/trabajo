@@ -10,6 +10,7 @@
         <title>Informe de profesores</title>
     </head>
     <body>
+        <#include "menu.ftl">
         <h1>Informe de profesores</h1>
         <hr/>
         
