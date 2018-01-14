@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package dao;
 
 import java.sql.PreparedStatement;
@@ -17,10 +13,6 @@ import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-/**
- *
- * @author ivan
- */
 public class PermisosDAO {
       public List<Permiso> getAllPermisosJDBCTemplate() {
      
@@ -62,8 +54,8 @@ filas = jtm.batchUpdate("INSERT INTO Usuarios_has_Permisos (Usuarios_idUsuarios,
     });
 }
 catch (DataAccessException e){
-//catch (DataIntegrityViolationException e) {
-       //System.out.println("repe");
+
+       System.out.println("el usuario ya tenia asignado ese permiso");
     }
 
           return filas ;
@@ -94,8 +86,8 @@ try {
     });
 }
 catch (DataAccessException e){
-//catch (DataIntegrityViolationException e) {
-        //System.out.println("history already exist");
+
+        System.out.println("el usuario no tiene ese permiso");
     }
           return filas;
 }
@@ -117,7 +109,6 @@ catch (DataAccessException e){
      
         JdbcTemplate jtm = new JdbcTemplate(
           DBConnection.getInstance().getDataSource());
-        //where Usuarios_idUsuarios=35" //jtm.queryForObject
         List <Asociaciones>permisos = jtm.query("Select * from Usuarios_has_Permisos where Usuarios_idUsuarios=?", new Object[]{id}, 
           new BeanPropertyRowMapper(Asociaciones.class));
         
@@ -125,4 +116,18 @@ catch (DataAccessException e){
         return permisos;
     }
       
+          public int addpermiso(Permiso p) {
+              int filas=0;
+        try {
+            
+            JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
+            filas = jtm.update("INSERT INTO Permisos(Valor) VALUES(?)", p.getValor());
+
+        } catch (Exception ex) {
+            Logger.getLogger(PermisosDAO.class.getName()).log(Level.SEVERE, null, ex);
+           
+        }
+        return filas;
+    }
+
 }

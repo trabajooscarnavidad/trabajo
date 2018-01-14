@@ -71,7 +71,8 @@
     </head>
     <body>
 <#include "menu.ftl">
-        
+        <div style="margin-left:1%">
+             <div class="col-xs-6 col-xs-offset-2" style="margin: 0%">
         <h2>REGISTRAR ALUMNOS/PROFESORES</h2>
         <hr/>
         <h2>Alumnos</h2>
@@ -82,7 +83,7 @@
         Mayor: <input type="checkbox" id="alumno_mayor"><br>
         <button onclick="registrar_alumno()" >Registrar</button><br><br>
         
-        <table border=1 cellspacing=0 cellpadding=2 bordercolor="666633">
+        <table class="table table-striped">
                 <tr>
                     <th>Id</th>
                     <th>Id usuario</th>
@@ -115,7 +116,7 @@
         
         <br>
         
-        <table border=1 cellspacing=0 cellpadding=2 bordercolor="666633">   
+        <table class="table table-striped">   
                 <tr>
                     <th>Id</th>
                     <th>Id usuario</th>
@@ -131,5 +132,7 @@
         </table>
         <br>
         <div id="espacio"></div>
+        </div>
+        </div>
     </body>
 </html>

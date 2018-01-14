@@ -33,22 +33,21 @@ public class Password extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+            throws ServletException, IOException {
 
-HashMap root = new HashMap();
+        HashMap root = new HashMap();
 
-         
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-        try {
+            try {
 
-             Template temp = Configuration.getInstance().getFreeMarker().getTemplate("password.ftl");
-            temp.process(root, response.getWriter());
-        } catch (TemplateException ex) {
-            Logger.getLogger(Permisos.class.getName()).log(Level.SEVERE, null, ex);
+                Template temp = Configuration.getInstance().getFreeMarker().getTemplate("password.ftl");
+                temp.process(root, response.getWriter());
+            } catch (TemplateException ex) {
+                Logger.getLogger(Permisos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
-        
-    }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -62,7 +61,7 @@ HashMap root = new HashMap();
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -76,7 +75,7 @@ HashMap root = new HashMap();
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 

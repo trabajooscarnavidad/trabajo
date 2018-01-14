@@ -11,6 +11,8 @@
     </head>
     <body>
         <#include "menu.ftl">
+           <div style="margin-left:1%">
+             <div class="col-xs-6 col-xs-offset-2" style="margin: 0%">
         <h1>Informe de profesores</h1>
         <hr/>
         
@@ -27,7 +29,7 @@
             </select>
         <br><br>
         
-        <table  border=1 cellspacing=0 cellpadding=2 bordercolor="666633">
+        <table  class="table table-striped">
             <tr><th>Asignatura</th><th>Alumno</th><th>Nota</th></tr>
             <#list informe1 as informe1>
                 <tr><td>${informe1.asignatura}</td><td>${informe1.alumno}</td><td>${informe1.nota}</td></tr>
@@ -46,7 +48,7 @@
             </select>
         <br><br>
         
-        <table border=1 cellspacing=0 cellpadding=2 bordercolor="666633">
+        <table class="table table-striped">
             <tr><th>Asignatura</th><th>Profesor</th><th>Alumno</th><th>Nota</th></tr>
              <#list informe2 as informe2>
                 <tr><td>${informe2.asignatura}</td><td>${informe2.profesor}</td><td>${informe2.alumno}</td><td>${informe2.nota}</td></tr>
@@ -55,5 +57,7 @@
         <br>
         <input type="submit" value="Consultar">
         </form>
+        </div>
+               </div>
     </body>
 </html>

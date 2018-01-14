@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package dao;
 
 import java.sql.Connection;
@@ -18,10 +14,6 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-/**
- *
- * @author Miguel Angel Diaz
- */
 public class NotasDAO {
 
     public Nota guardarNota(Nota n) {

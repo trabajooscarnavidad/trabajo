@@ -40,15 +40,15 @@
       <#include "menu.ftl">
         <div class="container">
             <div class="col-xs-8 col-xs-offset-2">
-                <h1>Notas</h1>
+                <h1>Mis Notas</h1>
 
                 <br>
                 <br>
- <table border=1 cellspacing=0 cellpadding=2 bordercolor="666633">
+ <table class="table table-striped">
               <tr>
 
-                    <th>Materia</th>
-                    <th>Nota</th>
+                    <td><strong>Materia</strong></th>
+                    <td><strong>Nota</strong></th>
 
                 </tr>
                                  

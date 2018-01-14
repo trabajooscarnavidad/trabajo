@@ -13,16 +13,8 @@
         </head>
     <body>  
         <#include "menu.ftl">
-    <#if content??>
-        <div>${content}</div>
-    <#else>
-        <div>No content</div>
-    </#if>
- <#if resultado??>
-        <div>${resultado}</div>
-    <#else>
-        <div>No content</div>
-    </#if>
+
+
         
        <form action="permisos" name="formulario1" method="get" >
           <input type="hidden" name ="op" id="op" value="test1"/>
@@ -109,10 +101,19 @@
        <!--third-->
              
         
-          
+    <div style="margin-left:1%">      
+         <#if resultado??>
+        <div>${resultado}</div>
+
+    </#if>
   <button id="asociarpermisos" onclick="myFunction(id)">Asociar permisos</button><br><br>
-    <button id="quitarpermisos" onclick="myFunction(id)">Quitar permisos</button>
-      <!--<button id="dardealta" onclick="myFunction(id)">Dar de alta</button>-->     
+    <button id="quitarpermisos" onclick="myFunction(id)">Quitar permisos</button><br><br>
+    
+    
+                               <input type="text" name="nuevopermiso" id="newasignatura" value="">
+      <button id="addpermiso" onclick="myFunction(id)">Añadir nuevo permiso</button>  
+ </div>
+     
         </form>
           <script src="assets/js/custom.js"></script>
         <script>

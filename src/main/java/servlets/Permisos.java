@@ -1,21 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package servlets;
 
 import config.Configuration;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.logging.Level;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,10 +18,7 @@ import servicios.PermisosServicios;
 import servicios.UserServicios;
 import utils.Constantes;
 
-/**
- *
- * @author ivan
- */
+
 @WebServlet(name = "Permisos", urlPatterns = {"/permisos"})
 public class Permisos extends HttpServlet {
 
@@ -44,44 +33,51 @@ public class Permisos extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String msg="";
-                String[] usuarios = request.getParameterValues("tablausuarios");
+        String msg = "";
+        String[] usuarios = request.getParameterValues("tablausuarios");
         String[] permisos = request.getParameterValues("tablapermisos");
-       String op = request.getParameter(Constantes.OPCION_SWITCH);
-              HashMap root = new HashMap();
+        String nuevopermiso = request.getParameter("nuevopermiso");
+        String op = request.getParameter(Constantes.OPCION_SWITCH);
+        HashMap root = new HashMap();
         PermisosServicios ps = new PermisosServicios();
         UserServicios us = new UserServicios();
-                if (op == null) {
+        if (op == null) {
             op = "salir";
         }
         switch (op) {
             case "asociarpermisos":
-             int [] result =  ps.asociarPermisos(usuarios,permisos); 
-             if (result.length>0){
-              root.put("resultado","asociado correctamente los permisos"); 		
-             } else {
-                 root.put("resultado","hubo un error"); 	
-             }
-              
-                break;
-            case "quitarpermisos":
-                   result =  ps.quitarPermisos(usuarios,permisos);
-                if (result.length<0){
-            		 root.put("resultado","hubo un error"); 
-             } else {
-                      root.put("resultado","quitado los permisos correctamente"); 
-                	
-             }
+                int[] result = ps.asociarPermisos(usuarios, permisos);
+                if (result.length > 0) {
+                    root.put("resultado", "asociado correctamente los permisos");
+                } else {
+                    root.put("resultado", "hubo un error");
+                }
 
                 break;
-            case "dardealta":
-                // ps.dardealta(usuarios,permisos);
+            case "quitarpermisos":
+                result = ps.quitarPermisos(usuarios, permisos);
+                if (result.length > 0) {
+                    root.put("resultado", "quitado los permisos correctamente");
+                } else {
+                    root.put("resultado", "hubo un error");
+                }
+
+                break;
             case "addpermiso":
-                //String codigo = request.getParameter(Constantes.CODIGO_LOGIN);
-               // msg = ls.activarUsuario(nombre, codigo) ? "usuario activado correctamente" : "no se pudo activar el usuario";
+                if (!"".equals(nuevopermiso)){
+               int exito = ps.addpermisos(nuevopermiso);
+                if (exito > 0) {
+                     root.put("resultado", "asociado correctamente los permisos");
+                } else {
+                    root.put("resultado", "hubo un error");
+                }
+                } else {
+                     root.put("resultado", "el permiso esta vacio");
+                }
+               
                 break;
             case "eliminarpermiso":
-                //request.getSession().setAttribute("LOGIN", null);
+                //demasiadas dependencias se deja para el futuro
                 break;
             default:
                 break;
@@ -90,32 +86,24 @@ public class Permisos extends HttpServlet {
             request.setAttribute("mensaje", msg);
 
         }
-     
+
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-        try {
-     
-            
-            root.put("content","Pagina asignacion de Permisos");
-           
-             root.put("permisos",ps.getAllPermisos()); 
-               root.put("usuarios",us.getAllUsuarios());
-              root.put("usuariosalt",us.getAllUsuariosSinAlta());
-             Template temp = Configuration.getInstance().getFreeMarker().getTemplate("permisos.ftl");
-            temp.process(root, response.getWriter());
-        } catch (TemplateException ex) {
-            Logger.getLogger(Permisos.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+
+                root.put("content", "Pagina asignacion de Permisos");
+
+                root.put("permisos", ps.getAllPermisos());
+                root.put("usuarios", us.getAllUsuarios());
+                root.put("usuariosalt", us.getAllUsuariosSinAlta());
+                Template temp = Configuration.getInstance().getFreeMarker().getTemplate("permisos.ftl");
+                temp.process(root, response.getWriter());
+            } catch (TemplateException ex) {
+                Logger.getLogger(Permisos.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+
     }
-
-        
-        
-
-
-        
-    }
-        
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

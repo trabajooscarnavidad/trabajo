@@ -30,11 +30,19 @@
           </ul>
         </li>
         
-        
-        
-      <li class="nav-item">
-        <a class="nav-link" href="/alumnos_profesores">Admins</a>
+                          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+            Admins
+          </a>
+          <ul class="dropdown-menu">
+           <li><a class="nav-link" href="/alumnos_profesores">Registrar alumnos o profesores</a></li>
+            <li><a class="dropdown-item" href="/asignaturas">Asignaturas</a></li>
+
+          </ul>
         </li>
+        
+        
+  
         
               <li class="nav-item">
         <a class="nav-link" href="/permisos">Superadmin</a>

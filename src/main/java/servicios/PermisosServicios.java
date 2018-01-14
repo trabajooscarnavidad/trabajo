@@ -1,12 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
 
- //añadir permisos
-                PermisosServicios ps = new PermisosServicios();
-                ps.asociarPermisosSinInterfaz(idUsuario, 3); //3 = alumnos, 2 = profesores
- */
 package servicios;
 
 import dao.PermisosDAO;
@@ -50,7 +42,6 @@ public class PermisosServicios {
             }
         }
 return dao.asociarPermisosJDBCTemplate(listA);
-       // return dao.asociarPermisosJDBCTemplate(listA);
     }
       
                       
@@ -69,7 +60,6 @@ return dao.asociarPermisosJDBCTemplate(listA);
             }
         }
 return dao.quitarPermisosJDBCTemplate(listA);
-       // return dao.asociarPermisosJDBCTemplate(listA);
     }
       
      public int asociarPermisosSinInterfaz(int idUser, int idPermiso) {
@@ -84,11 +74,11 @@ Asociaciones obj_asociaciones = new Asociaciones();
                 
               obj_asociaciones = dao.asociarPermisosSinInterfaz(obj_asociaciones);
                 if (obj_asociaciones != null) {
-                    exito = 1; //añadido correctamente
+                    exito = 1;
                 } else {
-                    exito = 2; //algo fallo (el unico fallo que puede ocurrir es que ya este asignado el permiso, ya que alumnos o profesores siempre tendran la misma id) y al cojer la id automaticamente del usuario no puede fallar.
+                    exito = 2; 
                 }
-            }catch(Exception e){ }
+            }catch(Exception e){ System.out.println("error inesperado"); }
             return exito;
            
         
@@ -103,5 +93,18 @@ Asociaciones obj_asociaciones = new Asociaciones();
         return dao.getAllPermisosJDBCTemplate(id);
     }
            
+         public int addpermisos(String newpermiso) {
+        PermisosDAO dao = new PermisosDAO();
+
+        int result = -1;
+        
+            try {
+                Permiso obj_permiso = new Permiso();
+                obj_permiso.setValor(newpermiso);
+                result = dao.addpermiso(obj_permiso);
+                   }catch(Exception e){ System.out.println("error inesperado"); }
+        return result;
+    }
+        
 }
 

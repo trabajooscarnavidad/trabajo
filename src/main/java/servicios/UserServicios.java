@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package servicios;
 
 import com.sun.corba.se.spi.presentation.rmi.StubAdapter;
@@ -19,10 +15,6 @@ import utils.Constantes;
 import utils.PasswordHash;
 import utils.Utils;
 
-/**
- *
- * @author Miguel Angel Diaz
- */
 public class UserServicios {
 
     public int registrar(User user) {
@@ -150,17 +142,17 @@ public class UserServicios {
         obj_user.setUsuario(nombre);
         obj_user.setEmail(email);
       
-         User obj_user_db = dao.getUserByNombre(obj_user.getUsuario()); //comprueba si existe el usuario en la db
+         User obj_user_db = dao.getUserByNombre(obj_user.getUsuario()); 
 
-         if (obj_user_db != null) //aqui podrias ser mas severo y comprobar nombre y correo aportado por el usuario con el de la db
+         if (obj_user_db != null) //aqui se podria ser mas severo y comprobar nombre, correo y pregunta secreta si existiera en la bd
             {
             String  pass =  Utils.randomAlphaNumeric(6); //genera nueva contraseña
  
-            cambiarPass(obj_user_db.getUsuario(), pass); // 
+            cambiarPass(obj_user_db.getUsuario(), pass); 
         MailServicios mail = new MailServicios();
                     mail.mandarMailPassword(obj_user_db.getEmail(), pass, "Password"); // le envia la nueva contraseña por correo
                     //otra forma tambien podria ser que le envie un correo antes confirmando si quiere cambiar la contraseña y luego cambiarla
-                    //en la pantalla de cambiar contraseña pero para no complicarme lo hice asi, lo puedes rehacer o cambiar
+                    //en la pantalla de cambiar contraseña
             exito = true;
         } else
         {
@@ -170,7 +162,7 @@ public class UserServicios {
 
     }
 
-    public boolean cambiarPass(String usuario, String passNueva) //esta funcion se utiliza desde /user en recuperar contraseña
+    public boolean cambiarPass(String usuario, String passNueva)
     {
       
         boolean exito = false;
@@ -182,7 +174,7 @@ public class UserServicios {
             String hash = PasswordHash.getInstance().createHash(passNueva);
             obj_user.setPass(hash);
             boolean igual = false;
-           User obj_user_db = dao.getUserByNombre(usuario);   //esta funcion la he cambiado para que coja los datos verificando el usuario
+           User obj_user_db = dao.getUserByNombre(usuario);
             if (obj_user_db != null) 
             {
                 int update = 0;
@@ -203,9 +195,7 @@ public class UserServicios {
         return exito;
     }        
     
-        public boolean cambiarPass(String usuario, String passActual, String passNueva) //no se si permite sobrecarga si no cambiarle el nombre a la funcion
-//esta funcion se utiliza en una nueva pagina que deberia ser /cambiarpassword o algo asi yo haria un nuevo servlet pero usando el servicio y dao de users
-                //el usuario se podria cojer de la session o formulario
+        public boolean cambiarPass(String usuario, String passActual, String passNueva) 
     {
       
         boolean exito = false;

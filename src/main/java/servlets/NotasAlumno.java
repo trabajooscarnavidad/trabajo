@@ -24,10 +24,6 @@ import servicios.AsignaturasServicios;
 import servicios.NotasServicios;
 import utils.Constantes;
 
-/**
- *
- * @author Miguel Angel Diaz
- */
 @WebServlet(name = "NotasAlumno", urlPatterns = {"/notasalumno"})
 public class NotasAlumno extends HttpServlet {
 
@@ -51,38 +47,30 @@ public class NotasAlumno extends HttpServlet {
         String nomAlu = request.getParameter("nombreAlumno");
         String nomAsig = request.getParameter("nombreAsignatura");
         String nota = request.getParameter("nota");
-        boolean cargar = false;
+
         HashMap root = new HashMap();
         Asignatura obj_temporal = new Asignatura();
 
-       Long id =  (Long) request.getSession().getAttribute("id");
+        Long id = (Long) request.getSession().getAttribute("id");
 
-                                             root.put("notas",ns.getNotas(id));
-                    
+        root.put("notas", ns.getNotas(id));
 
-
-            
-        
         // getAll siempre se hace
-         root.put("asignaturas", asigs.getAllAsignaturas());
-          root.put("alumnos",alums.listarAlumnos());
-          root.put("cursos",asigs.getAllcursos());
-           root.put("nomAlu",nomAlu);
-            root.put("idAlu",idAlu);
-             root.put("nomAsig",nomAsig);
-              root.put("idAsig",idAsig);
-  
-                 response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        root.put("asignaturas", asigs.getAllAsignaturas());
+        root.put("alumnos", alums.listarAlumnos());
+        root.put("cursos", asigs.getAllcursos());
+        root.put("nomAlu", nomAlu);
+        root.put("idAlu", idAlu);
+        root.put("nomAsig", nomAsig);
+        root.put("idAsig", idAsig);
+
+        response.setContentType("text/html;charset=UTF-8");
         try {
-      
-             Template temp = Configuration.getInstance().getFreeMarker().getTemplate("notasalumno.ftl");
+            Template temp = Configuration.getInstance().getFreeMarker().getTemplate("notasalumno.ftl");
             temp.process(root, response.getWriter());
         } catch (TemplateException ex) {
             Logger.getLogger(Permisos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-    }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

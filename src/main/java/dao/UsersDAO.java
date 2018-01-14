@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package dao;
 
 import java.util.List;
@@ -12,10 +8,7 @@ import model.User;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-/**
- *
- * @author Miguel Angel Diaz
- */
+
 public class UsersDAO {
 
     private final String queryRegistrar = "INSERT INTO Usuarios (usuario,pass,codigo,activo,fecha,email) VALUES(?,?,?,0,?,?)";

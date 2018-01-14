@@ -10,11 +10,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.rmi.Naming.list;
-import java.util.ArrayList;
-import static java.util.Collections.list;
 import java.util.HashMap;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -56,32 +52,23 @@ public class Notas extends HttpServlet {
         String nomAsig = request.getParameter("nombreAsignatura");
         String nota = request.getParameter("nota");
         String offset = request.getParameter("offset");
-        String limit =request.getParameter("limit");
+        String limit = request.getParameter("limit");
         int aumento = 0;
         boolean cargar = false;
         HashMap root = new HashMap();
 
-     if(offset==null){
-         offset="0";
-         limit="2";
-//          request.getSession().setAttribute("offset", offset);
-//           request.getSession().setAttribute("limit", limit);
-          root.put("offset",offset);
-        root.put("limit",limit);
-        
-     }else{
-//                  request.getSession().setAttribute("offset", offset);
-//           request.getSession().setAttribute("limit", limit);
-//                   root.put("offset",offset);
-//        root.put("limit",limit);
+        if (offset == null) {
+            offset = "0";
+            limit = "2";
+            root.put("offset", offset);
+            root.put("limit", limit);
+        }
 
-     }
-        
         if (op != null) {
             Nota n = new Nota();
-            if (!idAlu.equals("") && !idAsig.equals("")){
-            n.setAlumnos_idAlumnos(Long.parseLong(idAlu));
-            n.setAsignaturas_idAsignaturas(Long.parseLong(idAsig));
+            if (!idAlu.equals("") && !idAsig.equals("")) {
+                n.setAlumnos_idAlumnos(Long.parseLong(idAlu));
+                n.setAsignaturas_idAsignaturas(Long.parseLong(idAsig));
             }
             int filas = 0;
 
@@ -92,8 +79,7 @@ public class Notas extends HttpServlet {
                     if (n != null) {
                         filas = 1;
                     }
-                      root.put("nota",n);
-                    //request.setAttribute("nota", n);
+                    root.put("nota", n);
                     break;
                 case "borrar":
                     filas = ns.delNota(n);
@@ -102,51 +88,49 @@ public class Notas extends HttpServlet {
                     n = ns.getNota(n.getAlumnos_idAlumnos(), n.getAsignaturas_idAsignaturas());
                     cargar = true;
                     if (n == null) {
-                         root.put("mensaje","No hay notas");
-                       // request.setAttribute("mensaje", "No hay notas");
-                    }else{
-                         root.put("nota",n);
-                        //request.setAttribute("nota", n);
+                        root.put("mensaje", "No hay notas");
+                    } else {
+                        root.put("nota", n);
                     }
                     break;
-                    case "next":
-                    aumento=2;
+                case "next":
+                    aumento = 2;
                     break;
-                    case "back":
-                        if(!offset.equalsIgnoreCase("0")){
-                        aumento=-2;
-                    break;
-            }
+                case "back":
+                    if (!offset.equalsIgnoreCase("0")) {
+                        aumento = -2;
+                        break;
+                    }
             }
             if (filas != 0 && cargar == false) {
-                 root.put("mensaje",filas + " filas modificadas correctamente");
+                root.put("mensaje", filas + " filas modificadas correctamente");
 
             } else if (filas == 0 && cargar == false) {
-                root.put("mensaje",filas + "No se han hecho modificaciones");
+                root.put("mensaje", filas + "No se han hecho modificaciones");
 
             }
         }
         // getAll siempre se hace
-         root.put("asignaturas", asigs.getAllAsignaturas());
-          root.put("alumnos",alums.listarAlumnos());
-          root.put("cursos",asigs.getAllcursos());
-           root.put("nomAlu",nomAlu);
-            root.put("idAlu",idAlu);
-             root.put("nomAsig",nomAsig);
-              root.put("idAsig",idAsig);
-  root.put("alumnospaginados",alums.listarAlumnosPaginados(Integer.parseInt(offset)+aumento,Integer.parseInt(limit)));
-  root.put("offset", Integer.parseInt(offset)+aumento );
-                 response.setContentType("text/html;charset=UTF-8");
+        root.put("asignaturas", asigs.getAllAsignaturas());
+        root.put("alumnos", alums.listarAlumnos());
+        root.put("cursos", asigs.getAllcursos());
+        root.put("nomAlu", nomAlu);
+        root.put("idAlu", idAlu);
+        root.put("nomAsig", nomAsig);
+        root.put("idAsig", idAsig);
+        root.put("alumnospaginados", alums.listarAlumnosPaginados(Integer.parseInt(offset) + aumento, Integer.parseInt(limit)));
+        root.put("offset", Integer.parseInt(offset) + aumento);
+        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-        try {
-      
-             Template temp = Configuration.getInstance().getFreeMarker().getTemplate("notas.ftl");
-            temp.process(root, response.getWriter());
-        } catch (TemplateException ex) {
-            Logger.getLogger(Permisos.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+
+                Template temp = Configuration.getInstance().getFreeMarker().getTemplate("notas.ftl");
+                temp.process(root, response.getWriter());
+            } catch (TemplateException ex) {
+                Logger.getLogger(Permisos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
-        
-    }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

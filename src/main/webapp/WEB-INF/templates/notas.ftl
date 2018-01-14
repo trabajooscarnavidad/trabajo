@@ -113,12 +113,18 @@
                      <div class="col-xs-6 col-xs-offset-2" style="margin: 0%">
                          <p> Ejemplo paginacion </p>
                       <table class="table table-striped ">
-                    <tr><td>id</td><td>nombre</td></tr>
+                    <tr><td>id</td><td>nombre</td><td class="mt-1"></td></tr>
                     <#list alumnospaginados as alumnop>
                         <tr>
                             <td>${alumnop.idAlumnos}</td>
                             <td>${alumnop.nombre}</td>
-                            <#else><td colspan="2"><p>No hay mas alumnos vuelva atras!</p></td>   
+                                                <td>
+                        <input type="button" value="✔" 
+                               onclick="cargarAlumno('${alumnop.idAlumnos}',
+                                           '${alumnop.nombre}')
+                                           "/>
+                    </td> 
+                            <#else><td colspan="3"><p>No hay mas alumnos vuelva atras!</p></td>   
                         </tr>
                    </#list>
                 </table>
