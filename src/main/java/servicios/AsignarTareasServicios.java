@@ -14,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import model.Alumno;
+import model.Mostrar_tarea;
 import model.Tarea;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -39,11 +40,18 @@ public class AsignarTareasServicios
         return filas;
     }
 
-    public List<Tarea> getAllTareas()
+    public List<Mostrar_tarea> getAllTareas(String alumno)
     {
         TareasDAO dao = new TareasDAO();
-        return dao.getAllTareas();
+        return dao.getAllTareas(alumno);
     }
+    
+    public int marcarHecha (int id_tarea, int id_alumno, int realizada)
+    {
+        TareasDAO dao = new TareasDAO();
+        return dao.marcarHecha(id_tarea, id_alumno, realizada);
+    }
+    
     public List <Tarea> getAllAlumnosTareas()
     {
         TareasDAO dao = new TareasDAO();

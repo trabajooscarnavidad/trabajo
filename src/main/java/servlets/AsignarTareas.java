@@ -103,7 +103,7 @@ public class AsignarTareas extends HttpServlet
             try
             {
                 root.put("asignaturas", as.getAllAsignaturas());
-                root.put("tareas", ats.getAllTareas());
+//                root.put("tareas", ats.getAllTareas());
                 //  root.put("usuariosalt",ps.getAllUsuariosSinAlta());
                 Template temp = Configuration.getInstance().getFreeMarker().getTemplate("asignarTareas.ftl");
                 temp.process(root, response.getWriter());

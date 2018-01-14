@@ -44,40 +44,31 @@ public class Tareas extends HttpServlet
             throws ServletException, IOException
     {
         
-        AsignarTareasServicios ats = new AsignarTareasServicios();
-        String idTarea = request.getParameter("idTarea");
-        String idAsignatura = request.getParameter("idAsignatura");
-        String realizada = request.getParameter("realizada");
-        String op = request.getParameter("accion");
-        HashMap root = new HashMap();
-        int filas = 0;
+        AsignarTareasServicios ats = new AsignarTareasServicios();;
+        String op = request.getParameter("op");
+//        String alumno = (String) request.getSession().getAttribute("nombreLogin");
+        String alumno = "Juan";
+        
+        if (op == null)
+        {
+            op = "inicio";
+        }
+        
         switch(op)
         {
+            case "inicio":
+                request.setAttribute("tareas", ats.getAllTareas(alumno));
+                request.setAttribute("alumno", alumno);
+                request.getRequestDispatcher("/ver_tareas.jsp").forward(request, response);
+                break;
+                
             case "actualizar":
-                filas = ats.actualizarRealizada(idTarea,idAsignatura,realizada);
-                if(filas>0)
-                {
-                    root.put("mensaje","Tu tarea ha sido realizada");
-                }else
-                {
-                    root.put("mensaje","Error al actualizar tu tarea");
-                }
-              break;  
-        }
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter())
-        {
-            try
-            {
-                root.put("alumnosTareas", ats.getAllAlumnosTareas());
-                root.put("tareas", ats.getAllTareas());
-                //  root.put("usuariosalt",ps.getAllUsuariosSinAlta());
-                Template temp = Configuration.getInstance().getFreeMarker().getTemplate("Tareas.ftl");
-                temp.process(root, response.getWriter());
-            } catch (TemplateException ex)
-            {
-                Logger.getLogger(Permisos.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                int id_tarea = Integer.parseInt(request.getParameter("id_tarea"));
+                int id_alumno = Integer.parseInt(request.getParameter("id_alumno"));
+                int realizada = Integer.parseInt(request.getParameter("realizada"));
+                
+                response.getWriter().print(ats.marcarHecha(id_tarea, id_alumno, realizada));
+                break;
 
         }
         
