@@ -5,8 +5,14 @@
  */
 package servlets;
 
+import config.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,7 +44,7 @@ public class Informes_profesores extends HttpServlet {
         String op = request.getParameter("op");
         AsignaturasServicios as = new AsignaturasServicios();
         InformesServicios b = new InformesServicios();
-        
+        HashMap root = new HashMap();
         if (request.getParameter("profesor") == null)
         {
             profesor = "Marta";
@@ -58,14 +64,20 @@ public class Informes_profesores extends HttpServlet {
         switch (op)
         {
             case "inicio":
-                request.setAttribute("profesores", as.getAllprofesores());
-                request.setAttribute("informe1", b.informe1(profesor));
-                request.setAttribute("cursos", as.getAllcursos());
-                request.setAttribute("informe2", b.informe2(curso));
-                request.setAttribute("profesor_seleccionado", profesor);
-                request.setAttribute("curso_seleccionado", curso);
-                
-                request.getRequestDispatcher("/informe_profesores.jsp").forward(request, response);
+                  root.put("profesores", as.getAllprofesores());
+                   root.put("informe1", b.informe1(profesor));
+                    root.put("cursos", as.getAllcursos());
+                     root.put("informe2", b.informe2(curso));
+                      root.put("profesor_seleccionado", profesor);
+                       root.put("curso_seleccionado", curso);
+                try {
+              response.setContentType("text/html;charset=UTF-8");
+             Template temp = Configuration.getInstance().getFreeMarker().getTemplate("informes_profesores.ftl");
+            temp.process(root, response.getWriter());
+        } catch (TemplateException ex) {
+            Logger.getLogger(Permisos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
                 break;
         }
     }

@@ -82,8 +82,6 @@ public class NotasDAO {
     }
     
     public  List<Asociaciones2> getNotas(Long idAlu) {
-        Connection con = null;
-          List<Asociaciones2> n = null;
 
            JdbcTemplate jtm = new JdbcTemplate(
           DBConnection.getInstance().getDataSource());

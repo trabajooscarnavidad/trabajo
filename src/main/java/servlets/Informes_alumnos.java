@@ -5,7 +5,13 @@
  */
 package servlets;
 
+import config.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,13 +37,19 @@ public class Informes_alumnos extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+         HashMap root = new HashMap();
         String alumno = (String) request.getSession().getAttribute("nombreLogin");
         InformesServicios b = new InformesServicios();
+               root.put("informe3", b.informe3(alumno));
+                 root.put("alumno", alumno);
+    try {
+              response.setContentType("text/html;charset=UTF-8");
+             Template temp = Configuration.getInstance().getFreeMarker().getTemplate("informes_alumnos.ftl");
+            temp.process(root, response.getWriter());
+        } catch (TemplateException ex) {
+            Logger.getLogger(Permisos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        request.setAttribute("informe3", b.informe3(alumno));
-        request.setAttribute("alumno", alumno);
-        
-        request.getRequestDispatcher("/informe_alumnos.jsp").forward(request, response);
         }
     
 

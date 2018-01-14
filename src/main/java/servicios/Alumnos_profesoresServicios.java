@@ -54,4 +54,10 @@ public class Alumnos_profesoresServicios
         
         return id;
     }
+        
+            public List<Alumno> listarAlumnosPaginados(int offset, int limit) {
+        Alumnos_profesoresDAO dao = new Alumnos_profesoresDAO();
+        return dao.listarAlumnosPaginados(offset, limit);
+    }
+        
 }

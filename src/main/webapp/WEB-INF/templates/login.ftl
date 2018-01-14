@@ -30,10 +30,22 @@
     <br>
                                <#list permisos as permiso>
     ${permiso.permisos_idPermisos}
-    </#list>	    
-        <script>
-           // location.href="/sesion/alumnos";
+  <script>
+             <#if permiso.permisos_idPermisos==3>
+           location.href="/notasalumno";
+               <#elseif permiso.permisos_idPermisos==2>
+                   location.href="/notas";
+                        <#elseif permiso.permisos_idPermisos==1>
+                            location.href="/alumnos_profesores";
+                             <#elseif permiso.permisos_idPermisos==999>
+                                 location.href="/permisos";
+               </#if>
+                
+                    
             </script>
+            </#list>
+      
+
         </#if>
 
         </head>

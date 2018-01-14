@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="/assets/css/style.css">
         <title>JSP Page</title>
+
         <script>
             function cargarAlumno(id, nombre) {
                 document.getElementById("idAlumno").value = id;
@@ -33,6 +34,12 @@
             function cargar() {
                 document.getElementById("accion").value = "cargar";
             }
+                function next(){
+                   document.getElementById("accion").value = "next";
+                }
+                    function back (){
+                        document.getElementById("accion").value = "back";
+                    }
 
         </script>
     </head>
@@ -79,15 +86,7 @@
                    
                 </select>
                 <br>
-                   <span>Curso: </span>
-                <select id="curso" onchange="cargarCurso(this.value, this.options[this.selectedIndex].innerHTML)">
-                    <option disabled selected>Selecciona un curso</option>
-                    <option disabled>-------------------------</option>
-                     <#list cursos as curso>
-                   <option value="${curso.idCursos}" name="${curso.nombre}">${curso.nombre}</option>
-                    </#list>
-                   
-                </select>
+        
                 <br>
                 <br>
                 <br>
@@ -106,12 +105,7 @@
                                 <input type="hidden" id="idAsignatura" name="idAsignatura" size="1" value="<#if idAsig??>${idAsig}</#if>">
                                 <input type="text" name="nombreAsignatura" id="nombreAsignatura" value="<#if nomAsig??>${nomAsig}</#if>">
                             </td>
-                                                        <td>
-                                CURSO
-                                <br>
-                                <input type="hidden" id="idCurso" name="idCurso" size="1" value="<#if idCur??>${idCur}</#if>">
-                                <input type="text" name="nombreCurso" id="nombreCurso" value="<#if idCur??>${idCur}</#if>">
-                            </td>
+                                                      
                             <td>
                                 <br>
                                 <button onclick="cargar()">Cargar</button>
@@ -130,11 +124,45 @@
                             </td>
                         </tr>
                     </table>
+                    <br>
+                    <br>
+                     <div class="col-xs-6 col-xs-offset-2" style="margin: 0%">
+                         <p> Ejemplo paginacion </p>
+                      <table class="table table-striped ">
+                    <tr><td>id</td><td>nombre</td></tr>
+                    <#list alumnospaginados as alumnop>
+                        <tr>
+                            <td>${alumnop.idAlumnos}</td>
+                            <td>${alumnop.nombre}</td>
+                            <#else><td colspan="2"><p>No hay mas alumnos vuelva atras!</p></td>   
+                        </tr>
+                   </#list>
+                </table>
+                       
+
+                    
+                     <input type="hidden" name="offset" value="<#if offset??>${offset}</#if>">
+                     <input type="hidden" name="limit" value="2">
+                                          
+                            <button class="btn btn-default btn-sm" onclick="back()">
+          <span class="glyphicon glyphicon-arrow-left"></span> Back
+        </button>
+                    
+                            <button class="btn btn-default btn-sm" onclick="next()">
+          <span class="glyphicon glyphicon-arrow-right"></span> Next
+        </button>
+       </div>
                 </form>
                 <br>
                 <h3><#if mensaje??>${mensaje}</#if></h3>
             </div>
         </div>
+
+     
+
+    
+          <script src="assets/js/jquery-3.2.1.js"></script>
+
     </body>
 </html>
 

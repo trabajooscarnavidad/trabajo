@@ -24,7 +24,7 @@ import model.Asociaciones;
  *
  * @author Miguel Angel Diaz
  */
-@WebFilter(filterName = "FiltroProfesor", urlPatterns = {""})
+@WebFilter(filterName = "FiltroProfesor", urlPatterns = {"/informes_profesores"})
 public class FiltroProfesor implements Filter {
 
     private static final boolean debug = true;

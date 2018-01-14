@@ -123,4 +123,19 @@ public class Alumnos_profesoresDAO
         }
         return lista;
     }
+           public List<Alumno> listarAlumnosPaginados(int offset, int limit) {
+        List<Alumno> lista = null;
+        Connection con = null;
+        try {
+            con = DBConnection.getInstance().getConnection();
+            QueryRunner qr = new QueryRunner();
+            ResultSetHandler<List<Alumno>> h = new BeanListHandler<>(Alumno.class);
+            lista = qr.query(con, "select * FROM Alumnos LIMIT ?,?", h, offset, limit);
+        } catch (Exception ex) {
+            Logger.getLogger(Alumnos_profesoresDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBConnection.getInstance().cerrarConexion(con);
+        }
+        return lista;
+    }
 }
