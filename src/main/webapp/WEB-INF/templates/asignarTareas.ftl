@@ -34,108 +34,116 @@
                 function asignar(){
                    document.getElementById("accion").value = "asignar";
                 }
+                                    function tarea_alumno(){
+                   document.getElementById("accion").value = "tarea_alumno";
+                }
+                    
                     function modificar (){
                         document.getElementById("accion").value = "modificar";
                     }
 
-        </script>
-    </head>
+            </script>
+        </head>
     <body>
       <#include "menu.ftl">
         <div class="container">
             <div class="col-xs-8 col-xs-offset-2">
                 <h1>Asignar Tareas</h1>
-   <h3> <#if mensaje??>${mensaje}</#if></h3>
+                <h3> <#if mensaje??>${mensaje}</#if></h3>
                 <br>
                 <br>
                 <br>
                 <form action="asignarTareas">
-                   <table class="table-condensed" style="margin: auto">
-                    <tr>
+                    <table class="table-condensed" style="margin: auto">
+                        <tr>
                             <td>
                                 Tarea
                                 <br>
                                 <input type="hidden" id="idTarea" name="idTarea" size="1" value="<#if idAlu??>${idAlu}</#if>">
                                 <input type="text" name="nombre" id="nombre" value="<#if nomAlu??>${nomAlu}</#if>">
-                               <input type="datetime-local" name="fecha" id="fecha"><br>
-                            </td>
+                                <input type="datetime-local" name="fecha" id="fecha"><br>
+                                </td>
                             <td>
                                 ASIGNATURA
                                 <br>
                                 <input type="hidden" id="idAsignatura" name="idAsignatura" size="1" value="<#if idAsig??>${idAsig}</#if>">
                                 <input type="text" name="nombreAsignatura" id="nombreAsignatura" value="<#if nomAsig??>${nomAsig}</#if>">
-                            </td>
-                                                      
+                                </td>
 
-                        </tr>
+
+                            </tr>
                         <tr>
-                      
+
                             <td>
                                 <br>
                                 <input type="hidden" id="accion" name="accion" value="">
-                                <button onclick="asignar()">Asignar</button>
+                                <button onclick="asignar()">Crear</button>
                                 <button onclick="modificar()">Modificar</button>
                                 <button onclick="borrar()">Borrar</button>
-                            </td>
-                        </tr>
-                    </table>
+                                <button onclick="tarea_alumno()">Asociar Tarea a los alumnos de la asignatura</button>
+                                </td>
+                            </tr>
+                        </table>
                     <br>
                     <br>
-                                
-                <table class="table table-striped">
-                    
+</div>
+            <div class="col-xs-12">
+                <div class="col-xs-6">
+                    <table class="table table-striped">
+
                     <#list asignaturas as asignatura>
                         <tr>
                             <td>${asignatura.idAsignaturas}</td>
                             <td>${asignatura.nombre}</td>
                             <td>
-                        <input type="button" value="✔" 
-                               onclick="cargarAsignatura('${asignatura.idAsignaturas}',
+                                <input type="button" value="✔" 
+                                       onclick="cargarAsignatura('${asignatura.idAsignaturas}',
                                            '${asignatura.nombre}')
                                            "/>
-                    </td> 
-                        </tr>
+                                </td> 
+                            </tr>
                    </#list>
-                </table>
-            </div>
-            
-                            <table class="table table-striped">
-                    
+                        </table>
+                </div>
+
+            <div class="col-xs-6">
+            <table class="table table-striped">
+
                     <#list tareas as tarea>
-                        <tr>
-                            <td>${tarea.idTareas}</td><td>${tarea.asignaturas_idAsignaturas}</td><td>${tarea.nombre}</td><td>${tarea.fecha}</td>
-                           <td> <input type="button" value="✔" 
-                               onclick="cargarTarea('${tarea.idTareas}',
+                <tr>
+                    <td>${tarea.idTareas}</td><td>${tarea.asignaturas_idAsignaturas}</td><td>${tarea.nombre}</td><td>${tarea.fecha}</td>
+                    <td> <input type="button" value="✔" 
+                                onclick="cargarTarea('${tarea.idTareas}',
                                            '${tarea.asignaturas_idAsignaturas}',
                                            '${tarea.nombre}',
                                            '${tarea.fecha}')
                                            "/>
-                            </td>
-                        </tr>
+                        </td>
+                    </tr>
                    </#list>
                 </table>
             </div>
-            
-  
-       </div>
-                </form>
-                <br>
+</div>
 
-            </div>
         </div>
+    </form>
+<br>
 
-     
 
-    
-          <script src="assets/js/jquery-3.2.1.js"></script>
-                  <script>
-                function myFunction(id) {
-                this.id = id;
-                document.getElementById("op").value = id;
-            }
+</div>
+
+
+
+
+<script src="assets/js/jquery-3.2.1.js"></script>
+<script>
+function myFunction(id) {
+this.id = id;
+document.getElementById("op").value = id;
+}
             
     </script>
 
-    </body>
+</body>
 </html>
 

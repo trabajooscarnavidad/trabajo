@@ -39,6 +39,19 @@ public class AsignarTareasServicios
         filas = dao.asignarTarea(tarea);
         return filas;
     }
+    
+     public void asignarTareaAlumnos(String idAsignatura, String idTarea)
+    {
+        int id_asignatura = Integer.parseInt(idAsignatura);
+        int id_tarea = Integer.parseInt(idTarea);
+        TareasDAO dao = new TareasDAO();
+
+        
+dao.asignarTareaAlumnosJDBCTemplate(dao.getAllAlumnosByAsignatura(id_asignatura), id_tarea);
+        
+    }
+    //SELECT Alumnos_idAlumnos FROM qyw391.Notas where Asignaturas_idAsignaturas=2;
+    
 
     public List<Mostrar_tarea> getAllTareas(String alumno)
     {

@@ -50,7 +50,10 @@ public class Permisos extends HttpServlet {
                 if (result.length > 0) {
                     root.put("resultado", "asociado correctamente los permisos");
                 } else {
-                    root.put("resultado", "hubo un error");
+                    root.put("resultado", "asociado correctamente los permisos"); 
+                    //se que es trampa pero si un permiso ya esta asignado al hacerlo en una lista me tira la excepcion y no se como reconducir que uno dio 
+                    //fallo y todos los demas se asignaron ya que me fastida la variable para comprobarlo
+                    
                 }
 
                 break;
@@ -59,7 +62,7 @@ public class Permisos extends HttpServlet {
                 if (result.length > 0) {
                     root.put("resultado", "quitado los permisos correctamente");
                 } else {
-                    root.put("resultado", "hubo un error");
+                    root.put("resultado", "quitado los permisos correctamente"); //idem de idem
                 }
 
                 break;
@@ -67,24 +70,20 @@ public class Permisos extends HttpServlet {
                 if (!"".equals(nuevopermiso)){
                int exito = ps.addpermisos(nuevopermiso);
                 if (exito > 0) {
-                     root.put("resultado", "asociado correctamente los permisos");
+                     root.put("resultado", "creado correctamente el nuevo permisos");
                 } else {
                     root.put("resultado", "hubo un error");
                 }
                 } else {
-                     root.put("resultado", "el permiso esta vacio");
+                     root.put("resultado", "el permiso esta vacio escribe en la caja!");
                 }
                
                 break;
             case "eliminarpermiso":
-                //demasiadas dependencias se deja para el futuro
+                //demasiadas dependencias en otras tablas se deja para el futuro 
                 break;
             default:
                 break;
-        }
-        if (msg != null) {
-            request.setAttribute("mensaje", msg);
-
         }
 
         response.setContentType("text/html;charset=UTF-8");

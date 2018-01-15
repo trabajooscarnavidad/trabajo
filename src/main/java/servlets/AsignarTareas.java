@@ -93,9 +93,12 @@ public class AsignarTareas extends HttpServlet
 
                 } else
                 {
-                    root.put("mensaje", "Hubo un fallo al modificar la tarea");
+                    root.put("mensaje", "Hubo un fallo al borrar la tarea");
                 }
                 break;
+                case "tarea_alumno":
+                    ats.asignarTareaAlumnos(idAsignatura, idTarea);
+                    break;
         }
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter())

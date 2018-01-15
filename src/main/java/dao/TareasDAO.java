@@ -1,16 +1,22 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Alumno;
+import model.Asociaciones;
 import model.Mostrar_tarea;
+import model.Nota;
 import model.Tarea;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -119,5 +125,48 @@ public class TareasDAO
 
         return lista;
     }
+       
+              public List<Nota> getAllAlumnosByAsignatura(int id)
+    {
 
+        JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
+        List<Nota> lista = jtm.query("SELECT * FROM Notas where Asignaturas_idAsignaturas=?",  new BeanPropertyRowMapper(Nota.class), id);
+
+        return lista;
+    }
+
+              public void asignarTareaAlumnosJDBCTemplate(final List<Nota> records, final int id ) {
+   
+    
+try {
+    
+ JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
+
+    jtm.batchUpdate("INSERT INTO Alumnos_has_Tareas (Alumnos_idAlumnos,Tareas_idTareas, Realizada ) VALUES (?, ?, ?)", new BatchPreparedStatementSetter() {
+
+
+        @Override
+        public void setValues(PreparedStatement ps, int i) throws SQLException {
+              Nota record = records.get(i);
+
+              ps.setLong(1, record.getAlumnos_idAlumnos());
+              ps.setInt(2, id);
+              ps.setInt(3, 0);
+        }
+
+        @Override
+        public int getBatchSize() {
+            return records.size();
+        }
+    });
+}
+catch (DataAccessException e){
+
+       System.out.println("el usuario ya tenia asignada esa tarea");
+    }
+
+         // return filas ;
+
+}
+              
 }

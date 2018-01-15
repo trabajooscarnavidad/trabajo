@@ -25,11 +25,11 @@
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/ico/apple-touch-icon-72-precomposed.png">
         <link rel="apple-touch-icon-precomposed" href="/assets/ico/apple-touch-icon-57-precomposed.png">
         <#if nombreUsuario??>
-        ${nombreUsuario}<br>
+
 
     <br>
                                <#list permisos as permiso>
-    ${permiso.permisos_idPermisos}
+  
   <script>
              <#if permiso.permisos_idPermisos==3>
            location.href="/notasalumno";
@@ -39,6 +39,7 @@
                             location.href="/alumnos_profesores";
                              <#elseif permiso.permisos_idPermisos==999>
                                  location.href="/permisos";
+                                     <#else>
                </#if>
                 
                     

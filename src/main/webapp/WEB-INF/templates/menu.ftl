@@ -13,7 +13,7 @@
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="/notasalumno">Notas</a></li>
-            <li><a class="dropdown-item" href="/tareasalumno">Tareas</a></li>
+            <li><a class="dropdown-item" href="/tareas">Tareas</a></li>
             <li><a class="dropdown-item" href="/informes_alumnos">Informe Notas</a></li>
           </ul>
         </li>
