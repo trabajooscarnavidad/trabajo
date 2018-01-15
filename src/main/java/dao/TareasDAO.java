@@ -26,7 +26,7 @@ public class TareasDAO
         try {
      
         JdbcTemplate jtm = new JdbcTemplate(DBConnection.getInstance().getDataSource());
-        filas = jtm.update("INSERT INTO Tareas (Asignaturas_idAsignatura,Nombre,Fecha) VALUES (?,?,?)", tarea.getAsignaturas_idAsignaturas(), tarea.getNombre(), tarea.getFecha());
+        filas = jtm.update("INSERT INTO Tareas (Asignaturas_idAsignaturas,Nombre,Fecha) VALUES (?,?,?)", tarea.getAsignaturas_idAsignaturas(), tarea.getNombre(), tarea.getFecha());
        
         }catch (Exception ex) {
              Logger.getLogger(TareasDAO.class.getName()).log(Level.SEVERE, null, ex);
