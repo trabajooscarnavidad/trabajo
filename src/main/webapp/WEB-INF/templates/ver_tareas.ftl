@@ -1,13 +1,8 @@
-<%-- 
-    Document   : ver_tareas
-    Created on : 14-ene-2018, 21:59:57
-    Author     : Juan
---%>
+<#ftl strip_whitespace = true>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" 
-           uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<#assign charset="UTF-8">
+<#assign title="Example">
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -52,12 +47,15 @@
             
     </head>
     <body>
+        <#include "menu.ftl">
+        <div style="margin-left:1%">
+             <div class="col-xs-6 col-xs-offset-2" style="margin: 0%">
         <h1>Lista de tareas:</h1>
         
         <hr/>
-        <h3>Ver tareas del alumno: <font color="red"><c:out value = "${alumno}"/>. </font></h3>
+        <h3>Ver tareas del alumno: <font color="red"><#if alumno??>${alumno}</#if> </font></h3>
         
-        <table border="1">
+        <table class="table table-striped">
             <tr>
                 <th>Tarea</th>
                 <th>Fecha/hora de entrega</th>
@@ -65,16 +63,17 @@
                 <th>Marcar hecha</th>
                 <th>Actualizar</th>
             </tr>
-            <c:forEach items="${tareas}" var="tareas">
+            <#list tareas as tareas>
                 <tr>
                     <td>${tareas.tarea}</td>
                     <td>${tareas.fecha}</td>
-                    <td>${tareas.asignatura}</td>
-                    <td><input type="checkbox" id="realizada" <c:if test="${tareas.realizada}" >checked</c:if> /></td>
-                    <td><button onclick="actualizar('${tareas.tareas_idTareas}', '${tareas.alumnos_idAlumnos}', '${tareas.tarea}', ${tareas.realizada})">Actualizar</button></td>
+                    <td>${tareas.asignatura}</td>               
+                    <td><input type="checkbox" id="realizada" <#if tareas.realizada==true>checked</#if> /></td>
+                    <td><button onclick="actualizar('${tareas.tareas_idTareas}', '${tareas.alumnos_idAlumnos}', '${tareas.tarea}', ${tareas.realizada?c})">Actualizar</button></td>
                 </tr>
-            </c:forEach>
+            </#list>
         </table>
-        
+        </div>
+            </div>
     </body>
 </html>

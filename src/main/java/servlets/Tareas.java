@@ -43,12 +43,13 @@ public class Tareas extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
-        
+                HashMap root = new HashMap();
         AsignarTareasServicios ats = new AsignarTareasServicios();;
         String op = request.getParameter("op");
-//        String alumno = (String) request.getSession().getAttribute("nombreLogin");
-        String alumno = "Juan";
+        String alumno = (String) request.getSession().getAttribute("nombreLogin");
         
+       if (alumno == null) {alumno="Juan";}
+
         if (op == null)
         {
             op = "inicio";
@@ -57,8 +58,18 @@ public class Tareas extends HttpServlet
         switch(op)
         {
             case "inicio":
-                request.setAttribute("tareas", ats.getAllTareas(alumno));
-                request.setAttribute("alumno", alumno);
+                 root.put("tareas", ats.getAllTareas(alumno));
+                  root.put("alumno", alumno);
+                 response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            try {
+                Template temp = Configuration.getInstance().getFreeMarker().getTemplate("ver_tareas.ftl");
+                temp.process(root, response.getWriter());
+            } catch (TemplateException ex) {
+                Logger.getLogger(Tareas.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
                 request.getRequestDispatcher("/ver_tareas.jsp").forward(request, response);
                 break;
                 
